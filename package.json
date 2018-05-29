@@ -22,6 +22,7 @@
     "pug": "^2.0.0-rc.1"
   },
   "devDependencies": {
+    "handlebars": "^4.0.11",
     "nodemon": "^1.8.1",
     "vue": "^2.5.16"
   }

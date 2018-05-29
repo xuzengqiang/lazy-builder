@@ -30,9 +30,17 @@ app.use(json())
 app.use(logger())
 app.use(require('koa-static')(__dirname + '/public'))
 
+/**
+ * 使用handlebars模板引擎
+ * @date 2018-5-29 23:47:42
+ * @description npm install --save-dev handlebars
+ */
 app.use(
     views(__dirname + '/views', {
-        extension: 'pug'
+        map: {
+            hbs: 'handlebars'
+        },
+        extension: 'hbs'
     })
 )
 
