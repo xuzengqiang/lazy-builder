@@ -12,9 +12,12 @@ const json = require('koa-json')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
+const Handlebars = require('./config/handlebars')
 
 const index = require('./routes/index')
 const users = require('./routes/users')
+
+console.error(Handlebars)
 
 // error handler
 onerror(app)
@@ -41,19 +44,8 @@ app.use(require('koa-static')(__dirname + '/public'))
  * @date 2018-5-29 23:47:42
  * @description npm install --save-dev handlebars
  */
-app.use(
-    views(__dirname + '/views', {
-        map: {
-            hbs: 'handlebars'
-        },
-        extension: 'hbs',
-        options: {
-            partials: {
-                header: 'components/header'
-            }
-        }
-    })
-)
+console.error(Handlebars)
+app.use(views(__dirname + '/views', Handlebars))
 
 // logger
 app.use(async (ctx, next) => {
