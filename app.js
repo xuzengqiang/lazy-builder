@@ -44,7 +44,6 @@ app.use(require('koa-static')(__dirname + '/public'))
  * @date 2018-5-29 23:47:42
  * @description npm install --save-dev handlebars
  */
-console.error(Handlebars)
 app.use(views(__dirname + '/views', Handlebars))
 
 // logger

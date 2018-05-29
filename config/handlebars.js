@@ -9,12 +9,13 @@ const Handlebars = {
     map: {
         hbs: 'handlebars'
     },
-    extension: 'hbs',
-    options: {
-        partials: {
-            header: 'components/header'
-        }
-    }
+    extension: 'hbs'
+    // ,
+    // options: {
+    //     partials: {
+    //         header: 'components/header'
+    //     }
+    // }
 }
 
 module.exports = Handlebars
