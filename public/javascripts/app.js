@@ -7,6 +7,11 @@
  */
 dom.ready(() => {
     new Vue({
-        el: '#app'
+        el: '#app',
+        data() {
+            return {
+                build: '开始构建'
+            }
+        }
     })
 })
