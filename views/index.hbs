@@ -11,12 +11,13 @@
     <script type="text/javascript" src="static/common/dom.js"></script>
     <script type="text/javascript" src="static/gallery/vue/vue.min.js"></script>
     <script type="text/javascript" src="static/gallery/element/element.js"></script>
+    <script type="text/javascript" src="static/gallery/axios/axios.js"></script>
     <script type="text/javascript" src="javascripts/app.js"></script>
 </head>
 
 <body>
     <div id="app">
-        <el-button type="primary">${build}</el-button>
+        <el-button type="primary" @click="transport">${build}</el-button>
     </div>
 </body>
 

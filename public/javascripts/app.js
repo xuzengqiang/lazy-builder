@@ -13,6 +13,11 @@ dom.ready(() => {
             return {
                 build: '开始构建'
             }
+        },
+        methods: {
+            transport() {
+                axios.post('/json')
+            }
         }
     })
 })
