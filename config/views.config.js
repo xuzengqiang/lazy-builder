@@ -5,7 +5,12 @@
  * @date 2018-05-30 12:00:47
  * @version 1.0.0
  */
-const Handlebars = {
+// const Handlebars = require('handlebars')
+// const HandlebarsDelimiters = require('handlebars-delimiters')
+
+// HandlebarsDelimiters(Handlebars, ['${', '}'])
+
+module.exports = {
     map: {
         hbs: 'handlebars'
     },
@@ -17,5 +22,3 @@ const Handlebars = {
     //     }
     // }
 }
-
-module.exports = Handlebars

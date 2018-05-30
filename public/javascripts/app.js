@@ -8,6 +8,7 @@
 dom.ready(() => {
     new Vue({
         el: '#app',
+        delimiters: ['${', '}'],
         data() {
             return {
                 build: '开始构建'
