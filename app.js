@@ -16,6 +16,7 @@ const viewsConfig = require('./config/views.config')
 
 const index = require('./routes/index')
 const users = require('./routes/users')
+const builder = require('./routes/builder')
 
 // error handler
 onerror(app)
@@ -57,6 +58,7 @@ app.use(async (ctx, next) => {
  */
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
+app.use(builder.routes(), builder.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {

@@ -9,14 +9,22 @@ dom.ready(() => {
     new Vue({
         el: '#app',
         delimiters: ['${', '}'],
-        data() {
+        data () {
             return {
                 build: '开始构建'
             }
         },
         methods: {
-            transport() {
-                axios.post('/json')
+            transport () {
+                axios({
+                    method: 'POST',
+                    baseURL: 'http://localhost:3000',
+                    url: '/builder'
+                }).then(data => {
+                    console.error(data)
+                }).catch(error => {
+                    console.error(error)
+                })
             }
         }
     })
