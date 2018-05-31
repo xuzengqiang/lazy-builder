@@ -5,6 +5,7 @@
  */
 const FileUtils = require('../static/common/file')
 const rootPath = process.cwd()
+const IndexController = require('./IndexController')
 
 class BuilderController {
     constructor(props) {
@@ -15,13 +16,8 @@ class BuilderController {
      * 构建项目文件夹
      */
     build () {
-        FileUtils.mkdir(rootPath + '/build', error => {
-            if (error) {
-                console.error(error)
-            } else {
-                console.error('builder')
-            }
-        })
+        const indexController = new IndexController()
+        indexController.builder()
     }
 
     /**

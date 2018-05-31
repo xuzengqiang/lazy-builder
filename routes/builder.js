@@ -5,7 +5,7 @@
  */
 const router = require('koa-router')()
 const fs = require('fs')
-const BuilderController = require('../controller/BuilderController')
+const BuilderController = require('../controllers/BuilderController')
 
 /**
  * 构建项目文件夹
