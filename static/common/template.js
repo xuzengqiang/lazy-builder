@@ -26,8 +26,6 @@ TemplateEngine.readFile = filepath => {
  * @param {String} filepath - 文件路径
  */
 TemplateEngine.cacheReadFile = (key, filepath) => {
-    console.error('---->>')
-    console.error(templates)
     if (templates[key]) {
         console.error(`从缓存中读取模板文件:${TEMPLATE_PATH}${filepath}`)
         return templates[key]
@@ -58,5 +56,13 @@ for (let template in TemplateMapper) {
         return TemplateEngine.cacheReadFile(template, TemplateMapper[template])
     }
 }
+
+/**
+ * 转译
+ * @param {String} content - 原始内容
+ * @param {String} name - 模板名称 
+ * @param {String} value - 替换内容
+ */
+Template.escape = (content, name, value) => content.replace(`[[${name}]]`, value)
 
 module.exports = Template 
