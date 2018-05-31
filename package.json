@@ -24,6 +24,7 @@
   "devDependencies": {
     "handlebars": "^4.0.11",
     "handlebars-delimiters": "^1.0.0",
+    "moment": "^2.22.1",
     "nodemon": "^1.8.1",
     "vue": "^2.5.16"
   }
