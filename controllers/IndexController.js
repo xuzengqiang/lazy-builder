@@ -50,6 +50,8 @@ class IndexController {
             this._createDataFile()
             this._createMethodFile()
             this._createActivatedFile()
+            this._createComponentsFile()
+            this._createMixinFile()
         } catch (e) {
             console.error(e)
         }
@@ -111,10 +113,37 @@ class IndexController {
     }
 
     /**
+     * 创建components文件
+     */
+    _createComponentsFile () {
+        if (!this.componentsFlag) return
+        console.error('构建首页components.js')
+        const file = FileUtils.createFile(`${rootPath}/build/index/mixins/components.js`)
+        Template.writeFile(file, Template.indexComponents())
+    }
+
+    /**
      * 创建混合入口文件
      */
-    _createMixinFile (components, activated, computed) {
+    _createMixinFile () {
+        console.error('构建首页mixins.js')
+        const file = FileUtils.createFile(`${rootPath}/build/index/mixins/index.js`)
+        let content = Template.indexMixin()
+        const importTemplate = []
+        const propertyTemplate = []
 
+        if (this.componentsFlag) {
+            importTemplate.push(`import components from './components'`)
+            propertyTemplate.push(`  components,`)
+        }
+        if (this.activatedFlag) {
+            importTemplate.push(`import activated from './activated'`)
+            propertyTemplate.push(`  activated,`)
+        }
+
+        content = Template.escape(content, 'import', importTemplate.join('\n'))
+        content = Template.escape(content, 'property', propertyTemplate.join('\n'))
+        Template.writeFile(file, content)
     }
 }
 

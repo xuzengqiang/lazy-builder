@@ -1,8 +1,9 @@
 /**
  * @fileOverview: 首页data配置
- * @author: [[author]]
- * @date: [[creationDate]]
+ * @author [[author]]
+ * @date [[creationDate]]
  */
+
 import queryTableConfig from '../config/query-table'
 import customFilterConfig from '../config/custom-filter'
 export default {

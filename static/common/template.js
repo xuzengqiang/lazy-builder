@@ -45,9 +45,11 @@ TemplateEngine.cacheReadFile = (key, filepath) => {
 
 const TemplateMapper = {
     index: 'index/index.vue',
+    indexMixin: 'index/mixin.tpl',
     indexData: 'index/data.tpl',
     indexMethods: 'index/methods.tpl',
     indexActivated: 'index/activated.tpl',
+    indexComponents: 'index/components.tpl',
     dialog: 'dialog/dialog.tpl',
     dialogData: 'dialog/dialog.data.tpl',
     dialogMethods: 'dialog/dialog.methods.tpl'
