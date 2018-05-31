@@ -5,6 +5,7 @@
  */
 const FileUtils = require('./file')
 const fs = require('fs')
+const moment = require('moment')
 const rootPath = process.cwd()
 
 const Template = {}
@@ -46,6 +47,7 @@ const TemplateMapper = {
     index: 'index/index.vue',
     indexData: 'index/data.tpl',
     indexMethods: 'index/methods.tpl',
+    indexActivated: 'index/activated.tpl',
     dialog: 'dialog/dialog.tpl',
     dialogData: 'dialog/dialog.data.tpl',
     dialogMethods: 'dialog/dialog.methods.tpl'
@@ -64,5 +66,17 @@ for (let template in TemplateMapper) {
  * @param {String} value - 替换内容
  */
 Template.escape = (content, name, value) => content.replace(`[[${name}]]`, value)
+
+/**
+ * 写文件
+ * @param {File} file - 文件信息
+ * @param {String} content - 文件信息 
+ */
+Template.writeFile = (file, content) => {
+    const currentTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
+    content = content.replace(`[[author]]`, 'xuzengqiang')
+    content = content.replace(`[[creationDate]]`, currentTime)
+    file.write(content)
+}
 
 module.exports = Template 

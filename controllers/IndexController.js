@@ -49,6 +49,7 @@ class IndexController {
             this._createIndexFile()
             this._createDataFile()
             this._createMethodFile()
+            this._createActivatedFile()
         } catch (e) {
             console.error(e)
         }
@@ -65,7 +66,7 @@ class IndexController {
         let content = Template.index()
         content = Template.escape(content, 'dialog.tpl', dialog)
 
-        file.write(content)
+        Template.writeFile(file, content)
     }
 
     /**
@@ -81,7 +82,7 @@ class IndexController {
         content = Template.escape(content, 'selection.tpl', selection)
         content = Template.escape(content, 'dialog.data.tpl', dialogData)
 
-        file.write(content)
+        Template.writeFile(file, content)
     }
 
     /**
@@ -96,7 +97,17 @@ class IndexController {
         let content = Template.indexMethods()
         content = Template.escape(content, 'dialog.methods.tpl', dialogMethods)
 
-        file.write(content)
+        Template.writeFile(file, content)
+    }
+
+    /**
+     * 创建activated文件
+     */
+    _createActivatedFile () {
+        if (!this.activatedFlag) return
+        console.error('构建首页activated.js')
+        const file = FileUtils.createFile(`${rootPath}/build/index/mixins/activated.js`)
+        Template.writeFile(file, Template.indexActivated())
     }
 
     /**

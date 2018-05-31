@@ -1,4 +1,4 @@
-/*
+/**
  * @fileOverview: 首页methods
  * @author: [[author]]
  * @date: [[creationDate]]

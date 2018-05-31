@@ -1,6 +1,6 @@
-/*
+/**
  * @fileOverview: 首页data配置
- * @author: [[author.name]]
+ * @author: [[author]]
  * @date: [[creationDate]]
  */
 import queryTableConfig from '../config/query-table'
