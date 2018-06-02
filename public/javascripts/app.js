@@ -367,12 +367,13 @@ dom.ready(() => {
                 return rows
             },
 
-            addField () {
+            addField (layout) {
+                this.fieldDialogVisible = true
                 console.error(this.columns[0].main.fields)
-                this.columns[0].main.fields.push({
+                layout.fields.push({
                     label: '添加字段1',
                     key: 'hellokitty',
-                    column: 3
+                    column: 2
                 })
             }
         }

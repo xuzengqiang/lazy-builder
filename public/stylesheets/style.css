@@ -22,6 +22,10 @@ a {
   margin-left: 10px;
   vertical-align: bottom;
 }
+.form-layout {
+  border:1px dashed #AFAFAF;
+  min-height: 100px;
+}
 .form-layout .title{
   height:30px;
   background: #f5f5fa;
