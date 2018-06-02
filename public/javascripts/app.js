@@ -23,14 +23,16 @@ dom.ready(() => {
         data () {
             return {
                 build: '开始构建',
-                currentModule: 'index',
-                authorModel: {
+                currentModule: 'form',
+                module: {
                     author: '',
-                    router: ''
+                    router: '',
+                    name: ''
                 },
                 formToolList: [{
                     label: '刷新',
-                    icon: 'refresh'
+                    icon: 'refresh',
+                    func: () => vm.reload
                 }, {
                     label: '新增',
                     icon: 'plus'
@@ -68,10 +70,216 @@ dom.ready(() => {
                 icons: icons,
                 toolList: [],
                 toolDialogVisible: false,
+                columnDialogVisible: false,
                 toolModel: {
-                    label: '',
+                    label: '1212',
                     icon: ''
-                }
+                },
+                fieldDialogVisible: false,
+                fieldTypes: [
+                    'input',
+                    'number',
+                    'textarea',
+                    'select',
+                    'datePicker',
+                    'autocomplete',
+                    'area'
+                ],
+                columns: [
+                    {
+                        main: {
+                            totalspan: 24,
+                            column: 6,
+                            title: '录入信息',
+                            fields: [{
+                                label: '融资编码',
+                                disabled: true,
+                                key: 'financingNumber'
+                            }, {
+                                label: '借款总额',
+                                key: 'borrowAmount'
+                            }, {
+                                label: '实际借款',
+                                slot: 'actualLoanAmount'
+                            }, {
+                                label: '到账借款',
+                                disabled: true,
+                                key: 'payLoanAmount'
+                            }, {
+                                label: '未到账借款',
+                                slot: 'unpayLoanAmount'
+                            }, {
+                                label: '年利率',
+                                slot: 'annualRate'
+                            }, {
+                                label: '融资类型',
+                                type: 'select',
+                                lookupCode: 'fms_financing_type',
+                                key: 'financingType'
+                            }]
+                        }
+                        // leftcontent:
+                        // rightcontent:
+                    }, {
+                        main: {
+                            totalspan: 12,
+                            column: 2,
+                            title: '录入信息',
+                            fields: [{
+                                label: '融资编码',
+                                disabled: true,
+                                key: 'financingNumber'
+                            }, {
+                                label: '借款总额',
+                                key: 'borrowAmount'
+                            }, {
+                                label: '实际借款',
+                                slot: 'actualLoanAmount'
+                            }, {
+                                label: '到账借款',
+                                disabled: true,
+                                key: 'payLoanAmount'
+                            }, {
+                                label: '未到账借款',
+                                slot: 'unpayLoanAmount'
+                            }, {
+                                label: '年利率',
+                                slot: 'annualRate'
+                            }, {
+                                label: '融资类型',
+                                type: 'select',
+                                lookupCode: 'fms_financing_type',
+                                key: 'financingType'
+                            }]
+                        },
+                        leftcontent: {
+                            totalspan: 12,
+                            column: 2,
+                            title: '录入信息',
+                            fields: [{
+                                label: '融资编码',
+                                disabled: true,
+                                key: 'financingNumber'
+                            }, {
+                                label: '借款总额',
+                                key: 'borrowAmount'
+                            }, {
+                                label: '实际借款',
+                                slot: 'actualLoanAmount'
+                            }, {
+                                label: '到账借款',
+                                disabled: true,
+                                key: 'payLoanAmount'
+                            }, {
+                                label: '未到账借款',
+                                slot: 'unpayLoanAmount'
+                            }, {
+                                label: '年利率',
+                                slot: 'annualRate'
+                            }, {
+                                label: '融资类型',
+                                type: 'select',
+                                lookupCode: 'fms_financing_type',
+                                key: 'financingType'
+                            }]
+                        }
+                        // rightcontent:
+                    }, {
+                        main: {
+                            totalspan: 12,
+                            column: 4,
+                            title: '录入信息',
+                            fields: [{
+                                label: '融资编码',
+                                disabled: true,
+                                key: 'financingNumber'
+                            }, {
+                                label: '借款总额',
+                                key: 'borrowAmount'
+                            }, {
+                                label: '实际借款',
+                                slot: 'actualLoanAmount'
+                            }, {
+                                label: '到账借款',
+                                disabled: true,
+                                key: 'payLoanAmount'
+                            }, {
+                                label: '未到账借款',
+                                slot: 'unpayLoanAmount'
+                            }, {
+                                label: '年利率',
+                                slot: 'annualRate'
+                            }, {
+                                label: '融资类型',
+                                type: 'select',
+                                lookupCode: 'fms_financing_type',
+                                key: 'financingType'
+                            }]
+                        },
+                        leftcontent: {
+                            totalspan: 8,
+                            column: 2,
+                            title: '录入信息',
+                            fields: [{
+                                label: '融资编码',
+                                disabled: true,
+                                key: 'financingNumber'
+                            }, {
+                                label: '借款总额',
+                                key: 'borrowAmount'
+                            }, {
+                                label: '实际借款',
+                                slot: 'actualLoanAmount'
+                            }, {
+                                label: '到账借款',
+                                disabled: true,
+                                key: 'payLoanAmount'
+                            }, {
+                                label: '未到账借款',
+                                slot: 'unpayLoanAmount'
+                            }, {
+                                label: '年利率',
+                                slot: 'annualRate'
+                            }, {
+                                label: '融资类型',
+                                type: 'select',
+                                lookupCode: 'fms_financing_type',
+                                key: 'financingType'
+                            }]
+                        },
+                        rightcontent: {
+                            column: 1,
+                            totalspan: 4,
+                            title: '录入信息',
+                            fields: [{
+                                label: '融资编码',
+                                disabled: true,
+                                key: 'financingNumber'
+                            }, {
+                                label: '借款总额',
+                                key: 'borrowAmount'
+                            }, {
+                                label: '实际借款',
+                                slot: 'actualLoanAmount'
+                            }, {
+                                label: '到账借款',
+                                disabled: true,
+                                key: 'payLoanAmount'
+                            }, {
+                                label: '未到账借款',
+                                slot: 'unpayLoanAmount'
+                            }, {
+                                label: '年利率',
+                                slot: 'annualRate'
+                            }, {
+                                label: '融资类型',
+                                type: 'select',
+                                lookupCode: 'fms_financing_type',
+                                key: 'financingType'
+                            }]
+                        }
+                    }
+                ]
             }
         },
         methods: {
@@ -119,6 +327,52 @@ dom.ready(() => {
                 this.toolList.push({
                     label: this.toolModel.label,
                     icon: this.toolModel.icon
+                })
+            },
+
+            addColumn () {
+
+            },
+
+            getRowFields ({ fields, totalspan = 24, column = 4 }) {
+                let rows = []
+                let sum = 0
+                let arr = []
+                // 默认一列所占的span数
+                totalspan = 24
+                let span = totalspan / column
+
+                fields.forEach(field => {
+                    field.span = Math.min(totalspan, (/^[1-9]\d*$/.test(field.column) ? parseInt(field.column) : 1) * span)
+                    if (sum + field.span < totalspan) {
+                        arr.push(field)
+                        sum += field.span
+                    } else if (sum + field.span === totalspan) {
+                        arr.push(field)
+                        rows.push(arr)
+                        sum = 0
+                        arr = []
+                    } else {
+                        rows.push(arr)
+                        arr = []
+                        arr.push(field)
+                        sum = field.span
+                    }
+                })
+
+                if (arr.length) {
+                    rows.push(arr)
+                }
+
+                return rows
+            },
+
+            addField () {
+                console.error(this.columns[0].main.fields)
+                this.columns[0].main.fields.push({
+                    label: '添加字段1',
+                    key: 'hellokitty',
+                    column: 3
                 })
             }
         }

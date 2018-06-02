@@ -19,12 +19,15 @@
     <div id="app">
         <el-row>
             <el-col :span="8">
-                <el-form label-width="100px" ref="authorForm" :model="authorModel" label-position="left">
-                    <el-form-item label="开发者名称">
-                        <el-input v-model="authorModel.author"></el-input>
+                <el-form label-width="150px" ref="authorForm" :model="module" label-position="left">
+                    <el-form-item label="模块开发者名称">
+                        <el-input v-model="module.author" placeholder="用于生成头部注释"></el-input>
                     </el-form-item>
-                    <el-form-item label="主页面路由">
-                        <el-input v-model="authorModel.router"></el-input>
+                    <el-form-item label="模块名称">
+                        <el-input v-model="module.name"></el-input>
+                    </el-form-item>
+                    <el-form-item label="模块路由">
+                        <el-input v-model="module.router"></el-input>
                     </el-form-item>
                 </el-form>
             </el-col>
@@ -100,6 +103,64 @@
                 </el-form>
             </el-tab-pane>
             <el-tab-pane label="新增/修改配置" name="form">
+                <el-form label-position="left" label-width="80px">
+                    <el-row v-for="column in columns">
+                        <el-row :gutter="20" class="form-layout" style="border:1px dashed #AFAFAF;height:600px;">
+                            <el-col :span="column.leftcontent.totalspan" class="column-leftcontent" v-if="column.leftcontent">
+                                <div class="title">
+                                    <label>${column.leftcontent.title}</label>
+                                </div>
+                                <el-row :gutter="4" v-for="(row, rownum) in getRowFields(column.leftcontent)" :key="'row-'+rownum">
+                                    <el-col v-for="(field, column) in row" :key="'field-' + column" :span="field.span">
+                                        <el-form-item :label="field.label" :prop="field.key">
+                                            <el-input v-if="!field.type || field.type === 'input'" clearable :disabled="field.disabled || false">
+
+                                            </el-input>
+                                        </el-form-item>
+                                    </el-col>
+                                </el-row>
+                                <el-row>
+                                    <el-button @click="addField">添加字段</el-button>
+                                </el-row>
+                            </el-col>
+
+                            <el-col :span="column.main.totalspan" class="column-main" v-if="column.main">
+                                <div class="title">
+                                    <label>${column.main.title}</label>
+                                </div>
+                                <el-row :gutter="8" v-for="(row, rownum) in getRowFields(column.main)" :key="'row-'+rownum">
+                                    <el-col v-for="(field, column) in row" :key="'field-' + column" :span="field.span">
+                                        <el-form-item :label="field.label" :prop="field.key">
+                                            <el-input v-if="!field.type || field.type === 'input'">
+
+                                            </el-input>
+                                        </el-form-item>
+                                    </el-col>
+                                </el-row>
+                                <el-row>
+                                    <el-button @click="addField">添加字段</el-button>
+                                </el-row>
+                            </el-col>
+                            <el-col :span="column.rightcontent.totalspan" class="column-rightcontent" v-if="column.rightcontent">
+                                <div class="title">
+                                    <label>${column.rightcontent.title}</label>
+                                </div>
+                                <el-row :gutter="8" v-for="(row, rownum) in getRowFields(column.rightcontent)" :key="'row-'+rownum">
+                                    <el-col v-for="(field, column) in row" :key="'field-' + column" :span="field.span">
+                                        <el-form-item :label="field.label" :prop="field.key">
+                                            <el-input v-if="!field.type || field.type === 'input'">
+
+                                            </el-input>
+                                        </el-form-item>
+                                    </el-col>
+                                </el-row>
+                            </el-col>
+                        </el-row>
+                    </el-row>
+                </el-form>
+                <el-button @click="columnDialogVisible=true">
+                    添加栏目
+                </el-button>
             </el-tab-pane>
             <el-tab-pane label="详情页配置" name="detail">
             </el-tab-pane>
@@ -131,6 +192,79 @@
                 <el-form-item label="图标">
                     <el-select v-model="toolModel.icon">
                         <el-option v-for="icon in icons" :key="icon" :value="icon" :label="icon">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="toolDialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="addTool">确 定</el-button>
+            </span>
+        </el-dialog>
+
+        <el-dialog title="表单栏目配置" :visible.sync="columnDialogVisible">
+            <el-form label-width="100px" ref="toolsForm" label-position="left">
+                <el-form-item label="栏目名称">
+                    <el-input placeholder="可以不填写,如果填写会生成栏目标题"></el-input>
+                </el-form-item>
+                <el-form-item label="布局方式">
+                    <div class="layout-single" style="height:50px;width:90px;background:rgba(175, 175, 175, 0.5);float:left">
+                        <div style="width:90px;height:50px;background:#DDD;text-align:center;line-height:50px;">
+                            单栏
+                        </div>
+                    </div>
+                    <div class="layout-second" style="height:50px;width:90px;float:left;margin-left:20px;text-align:center;line-height:50px;">
+                        <div style="width:40px;height:50px;background:#DDD;float:left">
+
+                        </div>
+                        <div style="width:40px;height:50px;background:#DDD;float:left;margin-left:2px">
+
+                        </div>
+                    </div>
+                    <div class="layout-three" style="height:50px;width:100px;float:left;margin-left:20px">
+                        <div style="width:30px;height:50px;background:#DDD;float:left">
+
+                        </div>
+                        <div style="width:30px;height:50px;background:#DDD;float:left;margin-left:2px">
+
+                        </div>
+                        <div style="width:30px;height:50px;background:#DDD;float:left;margin-left:2px">
+
+                        </div>
+                    </div>
+                </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="toolDialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="addTool">确 定</el-button>
+            </span>
+        </el-dialog>
+        <el-dialog title="表单字段配置" :visible.sync="fieldDialogVisible">
+            <el-form label-width="100px" ref="toolsForm" label-position="left">
+                <el-form-item label="字段名称">
+                    <el-input placeholder="可以不填写,如果填写会生成栏目标题"></el-input>
+                </el-form-item>
+                <el-form-item label="key值">
+                    <el-input placeholder="form表单提交的key值,不填写的话会生成key:@TODO的注释"></el-input>
+                </el-form-item>
+                <el-form-item label="是否禁用">
+                    <el-select>
+                        <el-option v-for="item in yesOrNo" :key="item.value" :value="item.value" :label="item.label">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="表单类型">
+                    <el-select>
+                        <el-option v-for="type in fieldTypes" :key="type" :value="type" :label="type">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="数据字典">
+                    <el-input>
+                </el-form-item>
+                <el-form-item label="所占列数">
+                    <el-select>
+                        <el-option v-for="index in 6" :key="index" :value="index" :label="index">
                         </el-option>
                     </el-select>
                 </el-form-item>

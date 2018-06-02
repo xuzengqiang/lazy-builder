@@ -50,6 +50,7 @@ const TemplateMapper = {
     indexMethods: 'index/methods.tpl',
     indexActivated: 'index/activated.tpl',
     indexComponents: 'index/components.tpl',
+    indexBeforeRouteEnter: 'index/beforeRouteEnter.tpl',
     dialog: 'dialog/dialog.tpl',
     dialogData: 'dialog/dialog.data.tpl',
     dialogMethods: 'dialog/dialog.methods.tpl'
