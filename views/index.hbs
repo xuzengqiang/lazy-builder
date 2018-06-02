@@ -29,6 +29,8 @@
     <script type="text/javascript"
             src="components/form-field-dialog.js"></script>
     <script type="text/javascript"
+            src="components/add-column-dialog.js"></script>
+    <script type="text/javascript"
             src="components/index.js"></script>
 </head>
 
@@ -180,9 +182,8 @@
                         </el-row>
                     </el-row>
                 </el-form>
-                <el-button @click="columnDialogVisible=true">
-                    添加栏目
-                </el-button>
+                <el-button @click="showAddColumnDialog">添加栏目</el-button>
+                <add-column-dialog ref="columnDialog"></add-column-dialog>
             </el-tab-pane>
             <el-tab-pane label="详情页配置"
                          name="detail">
@@ -230,101 +231,6 @@
                                    :key="icon"
                                    :value="icon"
                                    :label="icon">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-            </el-form>
-            <span slot="footer"
-                  class="dialog-footer">
-                <el-button @click="toolDialogVisible = false">取 消</el-button>
-                <el-button type="primary"
-                           @click="addTool">确 定</el-button>
-            </span>
-        </el-dialog>
-
-        <el-dialog title="表单栏目配置"
-                   :visible.sync="columnDialogVisible">
-            <el-form label-width="100px"
-                     ref="toolsForm"
-                     label-position="left">
-                <el-form-item label="栏目名称">
-                    <el-input placeholder="可以不填写,如果填写会生成栏目标题"></el-input>
-                </el-form-item>
-                <el-form-item label="布局方式">
-                    <div class="layout-single"
-                         style="height:50px;width:90px;background:rgba(175, 175, 175, 0.5);float:left">
-                        <div style="width:90px;height:50px;background:#DDD;text-align:center;line-height:50px;">
-                            单栏
-                        </div>
-                    </div>
-                    <div class="layout-second"
-                         style="height:50px;width:90px;float:left;margin-left:20px;text-align:center;line-height:50px;">
-                        <div style="width:40px;height:50px;background:#DDD;float:left">
-
-                        </div>
-                        <div style="width:40px;height:50px;background:#DDD;float:left;margin-left:2px">
-
-                        </div>
-                    </div>
-                    <div class="layout-three"
-                         style="height:50px;width:100px;float:left;margin-left:20px">
-                        <div style="width:30px;height:50px;background:#DDD;float:left">
-
-                        </div>
-                        <div style="width:30px;height:50px;background:#DDD;float:left;margin-left:2px">
-
-                        </div>
-                        <div style="width:30px;height:50px;background:#DDD;float:left;margin-left:2px">
-
-                        </div>
-                    </div>
-                </el-form-item>
-            </el-form>
-            <span slot="footer"
-                  class="dialog-footer">
-                <el-button @click="toolDialogVisible = false">取 消</el-button>
-                <el-button type="primary"
-                           @click="addTool">确 定</el-button>
-            </span>
-        </el-dialog>
-        <el-dialog title="表单字段配置"
-                   :visible.sync="fieldDialogVisible">
-            <el-form label-width="100px"
-                     ref="toolsForm"
-                     label-position="left">
-                <el-form-item label="字段名称">
-                    <el-input placeholder="可以不填写,如果填写会生成栏目标题"></el-input>
-                </el-form-item>
-                <el-form-item label="key值">
-                    <el-input placeholder="form表单提交的key值,不填写的话会生成key:@TODO的注释"></el-input>
-                </el-form-item>
-                <el-form-item label="是否禁用">
-                    <el-select>
-                        <el-option v-for="item in yesOrNo"
-                                   :key="item.value"
-                                   :value="item.value"
-                                   :label="item.label">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="表单类型">
-                    <el-select>
-                        <el-option v-for="type in fieldTypes"
-                                   :key="type"
-                                   :value="type"
-                                   :label="type">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="数据字典">
-                    <el-input>
-                </el-form-item>
-                <el-form-item label="所占列数">
-                    <el-select>
-                        <el-option v-for="index in 6"
-                                   :key="index"
-                                   :value="index"
-                                   :label="index">
                         </el-option>
                     </el-select>
                 </el-form-item>
@@ -429,9 +335,7 @@
             </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
-            <el-button @click="show = false">
-                取 消
-            </el-button>
+            <el-button @click="show = false">取 消</el-button>
             <el-button type="primary" 
                        @click="addField">
                 确 定
@@ -440,5 +344,45 @@
     </el-dialog>
 </script>
 
+<script type="text/x-template"
+        id="add-column-dialog-template">
+<el-dialog title="表单栏目配置" :visible.sync="show">
+    <el-form label-width="100px"
+             ref="toolsForm"
+             label-position="left">
+        <el-form-item label="栏目名称">
+            <el-input placeholder="可以不填写,如果填写会生成栏目标题"></el-input>
+        </el-form-item>
+        <el-form-item label="布局方式">
+            <!-- 单栏 -->
+            <div class="layout-category one-column selected">
+                <label></label>
+                <div class="shade">单栏</div>
+            </div>
+
+            <!-- 两栏 -->
+            <div class="layout-category two-column">
+                <label></label>
+                <label></label>
+                <div class="shade">两栏</div>
+            </div>
+            
+            <!-- 三栏 -->
+            <div class="layout-category three-column">
+                <label></label>
+                <label></label>
+                <label></label>
+                <div class="shade">三栏</div>
+            </div>
+        </el-form-item>
+    </el-form>
+    <span slot="footer"
+            class="dialog-footer">
+        <el-button @click="show = false">取 消</el-button>
+        <el-button type="primary"
+                    @click="addColumn">确 定</el-button>
+    </span>
+</el-dialog>
+</script>
 
 </html>

@@ -4,11 +4,10 @@
  * @date 2018-06-02 16:03:06
  * @version 1.0.0
  */
-dom.ready(() => {
-    const components = [
-        FormFieldRender,
-        FormFieldDialog
-    ]
+const components = [
+    FormFieldRender,
+    FormFieldDialog,
+    AddColumnDialog
+]
 
-    components.forEach(component => Vue.component(component.name, component))
-})
+components.forEach(component => Vue.component(component.name, component))
