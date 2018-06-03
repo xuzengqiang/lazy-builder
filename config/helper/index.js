@@ -5,3 +5,4 @@
  */
 require('./stylesheet')
 require('./script')
+require('./component-scripts')

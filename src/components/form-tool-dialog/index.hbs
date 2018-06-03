@@ -1,0 +1,28 @@
+{{!-- 表单字段渲染组件 --}}
+<div class="form-field-render">
+    <div class="title">
+        <label v-text="title"></label>
+    </div>
+    <el-row :gutter="4"
+            v-for="(row, rownum) in rowFields"
+            :key="'row-'+rownum">
+        <el-col v-for="(field, column) in row"
+                :key="'field-' + column"
+                :span="field.span">
+            <el-form-item :label="field.label"
+                          :prop="field.key">
+                <el-input v-if="!field.type || field.type === 'input'"
+                          clearable
+                          :disabled="field.disabled || false">
+
+                </el-input>
+            </el-form-item>
+        </el-col>
+    </el-row>
+    <el-row>
+        <el-button @click="addField">添加字段</el-button>
+    </el-row>
+    <form-field-dialog ref="dialog"
+                       @add-field="addFieldHandle">
+    </form-field-dialog>
+</div>
