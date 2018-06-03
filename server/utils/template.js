@@ -77,7 +77,14 @@ Template.escape = (content, name, value) => content.replace(`[[${name}]]`, value
  * @param {String} content - 文件信息
  */
 Template.writeFile = (file, content) => {
+    const author = fs
+        .readFileSync(`${rootPath}/module.author`)
+        .toString()
+        .trim()
+
+    console.error('配置的作者名称为:' + author)
     const currentTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
+
     content = content.replace(`[[author]]`, 'xuzengqiang')
     content = content.replace(`[[creationDate]]`, currentTime)
     file.write(content)
