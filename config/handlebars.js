@@ -25,8 +25,8 @@ require('./helper')
 
 // HandlebarsDelimiters(Handlebars, ['${', '}'])
 const HandlebarsViews = () => hbs.middleware({
-    viewPath: `${rootPath}/views`,
-    partialsPath: `${rootPath}/views/components`
+    viewPath: `${rootPath}/src`,
+    partialsPath: `${rootPath}/src`
 })
 
 module.exports = HandlebarsViews

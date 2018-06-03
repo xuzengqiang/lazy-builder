@@ -3,13 +3,22 @@
  * @author: xuzengqiang
  * @date: 2018-06-03 14:29:54
  */
-;(window => {
-    const icons = ['voice', 'novoice', 'next', 'previous', 'unie038', 'remind', 'xiangzuo4', 'xiangyou4']
+; (window => {
+    const icons = [
+        'voice',
+        'novoice',
+        'next',
+        'previous',
+        'unie038',
+        'remind',
+        'xiangzuo4',
+        'xiangyou4'
+    ]
 
     const FormToolDialog = {
         template: '#form-tool-dialog-template',
         name: 'FormToolDialog',
-        data() {
+        data () {
             return {
                 model: {
                     name: '',
@@ -23,7 +32,7 @@
             /**
              * 增加FormTool按钮
              */
-            addFormTool() {
+            addFormTool () {
                 this.$emit('add-form-tool')
             }
         }

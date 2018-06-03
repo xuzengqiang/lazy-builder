@@ -36,7 +36,7 @@ app.use(logger())
  * @description
  * 1、表示放在项目根目录下的public文件夹下,引用的时候相对这个目录即可.
  */
-app.use(require('koa-static')(__dirname + '/public'))
+app.use(require('koa-static')(__dirname + '/src'))
 
 /**
  * 配置模板引擎中间件,使用handlebars模板引擎

@@ -4,6 +4,14 @@
  * @date 2018-06-03 06:05:27
  * @version 1.0.0
  */
-const components = [FormFieldRender, FormFieldDialog, AddColumnDialog, DialogFooter, MenuConfig, FormToolDialog, ToolDialog]
+const components = [
+    FormFieldRender,
+    AddFieldDialog,
+    AddColumnDialog,
+    DialogFooter,
+    MenuConfig,
+    FormToolDialog,
+    ToolDialog
+]
 
 components.forEach(component => Vue.component(component.name, component))

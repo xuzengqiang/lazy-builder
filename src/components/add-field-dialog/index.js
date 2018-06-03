@@ -3,7 +3,7 @@
  * @author: xuzengqiang
  * @date: 2018-06-02 16:01:31
  */
-;(window => {
+; (window => {
     const DEFAULT_COLUMN = 4
     const isPositionNumber = number => /^(0|[1-9]\d*)$/.test(number)
     const isInt = number => /^[1-9]\d*$/.test(number)
@@ -19,10 +19,10 @@
         }
     }
 
-    const FormFieldDialog = {
-        template: '#form-field-dialog-template',
-        name: 'FormFieldDialog',
-        data() {
+    const AddFieldDialog = {
+        template: '#add-field-dialog-template',
+        name: 'AddFieldDialog',
+        data () {
             return {
                 model: ModelConfig(),
                 show: false,
@@ -40,7 +40,7 @@
             }
         },
         watch: {
-            show(value) {
+            show (value) {
                 value && (this.model = ModelConfig())
             }
         },
@@ -48,12 +48,12 @@
             /**
              * 新增字段
              */
-            addField() {
+            addField () {
                 this.show = false
                 this.$emit('add-field', JSON.parse(JSON.stringify(this.model)))
             }
         }
     }
 
-    window.FormFieldDialog = FormFieldDialog
+    window.AddFieldDialog = AddFieldDialog
 })(window)

@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    {{>head}}
+    {{>partials/header/index}}
 </head>
 
 <body>
@@ -16,11 +16,11 @@
         <el-tabs v-model="currentModule">
             <el-tab-pane label="首页配置"
                          name="index">
-                {{>index/index}}
+                {{>partials/index/index}}
             </el-tab-pane>
             <el-tab-pane label="新增/修改配置"
                          name="form">
-                {{>addModify/index}}
+                {{>partials/addModify/index}}
             </el-tab-pane>
             <el-tab-pane label="详情页配置"
                          name="detail">
@@ -38,7 +38,7 @@
 -->
 <script type="text/x-template"
         id="menu-config-template">
-    {{>menu-config}}
+    {{>components/menu-config/index}}
 </script>
 
 <!--
@@ -48,7 +48,7 @@ dialog底部
 -->
 <script type="text/x-template"
         id="dialog-footer-template">
-    {{>dialog-footer}}
+    {{>components/dialog-footer/index}}
 </script>
 
 </html>
