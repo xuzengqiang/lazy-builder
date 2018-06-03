@@ -42,39 +42,51 @@ dom.ready(() => {
                 },
                 /**
                  * 首页参数配置
-                 * @property {Boolean} hasDialog - 是否有弹窗,
-                 * @property {String} method - 请求方法名称
-                 * @property {String} searchCode - 通用查询code
-                 * @property {String} customColumnCode - 自定义列code
-                 * @property {String} customSearchCode - 自定义查询code
                  */
                 indexModel: {
+                    /**
+                     * 首页参数配置
+                     * @property {Boolean} hasDialog - 是否有弹窗,
+                     * @property {String} method - 请求方法名称
+                     * @property {String} searchCode - 通用查询code
+                     * @property {String} customColumnCode - 自定义列code
+                     * @property {String} customSearchCode - 自定义查询code
+                     */
                     option: {
                         hasDialog: true,
                         method: '',
                         searchCode: '',
                         customColumnCode: '',
                         customSearchCode: ''
-                    }
+                    },
+
+                    /**
+                     * formTool集合
+                     */
+                    formToolList: [
+                        {
+                            label: '刷新',
+                            icon: 'refresh',
+                            key: 'refresh'
+                        },
+                        {
+                            label: '通用查询',
+                            icon: 'search',
+                            key: 'custom-filter'
+                        },
+                        {
+                            label: '个性设置',
+                            icon: 'custom',
+                            key: 'query-table'
+                        }
+                    ],
+
+                    /**
+                     * 操作按钮集合
+                     */
+                    toolList: []
                 },
 
-                formToolList: [
-                    {
-                        label: '刷新',
-                        icon: 'refresh',
-                        key: 'refresh'
-                    },
-                    {
-                        label: '通用查询',
-                        icon: 'search',
-                        key: 'custom-filter'
-                    },
-                    {
-                        label: '个性设置',
-                        icon: 'custom',
-                        key: 'query-table'
-                    }
-                ],
                 formToolModel: {
                     label: '',
                     value: ''
@@ -84,7 +96,6 @@ dom.ready(() => {
                 inputValue: '',
                 dialogVisible: false,
                 icons: icons,
-                toolList: [],
                 toolDialogVisible: false,
                 columnDialogVisible: false,
                 toolModel: {
@@ -140,10 +151,6 @@ dom.ready(() => {
                 ]
             }
         },
-        mounted() {
-            console.error(this.$refs.menu)
-            console.error(this.$refs.formToolDialog)
-        },
         methods: {
             /**
              * 开始构建
@@ -166,95 +173,47 @@ dom.ready(() => {
                         console.error(error)
                     })
             },
+
             /**
-             * 获取首页配置的JSON数据
+             * 新增FormTool
              * @author xuzengqiang
-             * @date 2018-6-3 21:08:26
-             * @since 1.0.0
+             * @date 2018-6-4 00:23:57
+             * @param {Object} model - formTool信息
              */
-            getIndexConfig() {
-                return {
-                    tools: [],
-                    formTools: [],
-                    option: {
-                        hasComponent: true,
-                        method: '',
-                        searchCode: '',
-                        customColumnCode: '',
-                        customSearchCode: ''
-                    }
-                }
+            addFormTool(model) {
+                let formTool = JSON.parse(JSON.stringify(model))
+                this.indexModel.formToolList.push(formTool)
             },
 
-            handleClose(tag) {
-                this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1)
+            /**
+             * 移除formTool
+             * @date 2018-6-4 00:36:25
+             * @since 1.0.0
+             * @param {Number} index - 索引
+             */
+            removeFormTool(index) {
+                this.indexModel.formToolList.splice(index, 1)
             },
 
-            showInput() {
-                this.inputVisible = true
-                this.$nextTick(_ => {
-                    this.$refs.saveTagInput.$refs.input.focus()
-                })
+            /**
+             * 增加tool按钮
+             * @date 2018-6-4 00:36:41
+             * @since 1.0.0
+             * @param {Object} model - formTool信息
+             */
+            addTool(model) {
+                let tool = JSON.parse(JSON.stringify(model))
+                this.indexModel.toolList.push(tool)
             },
 
-            handleInputConfirm() {
-                let inputValue = this.inputValue
-                if (inputValue) {
-                    this.dynamicTags.push(inputValue)
-                }
-                this.inputVisible = false
-                this.inputValue = ''
-            },
-
-            addFormTool() {
-                this.dialogVisible = false
-                this.formToolList.push({
-                    label: this.formToolModel.label,
-                    icon: this.formToolModel.icon
-                })
-            },
-
-            addTool() {
-                this.toolDialogVisible = false
-                this.toolList.push({
-                    label: this.toolModel.label,
-                    icon: this.toolModel.icon
-                })
-            },
-
-            addColumn() {},
-
-            getRowFields({ fields, totalspan = 24, column = 4 }) {
-                let rows = []
-                let sum = 0
-                let arr = []
-                // 默认一列所占的span数
-                totalspan = 24
-                let span = totalspan / column
-
-                fields.forEach(field => {
-                    field.span = Math.min(totalspan, (/^[1-9]\d*$/.test(field.column) ? parseInt(field.column) : 1) * span)
-                    if (sum + field.span < totalspan) {
-                        arr.push(field)
-                        sum += field.span
-                    } else if (sum + field.span === totalspan) {
-                        arr.push(field)
-                        rows.push(arr)
-                        sum = 0
-                        arr = []
-                    } else {
-                        rows.push(arr)
-                        arr = []
-                        arr.push(field)
-                        sum = field.span
-                    }
-                })
-
-                if (arr.length) {
-                    rows.push(arr)
-                }
-
-                return rows
+            /**
+             * 移除tool
+             * @date 2018-6-4 00:36:25
+             * @since 1.0.0
+             * @param {Number} index - 索引
+             */
+            removeTool(index) {
+                this.indexModel.toolList.splice(index, 1)
             },
 
             showAddColumnDialog() {

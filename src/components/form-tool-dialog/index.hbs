@@ -1,6 +1,7 @@
 {{!-- formTools按钮生成组件 --}}
 <el-dialog title="formTools按钮配置"
            append-to-body
+           width="360px"
            :visible.sync="show">
     <el-form label-width="100px"
              ref="form"
@@ -15,6 +16,15 @@
                            :key="icon"
                            :value="icon"
                            :label="icon">
+                </el-option>
+            </el-select>
+        </el-form-item>
+        <el-form-item label="是否禁用">
+            <el-select v-model="model.disabled">
+                <el-option v-for="item in yesOrNo"
+                           :key="item.value"
+                           :value="item.value"
+                           :label="item.label">
                 </el-option>
             </el-select>
         </el-form-item>

@@ -38,31 +38,34 @@
     <el-row>
         <el-form-item label="formTools配置">
             <el-tag :key="tag"
-                    v-for="tag in formToolList"
+                    v-for="(tag, index) in indexModel.formToolList"
                     closable
                     :disable-transitions="false"
-                    @close="handleClose(tag)">
+                    @close="removeFormTool(index)">
                 ${tag.label}
             </el-tag>
             <el-button class="button-new-tag"
                        size="small"
                        @click="$refs.formToolDialog.show = true">+新增formTool</el-button>
-            <form-tool-dialog ref="formToolDialog"></form-tool-dialog>
+            <form-tool-dialog ref="formToolDialog"
+                              @add-form-tool="addFormTool">
+            </form-tool-dialog>
         </el-form-item>
     </el-row>
     <el-row>
         <el-form-item label="tools配置">
             <el-tag :key="tool"
-                    v-for="tool in toolList"
+                    v-for="(tool, index) in indexModel.toolList"
                     closable
                     :disable-transitions="false"
-                    @close="handleClose(tag)">
+                    @close="removeTool(index)">
                 ${tool.label}
             </el-tag>
             <el-button class="button-new-tag"
                        size="small"
                        @click="$refs.toolDialog.show=true">+新增tool</el-button>
-            <tool-dialog ref="toolDialog"></tool-dialog>
+            <tool-dialog ref="toolDialog"
+                         @add-tool="addTool"></tool-dialog>
         </el-form-item>
     </el-row>
     <el-row>

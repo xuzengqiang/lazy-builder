@@ -51,6 +51,7 @@ class IndexController {
             this._createComponentsFile()
             this._createMixinFile()
             this._createCustomFilterFile()
+            this._createQueryTableFile()
         } catch (e) {
             console.error(e)
         }
@@ -163,6 +164,22 @@ class IndexController {
         content = Template.escape(content, 'menu', this.menu.router)
         content = Template.escape(content, 'method', option.method)
         content = Template.escape(content, 'searchCode', option.searchCode)
+
+        Template.writeFile(file, content)
+    }
+
+    /**
+     * 生成query-table
+     */
+    _createQueryTableFile() {
+        console.error('构建首页query-table.js文件')
+        const file = FileUtils.createFile(`${rootPath}/build/index/config/query-table.js`)
+        const option = this.model.option
+        let content = Template.indexQueryTable()
+
+        content = Template.escape(content, 'customSearchCode', option.customSearchCode)
+        content = Template.escape(content, 'customColumnCode', option.customColumnCode)
+        content = Template.escape(content, 'method', option.method)
 
         Template.writeFile(file, content)
     }

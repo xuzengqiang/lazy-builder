@@ -52,6 +52,7 @@ const TemplateMapper = {
     indexComponents: 'index/mixins/components.tpl',
     indexBeforeRouteEnter: 'index/mixins/beforeRouteEnter.tpl',
     indexCustomFilter: 'index/config/custom-filter.tpl',
+    indexQueryTable: 'index/config/query-table.tpl',
     dialog: 'dialog/dialog.tpl',
     dialogData: 'dialog/dialog.data.tpl',
     dialogMethods: 'dialog/dialog.methods.tpl'
@@ -82,7 +83,6 @@ Template.writeFile = (file, content) => {
         .toString()
         .trim()
 
-    console.error('配置的作者名称为:' + author)
     const currentTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
 
     content = content.replace(`[[author]]`, 'xuzengqiang')

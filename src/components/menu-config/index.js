@@ -1,7 +1,7 @@
 /*
- * @fileOverview: 模块配置组件
- * @author: xuzengqiang
- * @date: 2018-06-03 14:09:19
+ * @fileOverview 模块配置组件
+ * @author xuzengqiang
+ * @date 2018-06-03 14:09:19
  */
 ;(window => {
     const MenuConfig = {
@@ -10,7 +10,6 @@
         data() {
             return {
                 model: {
-                    author: '',
                     router: '',
                     name: ''
                 }
