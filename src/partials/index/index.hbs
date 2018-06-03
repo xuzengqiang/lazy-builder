@@ -1,9 +1,10 @@
 {{!-- 首页配置 --}}
-<el-form label-position="top">
+<el-form label-position="top"
+         :model="indexModel">
     <el-row :gutter="20">
         <el-col :span="4">
             <el-form-item label="是否有弹窗">
-                <el-select>
+                <el-select v-model="indexModel.option.hasDialog">
                     <el-option v-for="item in yesOrNo"
                                :key="item.value"
                                :value="item.value"
@@ -14,22 +15,23 @@
         </el-col>
         <el-col :span="4">
             <el-form-item label="请求method">
-                <el-input placeholder="列表数据请求对应的方法" />
+                <el-input placeholder="列表数据请求对应的方法"
+                          v-model="indexModel.option.method" />
             </el-form-item>
         </el-col>
         <el-col :span="4">
             <el-form-item label="通用查询code">
-                <el-input />
+                <el-input v-model="indexModel.option.searchCode" />
             </el-form-item>
         </el-col>
         <el-col :span="4">
             <el-form-item label="自定义列code">
-                <el-input />
+                <el-input v-model="indexModel.option.customColumnCode" />
             </el-form-item>
         </el-col>
         <el-col :span="4">
             <el-form-item label="自定义查询code">
-                <el-input />
+                <el-input v-model="indexModel.option.customSearchCode" />
             </el-form-item>
         </el-col>
     </el-row>

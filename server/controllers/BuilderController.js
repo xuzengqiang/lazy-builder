@@ -8,14 +8,19 @@ const rootPath = process.cwd()
 const IndexController = require('./IndexController')
 
 class BuilderController {
-    constructor(props) {}
+    constructor(options) {
+        this.options = options
+    }
 
     /**
      * 构建项目文件夹
      */
     build() {
-        const indexController = new IndexController()
-        indexController.builder()
+        const indexModel = this.options.indexModel
+        if (indexModel) {
+            const indexController = new IndexController(indexModel)
+            indexController.builder()
+        }
     }
 
     /**

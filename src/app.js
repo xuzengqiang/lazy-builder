@@ -8,64 +8,78 @@
 dom.ready(() => {
     const icons = ['voice', 'novoice', 'next', 'previous', 'unie038', 'remind', 'xiangzuo4', 'xiangyou4']
 
+    /**
+     * 是否数组
+     * @type {Array}
+     */
+    const yesOrNo = [
+        {
+            label: '是',
+            value: true
+        },
+        {
+            label: '否',
+            value: false
+        }
+    ]
+
     new Vue({
         el: '#app',
         delimiters: ['${', '}'],
         data() {
             return {
-                build: '开始构建',
                 currentModule: 'index',
+                /**
+                 * 模块配置
+                 * @property {String} author - 作者名称
+                 * @property {String} router - 菜单路由
+                 * @property {String} name - 菜单名称
+                 */
                 module: {
                     author: '',
                     router: '',
                     name: ''
                 },
+                /**
+                 * 首页参数配置
+                 * @property {Boolean} hasDialog - 是否有弹窗,
+                 * @property {String} method - 请求方法名称
+                 * @property {String} searchCode - 通用查询code
+                 * @property {String} customColumnCode - 自定义列code
+                 * @property {String} customSearchCode - 自定义查询code
+                 */
+                indexModel: {
+                    option: {
+                        hasDialog: true,
+                        method: '',
+                        searchCode: '',
+                        customColumnCode: '',
+                        customSearchCode: ''
+                    }
+                },
+
                 formToolList: [
                     {
                         label: '刷新',
                         icon: 'refresh',
-                        func: () => vm.reload
-                    },
-                    {
-                        label: '新增',
-                        icon: 'plus'
-                    },
-                    {
-                        label: '删除',
-                        icon: 'delete'
-                    },
-                    {
-                        label: '审核',
-                        icon: 'shenhe'
-                    },
-                    {
-                        label: '反审',
-                        icon: 'shenhe'
+                        key: 'refresh'
                     },
                     {
                         label: '通用查询',
-                        key: 'custom-filter',
-                        icon: 'search'
+                        icon: 'search',
+                        key: 'custom-filter'
                     },
                     {
                         label: '个性设置',
-                        icon: 'custom'
+                        icon: 'custom',
+                        key: 'query-table'
                     }
                 ],
                 formToolModel: {
                     label: '',
                     value: ''
                 },
-                yesOrNo: [
-                    {
-                        label: '是',
-                        value: 'yes'
-                    },
-                    {
-                        label: '否',
-                        value: 'no'
-                    }
-                ],
+                yesOrNo: yesOrNo,
                 inputVisible: false,
                 inputValue: '',
                 dialogVisible: false,
@@ -131,12 +145,20 @@ dom.ready(() => {
             console.error(this.$refs.formToolDialog)
         },
         methods: {
-            transport() {
-                axios({
-                    method: 'POST',
-                    baseURL: 'http://localhost:3000',
-                    url: '/builder'
-                })
+            /**
+             * 开始构建
+             */
+            builder() {
+                let params = {
+                    menu: this.$refs.menu.toJSON(),
+                    /** 首页配置 */
+                    indexModel: this.indexModel,
+                    /** 新增修改页配置 */
+                    addModify: {}
+                }
+
+                axios
+                    .post('http://localhost:3000/builder', params)
                     .then(data => {
                         console.error(data)
                     })
@@ -144,6 +166,26 @@ dom.ready(() => {
                         console.error(error)
                     })
             },
+            /**
+             * 获取首页配置的JSON数据
+             * @author xuzengqiang
+             * @date 2018-6-3 21:08:26
+             * @since 1.0.0
+             */
+            getIndexConfig() {
+                return {
+                    tools: [],
+                    formTools: [],
+                    option: {
+                        hasComponent: true,
+                        method: '',
+                        searchCode: '',
+                        customColumnCode: '',
+                        customSearchCode: ''
+                    }
+                }
+            },
+
             handleClose(tag) {
                 this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1)
             },

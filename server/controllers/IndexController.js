@@ -10,10 +10,10 @@ const Template = require('../utils/template')
 class IndexController {
     /**
      * 构造函数
-     * @param {Boolean} unifile - 是否生成单文件
+     * @param {Object} model - 请求的参数信息
      */
-    constructor(unifile) {
-        this.unifile = unifile || false
+    constructor(model) {
+        this.model = model
 
         /**
          * 是否生成复选框
@@ -25,19 +25,13 @@ class IndexController {
          * 是否有弹出层
          * @type {Boolean}
          */
-        this.dialogFlag = true
+        this.dialogFlag = model.option.hasDialog
 
         /**
          * 是否生成components.js文件
          * @type {Boolean}
          */
-        this.componentsFlag = true
-
-        /**
-         * 是否生成activated.js文件
-         * @type {Boolean}
-         */
-        this.activatedFlag = true
+        this.componentsFlag = this.dialogFlag
     }
 
     /**
@@ -49,7 +43,6 @@ class IndexController {
             this._createDataFile()
             this._createMethodFile()
             this._createBeforeRouteEnterFile()
-            this._createActivatedFile()
             this._createComponentsFile()
             this._createMixinFile()
         } catch (e) {
@@ -104,6 +97,7 @@ class IndexController {
 
     /**
      * 创建activated文件
+     * @deprecated
      */
     _createActivatedFile() {
         if (!this.activatedFlag) return
@@ -144,10 +138,6 @@ class IndexController {
         if (this.componentsFlag) {
             importTemplate.push(`import components from './components'`)
             propertyTemplate.push(`  components,`)
-        }
-        if (this.activatedFlag) {
-            importTemplate.push(`import activated from './activated'`)
-            propertyTemplate.push(`  activated,`)
         }
 
         content = Template.escape(content, 'import', importTemplate.join('\n'))
