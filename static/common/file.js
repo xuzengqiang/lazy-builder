@@ -31,11 +31,12 @@ FileUtils.mkdir = (path, callback) => {
  * 创建文件夹.
  * @param {String} dirpath - 文件路径
  * @description 如果父目录不存在则创建
+ * @fixed 在windows下文件夹分割BUG
  */
-FileUtils.createFolder = (dirpath) => {
+FileUtils.createFolder = dirpath => {
     if (!dirpath) return
     const sep = path.sep
-    const folders = path.dirname(dirpath).split(sep)
+    const folders = path.dirname(dirpath).split('/')
     let p = ''
     while (folders.length) {
         p += folders.shift() + sep
@@ -66,6 +67,5 @@ FileUtils.createFile = (filepath, encoding = 'utf8') => {
  * 读取模板文件
  */
 FileUtils.readTemplate
-
 
 module.exports = FileUtils
