@@ -49,6 +49,7 @@ class IndexController {
             this._createIndexFile()
             this._createDataFile()
             this._createMethodFile()
+            this._createBeforeRouteEnterFile()
             this._createActivatedFile()
             this._createComponentsFile()
             this._createMixinFile()
@@ -110,6 +111,15 @@ class IndexController {
         console.error('构建首页activated.js')
         const file = FileUtils.createFile(`${rootPath}/build/index/mixins/activated.js`)
         Template.writeFile(file, Template.indexActivated())
+    }
+
+    /**
+     * 
+     */
+    _createBeforeRouteEnterFile () {
+        console.error('构建首页beforeRouteEnter.js')
+        const file = FileUtils.createFile(`${rootPath}/build/index/mixins/beforeRouteEnter.js`)
+        Template.writeFile(file, Template.indexBeforeRouteEnter())
     }
 
     /**

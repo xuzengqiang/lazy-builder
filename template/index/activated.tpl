@@ -5,7 +5,7 @@
  */
 
 export default {
-    activated() {
-        this.reload()
-    }
+  activated() {
+    this.reload()
+  }
 }
