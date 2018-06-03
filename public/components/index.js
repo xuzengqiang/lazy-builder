@@ -10,7 +10,8 @@ const components = [
     AddColumnDialog,
     DialogFooter,
     MenuConfig,
-    FormToolDialog
+    FormToolDialog,
+    ToolDialog
 ]
 
 components.forEach(component => Vue.component(component.name, component))
