@@ -60,31 +60,34 @@ a {
   text-align:center;
 }
 .layout-category.selected{
-  border:2px solid rgba(125, 172, 190, 0.959)
+  border:2px solid rgba(159, 110, 204, 0.959)
 }
-.layout-category.one-column label{
+.layout-category.selected .shade{
+  /* color:rgba(159, 110, 204, 0.959) */
+}
+.layout-category[layout=one-column] label{
   width:120px;
   height:50px;
   background:#DDD;
   float:left
 }
-.layout-category.two-column label{
+.layout-category[layout=two-column] label{
   width:58px;
   height:50px;
   background:#DDD;
   margin-left:4px;
   float:left;
 }
-.layout-category.two-column label:first-child{
+.layout-category[layout=two-column] label:first-child{
   margin-left:0px;
 }
-.layout-category.three-column label{
+.layout-category[layout=three-column] label{
   width:38px;
   height:50px;
   background:#DDD;
-  margin-left:2px;
+  margin-left:3px;
   float:left
 }
-.layout-category.three-column label:first-child{
+.layout-category[layout=three-column] label:first-child{
   margin-left:0px;
 }
