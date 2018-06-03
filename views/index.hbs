@@ -239,12 +239,8 @@ dialog底部
 @date 2018-06-03 11:00:46
 -->
 <script type="text/x-template"
-        id="dialog-footer">
-<span class="dialog-footer">
-    <el-button @click="cancel">取 消</el-button>
-    <el-button type="primary"
-               @click="ensure">确 定</el-button>
-</span>
+        id="dialog-footer-template">
+    {{>dialog-footer}}
 </script>
 
 <!--

@@ -47,12 +47,8 @@
             <el-input v-model="model.lookupCode">
         </el-form-item>
     </el-form>
-    <span slot="footer"
-          class="dialog-footer">
-        <el-button @click="show = false">取 消</el-button>
-        <el-button type="primary"
-                   @click="addField">
-            确 定
-        </el-button>
-    </span>
+    <dialog-footer slot="footer"
+                   @cancel="show=false"
+                   @ensure="addField">
+    </dialog-footer>
 </el-dialog>

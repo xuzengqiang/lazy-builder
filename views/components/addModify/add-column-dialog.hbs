@@ -45,10 +45,8 @@
             </div>
         </el-form-item>
     </el-form>
-    <span slot="footer"
-          class="dialog-footer">
-        <el-button @click="show = false">取 消</el-button>
-        <el-button type="primary"
-                   @click="addColumn">确 定</el-button>
-    </span>
+    <dialog-footer slot="footer"
+                   @ensure="addColumn"
+                   @cancel="show=false">
+    </dialog-footer>
 </el-dialog>
