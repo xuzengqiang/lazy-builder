@@ -2,188 +2,25 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible"
-          content="ie=edge">
-    <title>项目自动构建工具</title>
-    <link rel="stylesheet"
-          type="text/css"
-          href="stylesheets/style.css">
-    <link rel="stylesheet"
-          type="text/css"
-          href="static/gallery/element/element.css">
-    <script type="text/javascript"
-            src="static/common/dom.js"></script>
-    <script type="text/javascript"
-            src="static/gallery/vue/vue.min.js"></script>
-    <script type="text/javascript"
-            src="static/gallery/element/element.js"></script>
-    <script type="text/javascript"
-            src="static/gallery/axios/axios.js"></script>
-    <script type="text/javascript"
-            src="javascripts/app.js"></script>
-    <script type="text/javascript"
-            src="components/form-field-render.js"></script>
-    <script type="text/javascript"
-            src="components/form-field-dialog.js"></script>
-    <script type="text/javascript"
-            src="components/add-column-dialog.js"></script>
-    <script type="text/javascript"
-            src="components/index.js"></script>
+    {{>head}}
 </head>
 
 <body>
     <div id="app">
         <el-row>
             <el-col :span="8">
-                <el-form label-width="150px"
-                         ref="authorForm"
-                         :model="module"
-                         label-position="left">
-                    <el-form-item label="模块开发者名称">
-                        <el-input v-model="module.author"
-                                  placeholder="用于生成头部注释"></el-input>
-                    </el-form-item>
-                    <el-form-item label="模块名称">
-                        <el-input v-model="module.name"></el-input>
-                    </el-form-item>
-                    <el-form-item label="模块路由">
-                        <el-input v-model="module.router"></el-input>
-                    </el-form-item>
-                </el-form>
+                {{!-- 菜单配置 --}}
+                <menu-config ref="menu" />
             </el-col>
         </el-row>
         <el-tabs v-model="currentModule">
             <el-tab-pane label="首页配置"
                          name="index">
-                <el-form label-position="top">
-                    <el-row :gutter="20">
-                        <el-col :span="4">
-                            <el-form-item label="是否有弹窗">
-                                <el-select>
-                                    <el-option v-for="item in yesOrNo"
-                                               :key="item.value"
-                                               :value="item.value"
-                                               :label="item.label">
-                                    </el-option>
-                                </el-select>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="4">
-                            <el-form-item label="请求method">
-                                <el-input />
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="4">
-                            <el-form-item label="通用查询code">
-                                <el-input />
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="4">
-                            <el-form-item label="自定义列code">
-                                <el-input />
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="4">
-                            <el-form-item label="自定义查询code">
-                                <el-input />
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
-                    <el-row>
-                        <el-form-item label="formTools配置">
-                            <el-tag :key="tag"
-                                    v-for="tag in formToolList"
-                                    closable
-                                    :disable-transitions="false"
-                                    @close="handleClose(tag)">
-                                ${tag.label}
-                            </el-tag>
-                            <el-button class="button-new-tag"
-                                       size="small"
-                                       @click="dialogVisible = true">+新增formTool</el-button>
-                        </el-form-item>
-                    </el-row>
-                    <el-row>
-                        <el-form-item label="tools配置">
-                            <el-tag :key="tool"
-                                    v-for="tool in toolList"
-                                    closable
-                                    :disable-transitions="false"
-                                    @close="handleClose(tag)">
-                                ${tool.label}
-                            </el-tag>
-                            <el-button class="button-new-tag"
-                                       size="small"
-                                       @click="toolDialogVisible = true">+新增tool</el-button>
-                        </el-form-item>
-                    </el-row>
-                    <el-row>
-                        <div>表格配置>></div>
-                        <el-col :span="4">
-                            <el-form-item label="是否生成复选框">
-                                <el-select>
-                                    <el-option v-for="item in yesOrNo"
-                                               :key="item.value"
-                                               :value="item.value"
-                                               :label="item.label">
-                                    </el-option>
-                                </el-select>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="4">
-                            <el-form-item label="修改操作">
-                                <el-select>
-                                    <el-option v-for="item in yesOrNo"
-                                               :key="item.value"
-                                               :value="item.value"
-                                               :label="item.label">
-                                    </el-option>
-                                </el-select>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
-                </el-form>
+                {{>index/index}}
             </el-tab-pane>
             <el-tab-pane label="新增/修改配置"
                          name="form">
-                <el-form label-position="left"
-                         label-width="80px">
-                    <el-row v-for="column in columns">
-                        <el-row :gutter="20"
-                                class="form-layout">
-                            <el-col :span="column.leftcontent.totalspan"
-                                    class="column-leftcontent"
-                                    v-if="column.leftcontent">
-                                <form-field-render :title="column.leftcontent.title"
-                                                   :fields="column.leftcontent.fields"
-                                                   :column="column.leftcontent.column">
-                                </form-field-render>
-                            </el-col>
-
-                            <el-col :span="column.main.totalspan"
-                                    class="column-main"
-                                    v-if="column.main">
-                                <form-field-render :title="column.main.title"
-                                                   :fields="column.main.fields"
-                                                   :column="column.main.column">
-                                </form-field-render>
-                            </el-col>
-                            <el-col :span="column.rightcontent.totalspan"
-                                    class="column-rightcontent"
-                                    v-if="column.rightcontent">
-                                <form-field-render :title="column.rightcontent.title"
-                                                   :fields="column.rightcontent.fields"
-                                                   :column="column.rightcontent.column">
-                                </form-field-render>
-                            </el-col>
-                        </el-row>
-                    </el-row>
-                </el-form>
-                <el-button @click="showAddColumnDialog">添加栏目</el-button>
-                <add-column-dialog ref="columnDialog"></add-column-dialog>
+                {{>addModify/index}}
             </el-tab-pane>
             <el-tab-pane label="详情页配置"
                          name="detail">
@@ -196,6 +33,13 @@
             <el-form label-width="100px"
                      ref="formToolsForm"
                      label-position="left">
+
+                <el-form-item label="常用按钮">
+                    <el-button type="primary">刷新</el-button>
+                    <el-button type="primary">新增</el-button>
+                    <el-button type="primary">通用查询</el-button>
+                    <el-button type="primary">个性设置</el-button>
+                </el-form-item>
                 <el-form-item label="按钮名称">
                     <el-input v-model="formToolModel.label"></el-input>
                 </el-form-item>
@@ -246,143 +90,23 @@
 </body>
 
 <!--
-表单字段渲染
+菜单配置组件
 @author xuzengqiang
-@date 2018-06-02 16:29:48
+@date 2018-06-03 14:17:25
 -->
 <script type="text/x-template"
-        id="form-field-render-template">
-<div class="form-field-render">
-    <div class="title">
-        <label v-text="title"></label>
-    </div>
-    <el-row :gutter="4" 
-            v-for="(row, rownum) in rowFields" 
-            :key="'row-'+rownum">
-        <el-col v-for="(field, column) in row" 
-                :key="'field-' + column" 
-                :span="field.span">
-            <el-form-item :label="field.label" 
-                          :prop="field.key">
-                <el-input v-if="!field.type || field.type === 'input'" 
-                          clearable 
-                          :disabled="field.disabled || false">
-
-                </el-input>
-            </el-form-item>
-        </el-col>
-    </el-row>
-    <el-row>
-        <el-button @click="addField">添加字段</el-button>
-    </el-row>
-    <form-field-dialog ref="dialog" 
-                       @add-field="addFieldHandle">
-    </form-field-dialog>
-</div>
+        id="menu-config-template">
+    {{>menu-config}}
 </script>
 
-<!-- 
-表单字段弹出层
+<!--
+dialog底部
 @author xuzengqiang
-@date 2018-06-02 16:05:41
+@date 2018-06-03 11:00:46
 -->
 <script type="text/x-template"
-        id="form-field-dialog-template">
-    <el-dialog title="表单字段配置" :visible.sync="show">
-        <el-form :model="model" 
-                 label-width="100px" 
-                 ref="form" 
-                 label-position="left">
-            <el-form-item label="字段名称">
-                <el-input v-model="model.label"
-                          placeholder="可以不填写,如果填写会生成栏目标题">
-                </el-input>
-            </el-form-item>
-            <el-form-item label="key值">
-                <el-input v-model="model.key" 
-                         placeholder="form表单提交的key值,不填写的话会生成key:@TODO的注释">
-                </el-input>
-            </el-form-item>
-            <el-form-item label="是否禁用">
-                <el-select v-model="model.disabled">
-                    <el-option v-for="item in yesOrNo" 
-                               :key="item.value" 
-                               :value="item.value" 
-                               :label="item.label">
-                    </el-option>
-                </el-selec>
-            </el-form-item>
-            <el-form-item label="所占列数">
-                <el-select v-model="model.column">
-                    <el-option v-for="index in 6" 
-                               :key="index" 
-                               :value="index" 
-                               :label="index">
-                    </el-option>
-                </el-select>
-            </el-form-item>
-            <el-form-item label="表单类型">
-                <el-select v-model="model.type">
-                    <el-option v-for="type in fieldTypes" 
-                               :key="type" 
-                               :value="type" 
-                               :label="type">
-                    </el-option>
-                </el-select>
-            </el-form-item>
-            <el-form-item label="数据字典" v-if="model.type === 'select'">
-                <el-input v-model="model.lookupCode">
-            </el-form-item>
-        </el-form>
-        <span slot="footer" class="dialog-footer">
-            <el-button @click="show = false">取 消</el-button>
-            <el-button type="primary" 
-                       @click="addField">
-                确 定
-            </el-button>
-        </span>
-    </el-dialog>
-</script>
-
-<script type="text/x-template"
-        id="add-column-dialog-template">
-<el-dialog title="表单栏目配置" :visible.sync="show">
-    <el-form label-width="100px"
-             ref="toolsForm"
-             label-position="left">
-        <el-form-item label="栏目名称">
-            <el-input placeholder="可以不填写,如果填写会生成栏目标题"></el-input>
-        </el-form-item>
-        <el-form-item label="布局方式">
-            <!-- 单栏 -->
-            <div class="layout-category one-column selected">
-                <label></label>
-                <div class="shade">单栏</div>
-            </div>
-
-            <!-- 两栏 -->
-            <div class="layout-category two-column">
-                <label></label>
-                <label></label>
-                <div class="shade">两栏</div>
-            </div>
-            
-            <!-- 三栏 -->
-            <div class="layout-category three-column">
-                <label></label>
-                <label></label>
-                <label></label>
-                <div class="shade">三栏</div>
-            </div>
-        </el-form-item>
-    </el-form>
-    <span slot="footer"
-            class="dialog-footer">
-        <el-button @click="show = false">取 消</el-button>
-        <el-button type="primary"
-                    @click="addColumn">确 定</el-button>
-    </span>
-</el-dialog>
+        id="dialog-footer-template">
+    {{>dialog-footer}}
 </script>
 
 </html>

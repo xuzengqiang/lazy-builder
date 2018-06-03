@@ -12,7 +12,7 @@ const json = require('koa-json')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
-const viewsConfig = require('./config/views.config')
+const HandlebarsViews = require('./config/handlebars')
 
 const index = require('./routes/index')
 const users = require('./routes/users')
@@ -43,7 +43,7 @@ app.use(require('koa-static')(__dirname + '/public'))
  * @date 2018-5-29 23:47:42
  * @description npm install --save-dev handlebars
  */
-app.use(views(__dirname + '/views', viewsConfig))
+app.use(HandlebarsViews())
 
 // logger
 app.use(async (ctx, next) => {

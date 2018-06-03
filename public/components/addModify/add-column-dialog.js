@@ -13,6 +13,7 @@
                     title: '',
                     layout: ''
                 },
+                layout: 'one-column',
                 show: false
             }
         },

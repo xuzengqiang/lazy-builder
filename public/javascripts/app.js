@@ -23,7 +23,7 @@ dom.ready(() => {
         data () {
             return {
                 build: '开始构建',
-                currentModule: 'form',
+                currentModule: 'index',
                 module: {
                     author: '',
                     router: '',
@@ -125,8 +125,8 @@ dom.ready(() => {
             }
         },
         mounted () {
-            console.error(this.$refs.dialog)
-            console.error(document.getElementById('add-column-dialog-template').innerHTML)
+            console.error(this.$refs.menu)
+            console.error(this.$refs.formToolDialog)
         },
         methods: {
             transport () {
