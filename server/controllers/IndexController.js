@@ -7,13 +7,18 @@ const FileUtils = require('../utils/file')
 const fs = require('fs')
 const rootPath = process.cwd()
 const Template = require('../utils/template')
+const log4js = require('koa-log4')
+const logger = log4js.getLogger('index')
+
 class IndexController {
     /**
      * 构造函数
      * @param {Object} model - 请求的参数信息
+     * @param {Object} menu - 菜单配置
      */
-    constructor(model) {
+    constructor(model, menu) {
         this.model = model
+        this.menu = menu
 
         /**
          * 是否生成复选框
@@ -45,6 +50,7 @@ class IndexController {
             this._createBeforeRouteEnterFile()
             this._createComponentsFile()
             this._createMixinFile()
+            this._createCustomFilterFile()
         } catch (e) {
             console.error(e)
         }
@@ -142,6 +148,22 @@ class IndexController {
 
         content = Template.escape(content, 'import', importTemplate.join('\n'))
         content = Template.escape(content, 'property', propertyTemplate.join('\n'))
+        Template.writeFile(file, content)
+    }
+
+    /**
+     * 创建CustomFilter文件
+     */
+    _createCustomFilterFile() {
+        console.error('构建首页custom-filter.js文件')
+        const file = FileUtils.createFile(`${rootPath}/build/index/config/custom-filter.js`)
+        const option = this.model.option
+        let content = Template.indexCustomFilter()
+
+        content = Template.escape(content, 'menu', this.menu.router)
+        content = Template.escape(content, 'method', option.method)
+        content = Template.escape(content, 'searchCode', option.searchCode)
+
         Template.writeFile(file, content)
     }
 }

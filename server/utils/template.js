@@ -15,7 +15,7 @@ let templates = []
 
 /**
  * 读取模板配置文件
- * @param {String} filepath - 文件路径 
+ * @param {String} filepath - 文件路径
  */
 TemplateEngine.readFile = filepath => {
     return fs.readFileSync(TEMPLATE_PATH + filepath)
@@ -45,12 +45,13 @@ TemplateEngine.cacheReadFile = (key, filepath) => {
 
 const TemplateMapper = {
     index: 'index/index.vue',
-    indexMixin: 'index/mixin.tpl',
-    indexData: 'index/data.tpl',
-    indexMethods: 'index/methods.tpl',
-    indexActivated: 'index/activated.tpl',
-    indexComponents: 'index/components.tpl',
-    indexBeforeRouteEnter: 'index/beforeRouteEnter.tpl',
+    indexMixin: 'index/mixins/index.tpl',
+    indexData: 'index/mixins/data.tpl',
+    indexMethods: 'index/mixins/methods.tpl',
+    indexActivated: 'index/mixins/activated.tpl',
+    indexComponents: 'index/mixins/components.tpl',
+    indexBeforeRouteEnter: 'index/mixins/beforeRouteEnter.tpl',
+    indexCustomFilter: 'index/config/custom-filter.tpl',
     dialog: 'dialog/dialog.tpl',
     dialogData: 'dialog/dialog.data.tpl',
     dialogMethods: 'dialog/dialog.methods.tpl'
@@ -65,7 +66,7 @@ for (let template in TemplateMapper) {
 /**
  * 转译
  * @param {String} content - 原始内容
- * @param {String} name - 模板名称 
+ * @param {String} name - 模板名称
  * @param {String} value - 替换内容
  */
 Template.escape = (content, name, value) => content.replace(`[[${name}]]`, value)
@@ -73,7 +74,7 @@ Template.escape = (content, name, value) => content.replace(`[[${name}]]`, value
 /**
  * 写文件
  * @param {File} file - 文件信息
- * @param {String} content - 文件信息 
+ * @param {String} content - 文件信息
  */
 Template.writeFile = (file, content) => {
     const currentTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
@@ -82,4 +83,4 @@ Template.writeFile = (file, content) => {
     file.write(content)
 }
 
-module.exports = Template 
+module.exports = Template

@@ -3,6 +3,11 @@
  * @author xuzengqiang <253948113@qq.com>
  * @date 2018-5-29 00:47:26
  * @version 1.0.0
+ *
+ * @update xuzengqiang
+ * @date 2018-6-3 21:45:52
+ * @version 1.0.1
+ * @description 引入log4j(npm install --save koa-log4)
  */
 
 const Koa = require('koa')
@@ -13,6 +18,7 @@ const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 const HandlebarsViews = require('./config/handlebars')
+const log4js = require('koa-log4')
 
 const index = require('./routes/index')
 const users = require('./routes/users')
@@ -52,6 +58,16 @@ app.use(async (ctx, next) => {
     const ms = new Date() - start
     console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 })
+
+/**
+ * 使用log4j中间件
+ * @since 1.0.1
+ */
+app.use(
+    log4js.koaLogger(log4js.getLogger('http'), {
+        level: 'auto'
+    })
+)
 
 /**
  * 使用路由中间件

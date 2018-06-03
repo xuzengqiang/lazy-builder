@@ -10,17 +10,16 @@ const IndexController = require('./IndexController')
 class BuilderController {
     constructor(options) {
         this.options = options
+        this.menu = options.menu
+        this.indexModel = options.indexModel
     }
 
     /**
      * 构建项目文件夹
      */
     build() {
-        const indexModel = this.options.indexModel
-        if (indexModel) {
-            const indexController = new IndexController(indexModel)
-            indexController.builder()
-        }
+        const indexController = new IndexController(this.indexModel, this.menu)
+        indexController.builder()
     }
 
     /**
