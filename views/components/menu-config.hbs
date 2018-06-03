@@ -1,16 +1,16 @@
 {{!-- 菜单配置 --}}
 <el-form label-width="150px"
          ref="form"
-         :model="menu"
+         :model="model"
          label-position="left">
     <el-form-item label="菜单开发者名称">
-        <el-input v-model="menu.author"
+        <el-input v-model="model.author"
                   placeholder="用于生成头部注释"></el-input>
     </el-form-item>
     <el-form-item label="菜单主页面路由">
-        <el-input v-model="menu.router"></el-input>
+        <el-input v-model="model.router"></el-input>
     </el-form-item>
     <el-form-item label="菜单名称">
-        <el-input v-model="menu.name"></el-input>
+        <el-input v-model="model.name"></el-input>
     </el-form-item>
 </el-form>

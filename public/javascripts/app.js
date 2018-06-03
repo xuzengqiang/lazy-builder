@@ -125,6 +125,7 @@ dom.ready(() => {
             }
         },
         mounted () {
+            console.error(this.$refs.menu)
             console.error(this.$refs.formToolDialog)
         },
         methods: {

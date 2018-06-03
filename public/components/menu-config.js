@@ -9,7 +9,7 @@
         name: 'MenuConfig',
         data () {
             return {
-                meun: {
+                model: {
                     author: '',
                     router: '',
                     name: ''
@@ -22,7 +22,7 @@
              * @description 用于提交表单数据
              */
             toJSON () {
-                return this.menu
+                return this.model
             }
         }
     }
