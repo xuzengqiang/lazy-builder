@@ -12,6 +12,14 @@
  */
 const hbs = require('koahub-handlebars')
 const rootPath = process.cwd()
+
+/**
+ * 注册helper
+ * @author xuzengqiang
+ * @date 2018-06-03 11:37:23
+ */
+require('./helper')
+
 // const Handlebars = require('handlebars')
 // const HandlebarsDelimiters = require('handlebars-delimiters')
 
