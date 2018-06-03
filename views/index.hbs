@@ -9,152 +9,18 @@
     <div id="app">
         <el-row>
             <el-col :span="8">
-                <el-form label-width="150px"
-                         ref="authorForm"
-                         :model="module"
-                         label-position="left">
-                    <el-form-item label="模块开发者名称">
-                        <el-input v-model="module.author"
-                                  placeholder="用于生成头部注释"></el-input>
-                    </el-form-item>
-                    <el-form-item label="模块名称">
-                        <el-input v-model="module.name"></el-input>
-                    </el-form-item>
-                    <el-form-item label="模块路由">
-                        <el-input v-model="module.router"></el-input>
-                    </el-form-item>
-                </el-form>
+                {{!-- 菜单配置 --}}
+                <menu-config ref="menu" />
             </el-col>
         </el-row>
         <el-tabs v-model="currentModule">
             <el-tab-pane label="首页配置"
                          name="index">
-                <el-form label-position="top">
-                    <el-row :gutter="20">
-                        <el-col :span="4">
-                            <el-form-item label="是否有弹窗">
-                                <el-select>
-                                    <el-option v-for="item in yesOrNo"
-                                               :key="item.value"
-                                               :value="item.value"
-                                               :label="item.label">
-                                    </el-option>
-                                </el-select>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="4">
-                            <el-form-item label="请求method">
-                                <el-input placeholder="列表数据请求对应的方法" />
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="4">
-                            <el-form-item label="通用查询code">
-                                <el-input />
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="4">
-                            <el-form-item label="自定义列code">
-                                <el-input />
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="4">
-                            <el-form-item label="自定义查询code">
-                                <el-input />
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
-                    <el-row>
-                        <el-form-item label="formTools配置">
-                            <el-tag :key="tag"
-                                    v-for="tag in formToolList"
-                                    closable
-                                    :disable-transitions="false"
-                                    @close="handleClose(tag)">
-                                ${tag.label}
-                            </el-tag>
-                            <el-button class="button-new-tag"
-                                       size="small"
-                                       @click="dialogVisible = true">+新增formTool</el-button>
-                        </el-form-item>
-                    </el-row>
-                    <el-row>
-                        <el-form-item label="tools配置">
-                            <el-tag :key="tool"
-                                    v-for="tool in toolList"
-                                    closable
-                                    :disable-transitions="false"
-                                    @close="handleClose(tag)">
-                                ${tool.label}
-                            </el-tag>
-                            <el-button class="button-new-tag"
-                                       size="small"
-                                       @click="toolDialogVisible = true">+新增tool</el-button>
-                        </el-form-item>
-                    </el-row>
-                    <el-row>
-                        <div>表格配置>></div>
-                        <el-col :span="4">
-                            <el-form-item label="是否生成复选框">
-                                <el-select>
-                                    <el-option v-for="item in yesOrNo"
-                                               :key="item.value"
-                                               :value="item.value"
-                                               :label="item.label">
-                                    </el-option>
-                                </el-select>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="4">
-                            <el-form-item label="修改操作">
-                                <el-select>
-                                    <el-option v-for="item in yesOrNo"
-                                               :key="item.value"
-                                               :value="item.value"
-                                               :label="item.label">
-                                    </el-option>
-                                </el-select>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
-                </el-form>
+                {{>index/index}}
             </el-tab-pane>
             <el-tab-pane label="新增/修改配置"
                          name="form">
-                <el-form label-position="left"
-                         label-width="80px">
-                    <el-row v-for="column in columns">
-                        <el-row :gutter="20"
-                                class="form-layout">
-                            <el-col :span="column.leftcontent.totalspan"
-                                    class="column-leftcontent"
-                                    v-if="column.leftcontent">
-                                <form-field-render :title="column.leftcontent.title"
-                                                   :fields="column.leftcontent.fields"
-                                                   :column="column.leftcontent.column">
-                                </form-field-render>
-                            </el-col>
-
-                            <el-col :span="column.main.totalspan"
-                                    class="column-main"
-                                    v-if="column.main">
-                                <form-field-render :title="column.main.title"
-                                                   :fields="column.main.fields"
-                                                   :column="column.main.column">
-                                </form-field-render>
-                            </el-col>
-                            <el-col :span="column.rightcontent.totalspan"
-                                    class="column-rightcontent"
-                                    v-if="column.rightcontent">
-                                <form-field-render :title="column.rightcontent.title"
-                                                   :fields="column.rightcontent.fields"
-                                                   :column="column.rightcontent.column">
-                                </form-field-render>
-                            </el-col>
-                        </el-row>
-                    </el-row>
-                </el-form>
-                <el-button @click="showAddColumnDialog">添加栏目</el-button>
-                <add-column-dialog ref="columnDialog"></add-column-dialog>
+                {{>addModify/index}}
             </el-tab-pane>
             <el-tab-pane label="详情页配置"
                          name="detail">
@@ -224,6 +90,16 @@
 </body>
 
 <!--
+菜单配置组件
+@author xuzengqiang
+@date 2018-06-03 14:17:25
+-->
+<script type="text/x-template"
+        id="menu-config-template">
+    {{>menu-config}}
+</script>
+
+<!--
 formTools组件
 @author xuzengqiang
 @date 2018-06-03 10:59:16
@@ -241,36 +117,6 @@ dialog底部
 <script type="text/x-template"
         id="dialog-footer-template">
     {{>dialog-footer}}
-</script>
-
-<!--
-表单字段渲染
-@author xuzengqiang
-@date 2018-06-02 16:29:48
--->
-<script type="text/x-template"
-        id="form-field-render-template">
-    {{>addModify/form-field-render}}
-</script>
-
-<!-- 
-表单字段弹出层
-@author xuzengqiang
-@date 2018-06-02 16:05:41
--->
-<script type="text/x-template"
-        id="form-field-dialog-template">
-    {{>addModify/form-field-dialog}}
-</script>
-
-<!--
-新增栏目弹出层
-@author xuzengqiang
-@date 2018-06-03 11:22:12    
--->
-<script type="text/x-template"
-        id="add-column-dialog-template">
-    {{>addModify/add-column-dialog}}
 </script>
 
 </html>

@@ -1,0 +1,68 @@
+{{!-- 新增修改子栏目首页 --}}
+
+<el-form label-position="left"
+         label-width="80px">
+    <el-row v-for="column in columns">
+        <el-row :gutter="20"
+                class="form-layout">
+            <el-col :span="column.leftcontent.totalspan"
+                    class="column-leftcontent"
+                    v-if="column.leftcontent">
+                <form-field-render :title="column.leftcontent.title"
+                                   :fields="column.leftcontent.fields"
+                                   :column="column.leftcontent.column">
+                </form-field-render>
+            </el-col>
+
+            <el-col :span="column.main.totalspan"
+                    class="column-main"
+                    v-if="column.main">
+                <form-field-render :title="column.main.title"
+                                   :fields="column.main.fields"
+                                   :column="column.main.column">
+                </form-field-render>
+            </el-col>
+            <el-col :span="column.rightcontent.totalspan"
+                    class="column-rightcontent"
+                    v-if="column.rightcontent">
+                <form-field-render :title="column.rightcontent.title"
+                                   :fields="column.rightcontent.fields"
+                                   :column="column.rightcontent.column">
+                </form-field-render>
+            </el-col>
+        </el-row>
+    </el-row>
+</el-form>
+<el-button @click="showAddColumnDialog">添加栏目</el-button>
+<add-column-dialog ref="columnDialog"></add-column-dialog>
+
+
+<!--
+表单字段渲染
+@author xuzengqiang
+@date 2018-06-02 16:29:48
+-->
+<script type="text/x-template"
+        id="form-field-render-template">
+    {{>addModify/form-field-render}}
+</script>
+
+<!-- 
+表单字段弹出层
+@author xuzengqiang
+@date 2018-06-02 16:05:41
+-->
+<script type="text/x-template"
+        id="form-field-dialog-template">
+    {{>addModify/form-field-dialog}}
+</script>
+
+<!--
+新增栏目弹出层
+@author xuzengqiang
+@date 2018-06-03 11:22:12    
+-->
+<script type="text/x-template"
+        id="add-column-dialog-template">
+    {{>addModify/add-column-dialog}}
+</script>

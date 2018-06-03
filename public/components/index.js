@@ -8,7 +8,9 @@ const components = [
     FormFieldRender,
     FormFieldDialog,
     AddColumnDialog,
-    DialogFooter
+    DialogFooter,
+    MenuConfig,
+    FormToolDialog
 ]
 
 components.forEach(component => Vue.component(component.name, component))

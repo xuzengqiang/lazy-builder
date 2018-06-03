@@ -2,7 +2,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>项目自动构建工具</title>
+<title>代码自动构建工具</title>
 
 {{stylesheet 'stylesheets/style.css'}}
 {{stylesheet 'static/gallery/element/element.css'}}
@@ -11,9 +11,19 @@
 {{script 'static/gallery/vue/vue.min'}}
 {{script 'static/gallery/element/element'}}
 {{script 'static/gallery/axios/axios'}}
-{{script 'components/form-field-render'}}
-{{script 'components/form-field-dialog'}}
-{{script 'components/add-column-dialog'}}
+
+{{!-- 公用组件 --}}
 {{script 'components/dialog-footer'}}
+{{script 'components/menu-config'}}
+
+{{!-- 首页配置组件 --}}
+{{script 'components/index/form-tool-dialog'}}
+
+{{!-- 新增修改页配置组件 --}}
+{{script 'components/addModify/form-field-render'}}
+{{script 'components/addModify/form-field-dialog'}}
+{{script 'components/addModify/add-column-dialog'}}
+
+{{!-- 组件入口文件 --}}
 {{script 'components/index'}}
 {{script 'javascripts/app'}}

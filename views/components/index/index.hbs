@@ -1,0 +1,100 @@
+{{!-- 首页配置 --}}
+<el-form label-position="top">
+    <el-row :gutter="20">
+        <el-col :span="4">
+            <el-form-item label="是否有弹窗">
+                <el-select>
+                    <el-option v-for="item in yesOrNo"
+                               :key="item.value"
+                               :value="item.value"
+                               :label="item.label">
+                    </el-option>
+                </el-select>
+            </el-form-item>
+        </el-col>
+        <el-col :span="4">
+            <el-form-item label="请求method">
+                <el-input placeholder="列表数据请求对应的方法" />
+            </el-form-item>
+        </el-col>
+        <el-col :span="4">
+            <el-form-item label="通用查询code">
+                <el-input />
+            </el-form-item>
+        </el-col>
+        <el-col :span="4">
+            <el-form-item label="自定义列code">
+                <el-input />
+            </el-form-item>
+        </el-col>
+        <el-col :span="4">
+            <el-form-item label="自定义查询code">
+                <el-input />
+            </el-form-item>
+        </el-col>
+    </el-row>
+    <el-row>
+        <el-form-item label="formTools配置">
+            <el-tag :key="tag"
+                    v-for="tag in formToolList"
+                    closable
+                    :disable-transitions="false"
+                    @close="handleClose(tag)">
+                ${tag.label}
+            </el-tag>
+            <el-button class="button-new-tag"
+                       size="small"
+                       @click="$refs.formToolDialog.show = true">+新增formTool</el-button>
+            <form-tool-dialog ref="formToolDialog"></form-tool-dialog>
+        </el-form-item>
+    </el-row>
+    <el-row>
+        <el-form-item label="tools配置">
+            <el-tag :key="tool"
+                    v-for="tool in toolList"
+                    closable
+                    :disable-transitions="false"
+                    @close="handleClose(tag)">
+                ${tool.label}
+            </el-tag>
+            <el-button class="button-new-tag"
+                       size="small"
+                       @click="toolDialogVisible = true">+新增tool</el-button>
+        </el-form-item>
+    </el-row>
+    <el-row>
+        <div>表格配置>></div>
+        <el-col :span="4">
+            <el-form-item label="是否生成复选框">
+                <el-select>
+                    <el-option v-for="item in yesOrNo"
+                               :key="item.value"
+                               :value="item.value"
+                               :label="item.label">
+                    </el-option>
+                </el-select>
+            </el-form-item>
+        </el-col>
+        <el-col :span="4">
+            <el-form-item label="修改操作">
+                <el-select>
+                    <el-option v-for="item in yesOrNo"
+                               :key="item.value"
+                               :value="item.value"
+                               :label="item.label">
+                    </el-option>
+                </el-select>
+            </el-form-item>
+        </el-col>
+    </el-row>
+</el-form>
+
+<!--
+formToolDialog弹出层组件
+@author xuzengqiang
+@date 2018-06-03 14:40:44
+-->
+<script type="text/x-template"
+        id="form-tool-dialog-template">
+    {{>index/form-tool-dialog}}    
+</script>
