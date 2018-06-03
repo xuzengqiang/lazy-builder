@@ -3,13 +3,13 @@
  * @author: xuzengqiang
  * @date: 2018-05-31 16:14:41
  */
-const FileUtils = require('../static/common/file')
+const FileUtils = require('../utils/file')
 const fs = require('fs')
 const rootPath = process.cwd()
-const Template = require('../static/common/template')
+const Template = require('../utils/template')
 class IndexController {
     /**
-     * 构造函数 
+     * 构造函数
      * @param {Boolean} unifile - 是否生成单文件
      */
     constructor(unifile) {
@@ -38,13 +38,12 @@ class IndexController {
          * @type {Boolean}
          */
         this.activatedFlag = true
-
     }
 
     /**
      * 首页配置构建
      */
-    builder () {
+    builder() {
         try {
             this._createIndexFile()
             this._createDataFile()
@@ -61,7 +60,7 @@ class IndexController {
     /**
      * 创建首页入口文件
      */
-    _createIndexFile () {
+    _createIndexFile() {
         console.error('构建首页入口文件')
         const file = FileUtils.createFile(`${rootPath}/build/index/index.vue`)
         const dialog = this.dialogFlag ? Template.dialog() : ''
@@ -75,7 +74,7 @@ class IndexController {
     /**
      * 创建首页data文件
      */
-    _createDataFile () {
+    _createDataFile() {
         console.error('构建首页data.js')
         const file = FileUtils.createFile(`${rootPath}/build/index/mixins/data.js`)
         const selection = this.selectionFlag ? 'selection:[],' : ''
@@ -90,9 +89,9 @@ class IndexController {
 
     /**
      * 创建首页method文件
-     * @param {Boolean} 
+     * @param {Boolean}
      */
-    _createMethodFile () {
+    _createMethodFile() {
         console.error('构建首页methods.js')
         const file = FileUtils.createFile(`${rootPath}/build/index/mixins/methods.js`)
         const dialogMethods = this.dialogFlag ? Template.dialogMethods() : ''
@@ -106,7 +105,7 @@ class IndexController {
     /**
      * 创建activated文件
      */
-    _createActivatedFile () {
+    _createActivatedFile() {
         if (!this.activatedFlag) return
         console.error('构建首页activated.js')
         const file = FileUtils.createFile(`${rootPath}/build/index/mixins/activated.js`)
@@ -114,9 +113,9 @@ class IndexController {
     }
 
     /**
-     * 
+     *
      */
-    _createBeforeRouteEnterFile () {
+    _createBeforeRouteEnterFile() {
         console.error('构建首页beforeRouteEnter.js')
         const file = FileUtils.createFile(`${rootPath}/build/index/mixins/beforeRouteEnter.js`)
         Template.writeFile(file, Template.indexBeforeRouteEnter())
@@ -125,7 +124,7 @@ class IndexController {
     /**
      * 创建components文件
      */
-    _createComponentsFile () {
+    _createComponentsFile() {
         if (!this.componentsFlag) return
         console.error('构建首页components.js')
         const file = FileUtils.createFile(`${rootPath}/build/index/mixins/components.js`)
@@ -135,7 +134,7 @@ class IndexController {
     /**
      * 创建混合入口文件
      */
-    _createMixinFile () {
+    _createMixinFile() {
         console.error('构建首页mixins.js')
         const file = FileUtils.createFile(`${rootPath}/build/index/mixins/index.js`)
         let content = Template.indexMixin()

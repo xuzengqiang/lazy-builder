@@ -5,12 +5,12 @@
  */
 const router = require('koa-router')()
 const fs = require('fs')
-const BuilderController = require('../controllers/BuilderController')
+const BuilderController = require('../server/controllers/BuilderController')
 
 /**
  * 构建项目文件夹
  */
-router.post('/builder', function (ctx, next) {
+router.post('/builder', function(ctx, next) {
     const builderController = new BuilderController()
     builderController.build()
     ctx.body = 'builder'
