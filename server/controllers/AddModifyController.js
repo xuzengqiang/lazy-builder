@@ -9,8 +9,6 @@ const rootPath = process.cwd()
 const Template = require('../utils/template/Template')
 const log4js = require('koa-log4')
 const logger = log4js.getLogger('index')
-const BuilderUtils = require('../utils/BuilderUtils')
-const Handlebars = require('handlebars')
 
 class AddModifyController {
   /**
@@ -42,7 +40,8 @@ class AddModifyController {
     const file = FileUtils.createFile(`${rootPath}/build/add/index.vue`)
     const template = new Template('addIndex')
     template.compile(file, {
-      hasDialog: false
+      hasDialog: false,
+      columns: this.model.columns
     })
   }
 }

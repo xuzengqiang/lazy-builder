@@ -9,8 +9,6 @@ const rootPath = process.cwd()
 const Template = require('../utils/template/Template')
 const log4js = require('koa-log4')
 const logger = log4js.getLogger('index')
-const BuilderUtils = require('../utils/BuilderUtils')
-const Handlebars = require('handlebars')
 
 class IndexController {
   /**
@@ -26,25 +24,25 @@ class IndexController {
      * 是否生成复选框
      * @type {Boolean}
      */
-    this.selectionFlag = model.option.hasSelection
+    this.hasSelection = model.option.hasSelection
 
     /**
      * 是否有编辑操作
      * @type {Boolean}
      */
-    this.editFlag = model.option.hasEdit
+    this.hasOperation = model.option.hasEdit
 
     /**
      * 是否有弹出层
      * @type {Boolean}
      */
-    this.dialogFlag = model.option.hasDialog
+    this.hasDialog = model.option.hasDialog
 
     /**
      * 是否生成components.js文件
      * @type {Boolean}
      */
-    this.componentsFlag = this.dialogFlag
+    this.hasComponents = this.hasDialog
   }
 
   /**
@@ -73,18 +71,8 @@ class IndexController {
     const file = FileUtils.createFile(`${rootPath}/build/index/index.vue`)
     const template = new Template('index')
     template.compile(file, {
-      hasDialog: this.dialogFlag
+      hasDialog: this.hasDialog
     })
-
-    // template.compile({
-    //   hasDialog: this.dialogFlag
-    // })
-
-    // const dialog = this.dialogFlag ? Template.dialog() : ''
-
-    // const template = new Template('index')
-    // template.escape('dialog.tpl', dialog)
-    // template.writeIn(file)
   }
 
   /**
@@ -95,16 +83,9 @@ class IndexController {
     const file = FileUtils.createFile(`${rootPath}/build/index/mixins/data.js`)
     const template = new Template('indexData')
     template.compile(file, {
-      hasDialog: this.dialogFlag,
-      hasSelection: this.selectionFlag
+      hasDialog: this.hasDialog,
+      hasSelection: this.hasSelection
     })
-
-    // const selection = this.selectionFlag ? 'selection:[],' : ''
-    // const dialogData = this.dialogFlag ? Template.dialogData() : ''
-
-    // const template = new Template('indexData')
-    // template.escape('selection.tpl', selection).escape('dialog.data.tpl', dialogData)
-    // template.writeIn(file)
   }
 
   /**
@@ -116,7 +97,7 @@ class IndexController {
     const file = FileUtils.createFile(`${rootPath}/build/index/mixins/methods.js`)
     const template = new Template('indexMethods')
     template.compile(file, {
-      hasDialog: this.dialogFlag
+      hasDialog: this.hasDialog
     })
   }
 
@@ -149,22 +130,8 @@ class IndexController {
     const file = FileUtils.createFile(`${rootPath}/build/index/mixins/index.js`)
     const template = new Template('indexMixin')
     template.compile(file, {
-      hasComponents: this.componentsFlag
+      hasComponents: this.hasComponents
     })
-
-    // let content = Template.indexMixin()
-
-    // const importTemplate = []
-    // const propertyTemplate = []
-
-    // if (this.componentsFlag) {
-    //   importTemplate.push(`import components from './components'`)
-    //   propertyTemplate.push(`  components,`)
-    // }
-
-    // const template = new Template('indexMixin')
-    // template.escape('import', importTemplate.join('\n')).escape('property', propertyTemplate.join('\n'))
-    // template.writeIn(file)
   }
 
   /**
@@ -180,13 +147,6 @@ class IndexController {
       method: option.method,
       searchCode: option.searchCode
     })
-
-    // const template = new Template('indexCustomFilter')
-    // template
-    //   .escape('menu', this.menu.router)
-    //   .escape('method', option.method)
-    //   .escape('searchCode', option.searchCode)
-    // template.writeIn(file)
   }
 
   /**
@@ -198,30 +158,14 @@ class IndexController {
     const option = this.model.option
     const template = new Template('indexQueryTable')
     template.compile(file, {
-      hasOperation: this.editFlag,
+      hasOperation: this.hasOperation,
       customSearchCode: option.customSearchCode,
       customColumnCode: option.customColumnCode,
       method: option.method,
       formTools: this.model.formToolList,
       tools: this.model.toolList,
-      hasSelection: this.selectionFlag
+      hasSelection: this.hasSelection
     })
-
-    // const formTools = BuilderUtils.createFormTools(this.model.formToolList)
-    // const tools = BuilderUtils.createTools(this.model.toolList)
-    // const selection = this.selectionFlag ? Template.tableSelection() : ''
-    // const operation = this.editFlag ? Template.tableOperation() : ''
-
-    // const template = new Template('indexQueryTable')
-    // template
-    //   .escape('customSearchCode', option.customSearchCode)
-    //   .escape('customColumnCode', option.customColumnCode)
-    //   .escape('method', option.method)
-    //   .escape('formTools', formTools)
-    //   .escape('selection', selection)
-    //   .escape('tools', tools)
-    //   .escape('operation', operation)
-    // template.writeIn(file)
   }
 }
 
