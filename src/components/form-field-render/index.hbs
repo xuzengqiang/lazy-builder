@@ -2,10 +2,11 @@
 <div class="form-field-render"
      :class="{
         setting: status === 'setting'
-    }">
+    }"
+     @click="columnClicked">
     <div class="column-setting"
          v-if="status==='setting'">
-        <label>双击修改栏目配置</label>
+        <label>单击修改栏目配置</label>
     </div>
     <div class="form-field-editor"
          v-else>
@@ -35,4 +36,7 @@
                           @add-field="addFieldHandle">
         </add-field-dialog>
     </div>
+    <column-config-dialog ref="columnConfigDialog"
+                          :has-title="hasTitle"
+                          @set-column="setColumn" />
 </div>

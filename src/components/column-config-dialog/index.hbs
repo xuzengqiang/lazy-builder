@@ -1,0 +1,31 @@
+{{!-- 栏目配置 --}}
+<el-dialog title="子栏目配置"
+           append-to-body
+           :visible.sync="show">
+    <el-form label-width="100px"
+             ref="toolsForm"
+             label-position="left">
+        <el-form-item label="子栏目名称">
+            <el-input v-if="hasTitle"
+                      disabled
+                      placeholder="父栏目已经存在标题,无法再次设置">
+            </el-input>
+            <el-input v-else
+                      v-model="model.title"
+                      placeholder="可以不填写,如果填写会生成栏目标题"></el-input>
+        </el-form-item>
+        <el-form-item label="字段列数">
+            <el-select v-model="model.column">
+                <el-option v-for="index in [1,2,4,6]"
+                           :key="index"
+                           :value="index"
+                           :label="index">
+                </el-option>
+            </el-select>
+        </el-form-item>
+    </el-form>
+    <dialog-footer slot="footer"
+                   @ensure="setColumn"
+                   @cancel="show=false">
+    </dialog-footer>
+</el-dialog>

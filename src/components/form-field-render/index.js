@@ -19,22 +19,19 @@
         data () {
             return {
                 dialogVisible: false,
-                status: 'setting'
+                status: 'setting',
+                fields: [],
+                title: '',
+                focused: true,
+                column: DEFAULT_COLUMN
             }
         },
+        /**
+         * 属性列表
+         * @property {Boolean} hasTitle - 父栏目是否存在标题
+         */
         props: {
-            title: String,
-            fields: {
-                type: Array,
-                default: () => []
-            },
-            column: {
-                type: Number,
-                default: DEFAULT_COLUMN,
-                validator (value) {
-                    return isInt(value) && parseInt(value) % 2 === 0
-                }
-            }
+            hasTitle: Boolean
         },
         computed: {
             rowFields () {
@@ -83,6 +80,24 @@
              */
             addFieldHandle (field) {
                 this.fields.push(field)
+            },
+            /**
+             * 栏目点击事件
+             * @description 如果是设置状态,那么则弹出设置层
+             */
+            columnClicked () {
+                if (this.status === 'setting') {
+                    this.$refs.columnConfigDialog.show = true
+                }
+            },
+            /**
+             * 设置栏目信息
+             * @param {Object} model - 栏目信息
+             */
+            setColumn (model) {
+                this.title = model.title
+                this.column = model.column
+                this.status = 'editor'
             }
         }
     }

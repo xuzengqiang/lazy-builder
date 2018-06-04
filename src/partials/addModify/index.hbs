@@ -12,26 +12,20 @@
             <el-col :span="column.leftcontent.totalspan"
                     class="column-leftcontent"
                     v-if="column.leftcontent">
-                <form-field-render :title="column.leftcontent.title"
-                                   :fields="column.leftcontent.fields"
-                                   :column="column.leftcontent.column">
+                <form-field-render :has-title="!!column.title">
                 </form-field-render>
             </el-col>
 
             <el-col :span="column.main.totalspan"
                     class="column-main"
                     v-if="column.main">
-                <form-field-render :title="column.main.title"
-                                   :fields="column.main.fields"
-                                   :column="column.main.column">
+                <form-field-render :has-title="!!column.title">
                 </form-field-render>
             </el-col>
             <el-col :span="column.rightcontent.totalspan"
                     class="column-rightcontent"
                     v-if="column.rightcontent">
-                <form-field-render :title="column.rightcontent.title"
-                                   :fields="column.rightcontent.fields"
-                                   :column="column.rightcontent.column">
+                <form-field-render :has-title="!!column.title">
                 </form-field-render>
             </el-col>
         </el-row>
@@ -70,4 +64,15 @@
 <script type="text/x-template"
         id="add-column-dialog-template">
     {{>components/add-column-dialog/index}}
+</script>
+
+
+<!--
+子栏目配置弹出层
+@author xuzengqiang
+@date 2018-06-04 16:51:36   
+-->
+<script type="text/x-template"
+        id="column-config-dialog-template">
+    {{>components/column-config-dialog/index}}
 </script>
