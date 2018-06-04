@@ -3,10 +3,10 @@
  * @author: xuzengqiang
  * @date: 2018-05-31 16:14:41
  */
-const FileUtils = require('../utils/file')
+const FileUtils = require('../utils/FileUtils')
 const fs = require('fs')
 const rootPath = process.cwd()
-const Template = require('../utils/template')
+const Template = require('../utils/template/Template')
 const log4js = require('koa-log4')
 const logger = log4js.getLogger('index')
 
@@ -42,7 +42,7 @@ class IndexController {
     /**
      * 首页配置构建
      */
-    builder() {
+    builder () {
         try {
             this._createIndexFile()
             this._createDataFile()
@@ -60,82 +60,82 @@ class IndexController {
     /**
      * 创建首页入口文件
      */
-    _createIndexFile() {
+    _createIndexFile () {
         console.error('构建首页入口文件')
         const file = FileUtils.createFile(`${rootPath}/build/index/index.vue`)
         const dialog = this.dialogFlag ? Template.dialog() : ''
 
-        let content = Template.index()
-        content = Template.escape(content, 'dialog.tpl', dialog)
-
-        Template.writeFile(file, content)
+        const template = new Template('index')
+        template.escape('dialog.tpl', dialog)
+        template.writeIn(file)
     }
 
     /**
      * 创建首页data文件
      */
-    _createDataFile() {
+    _createDataFile () {
         console.error('构建首页data.js')
         const file = FileUtils.createFile(`${rootPath}/build/index/mixins/data.js`)
         const selection = this.selectionFlag ? 'selection:[],' : ''
         const dialogData = this.dialogFlag ? Template.dialogData() : ''
 
-        let content = Template.indexData()
-        content = Template.escape(content, 'selection.tpl', selection)
-        content = Template.escape(content, 'dialog.data.tpl', dialogData)
-
-        Template.writeFile(file, content)
+        const template = new Template('indexData')
+        template.escape('selection.tpl', selection)
+            .escape('dialog.data.tpl', dialogData)
+        template.writeIn(file)
     }
 
     /**
      * 创建首页method文件
      * @param {Boolean}
      */
-    _createMethodFile() {
+    _createMethodFile () {
         console.error('构建首页methods.js')
         const file = FileUtils.createFile(`${rootPath}/build/index/mixins/methods.js`)
         const dialogMethods = this.dialogFlag ? Template.dialogMethods() : ''
 
-        let content = Template.indexMethods()
-        content = Template.escape(content, 'dialog.methods.tpl', dialogMethods)
-
-        Template.writeFile(file, content)
+        const template = new Template('indexMethods')
+        template.escape('dialog.methods.tpl', dialogMethods)
+        template.writeIn(file)
     }
 
     /**
      * 创建activated文件
      * @deprecated
      */
-    _createActivatedFile() {
+    _createActivatedFile () {
         if (!this.activatedFlag) return
         console.error('构建首页activated.js')
         const file = FileUtils.createFile(`${rootPath}/build/index/mixins/activated.js`)
-        Template.writeFile(file, Template.indexActivated())
+        const template = new Template('indexActivated')
+        template.writeIn(file)
     }
 
     /**
-     *
+     * 创建首页beforeRouteEnter文件
      */
-    _createBeforeRouteEnterFile() {
+    _createBeforeRouteEnterFile () {
         console.error('构建首页beforeRouteEnter.js')
         const file = FileUtils.createFile(`${rootPath}/build/index/mixins/beforeRouteEnter.js`)
-        Template.writeFile(file, Template.indexBeforeRouteEnter())
+        const template = new Template('indexBeforeRouteEnter')
+        template.writeIn(file)
     }
 
     /**
      * 创建components文件
      */
-    _createComponentsFile() {
+    _createComponentsFile () {
         if (!this.componentsFlag) return
         console.error('构建首页components.js')
         const file = FileUtils.createFile(`${rootPath}/build/index/mixins/components.js`)
-        Template.writeFile(file, Template.indexComponents())
+        const template = new Template('indexComponents')
+        template.writeIn(file)
     }
 
     /**
      * 创建混合入口文件
      */
-    _createMixinFile() {
+    _createMixinFile () {
         console.error('构建首页mixins.js')
         const file = FileUtils.createFile(`${rootPath}/build/index/mixins/index.js`)
         let content = Template.indexMixin()
@@ -147,41 +147,40 @@ class IndexController {
             propertyTemplate.push(`  components,`)
         }
 
-        content = Template.escape(content, 'import', importTemplate.join('\n'))
-        content = Template.escape(content, 'property', propertyTemplate.join('\n'))
-        Template.writeFile(file, content)
+        const template = new Template('indexMixin')
+        template.escape('import', importTemplate.join('\n'))
+            .escape('property', propertyTemplate.join('\n'))
+        template.writeIn(file)
     }
 
     /**
      * 创建CustomFilter文件
      */
-    _createCustomFilterFile() {
+    _createCustomFilterFile () {
         console.error('构建首页custom-filter.js文件')
         const file = FileUtils.createFile(`${rootPath}/build/index/config/custom-filter.js`)
         const option = this.model.option
-        let content = Template.indexCustomFilter()
 
-        content = Template.escape(content, 'menu', this.menu.router)
-        content = Template.escape(content, 'method', option.method)
-        content = Template.escape(content, 'searchCode', option.searchCode)
-
-        Template.writeFile(file, content)
+        const template = new Template('indexCustomFilter')
+        template.escape('menu', this.menu.router)
+            .escape('method', option.method)
+            .escape('searchCode', option.searchCode)
+        template.writeIn(file)
     }
 
     /**
      * 生成query-table
      */
-    _createQueryTableFile() {
+    _createQueryTableFile () {
         console.error('构建首页query-table.js文件')
         const file = FileUtils.createFile(`${rootPath}/build/index/config/query-table.js`)
         const option = this.model.option
-        let content = Template.indexQueryTable()
 
-        content = Template.escape(content, 'customSearchCode', option.customSearchCode)
-        content = Template.escape(content, 'customColumnCode', option.customColumnCode)
-        content = Template.escape(content, 'method', option.method)
-
-        Template.writeFile(file, content)
+        const template = new Template('indexQueryTable')
+        template.escape('customSearchCode', option.customSearchCode)
+            .escape('customColumnCode', option.customColumnCode)
+            .escape('method', option.method)
+        template.writeIn(file)
     }
 }
 

@@ -3,10 +3,13 @@
  * @author: xuzengqiang
  * @date: 2018-05-31 17:57:43
  */
-const FileUtils = require('./file')
+const FileUtils = require('./FileUtils')
 const fs = require('fs')
 const moment = require('moment')
 const rootPath = process.cwd()
+
+
+
 
 const Template = {}
 const TemplateEngine = {}

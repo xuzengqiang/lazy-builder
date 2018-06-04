@@ -3,7 +3,7 @@
  * @author: xuzengqiang
  * @date: 2018-05-31 15:53:03
  */
-const FileUtils = require('../utils/file')
+const FileUtils = require('../utils/FileUtils')
 const rootPath = process.cwd()
 const IndexController = require('./IndexController')
 
@@ -17,7 +17,7 @@ class BuilderController {
     /**
      * 构建项目文件夹
      */
-    build() {
+    build () {
         const indexController = new IndexController(this.indexModel, this.menu)
         indexController.builder()
     }
@@ -25,7 +25,7 @@ class BuilderController {
     /**
      * 构建首页
      */
-    indexBuilder() {}
+    indexBuilder () { }
 
     /**
      * 构建新增和编辑页
