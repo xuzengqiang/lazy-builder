@@ -35,17 +35,59 @@
             </el-select>
         </el-form-item>
         <el-form-item label="表单类型">
-            <el-select v-model="model.type">
-                <el-option v-for="type in fieldTypes"
-                           :key="type"
-                           :value="type"
-                           :label="type">
+            <el-select v-model="model.type"
+                       @change="fieldTypeChange">
+                <el-option v-for="fieldType in fieldTypes"
+                           :key="fieldType.value"
+                           :value="fieldType.value"
+                           :label="fieldType.value"
+                           :disabled="fieldType.disabled">
                 </el-option>
             </el-select>
         </el-form-item>
         <el-form-item label="数据字典"
                       v-if="model.type === 'select'">
             <el-input v-model="model.lookupCode">
+        </el-form-item>
+        <el-form-item label="日期显示类型"
+                      v-if="model.type === 'datePicker'">
+            <el-select v-model="model.dateType"
+                       @change="dateTypeChange">
+                <el-option v-for="dateType in dateTypes"
+                           :key="dateType"
+                           :value="dateType"
+                           :label="dateType">
+                </el-option>
+            </el-select>
+        </el-form-item>
+        <el-form-item label="日期值格式"
+                      v-if="model.type === 'datePicker'">
+            <el-input v-model="model.valueFormat" />
+        </el-form-item>
+        <el-form-item label="过滤器类型"
+                      v-if="model.type === 'datePicker' || model.type === 'select'">
+            <el-select v-model="model.filter">
+                <el-option v-for="filter in filters"
+                           :key="filter"
+                           :value="filter"
+                           :label="filter">
+                </el-option>
+            </el-select>
+        </el-form-item>
+        <el-form-item label="行数"
+                      v-if="model.type === 'textarea'">
+            <el-input-number :min="1"
+                             v-model="model.rows" />
+        </el-form-item>
+        <el-form-item label="缩放类型"
+                      v-if="model.type === 'textarea'">
+            <el-select v-model="model.resize">
+                <el-option v-for="resize in resizes"
+                           :key="resize"
+                           :value="resize"
+                           :label="resize">
+                </el-option>
+            </el-select>
         </el-form-item>
     </el-form>
     <dialog-footer slot="footer"

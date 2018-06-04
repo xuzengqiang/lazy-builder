@@ -4,12 +4,13 @@
  * @date: 2018-06-02 17:49:18
  */
 ; (window => {
+    const DEFAULT_COLUMN = 4
     const ModelConfig = () => {
         return {
             title: '',
-            main: {},
-            leftcontent: {},
-            rightcontent: {}
+            main: null,
+            leftcontent: null,
+            rightcontent: null
         }
     }
 
@@ -18,6 +19,15 @@
             main: 24,
             leftcontent: 0,
             rightcontent: 0
+        }
+    }
+
+    const getModel = totalspan => {
+        return {
+            title: '',
+            fields: [],
+            column: DEFAULT_COLUMN,
+            totalspan: totalspan
         }
     }
 
@@ -36,7 +46,6 @@
             show (value) {
                 if (value) {
                     this.model = ModelConfig()
-                    console.error(this.model)
                     this.column = ColumnConfig()
                 }
             }
@@ -44,27 +53,15 @@
         methods: {
             addColumn () {
                 const column = this.column
-                const title = this.model.title ? (this.model.title + '').trim() : ''
+
                 const model = {
-                    main: {
-                        totalspan: column.main
-                    }
-                }
-
-                if (this.layout !== 'one-column') {
-                    model.leftcontent = {
-                        totalspan: column.leftcontent
-                    }
-                }
-
-                if (this.layout === 'three-column') {
-                    model.rightcontent = {
-                        totalspan: column.rightcontent
-                    }
+                    title: this.model.title.trim(),
+                    main: getModel(column.main),
+                    leftcontent: this.layout !== 'one-column' ? getModel(column.leftcontent) : null,
+                    rightcontent: this.layout === 'three-column' ? getModel(column.rightcontent) : null
                 }
 
                 this.show = false
-                title && (model.title = title)
                 this.$emit('add-column', model)
             },
             /**

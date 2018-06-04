@@ -15,9 +15,91 @@
             disabled: false,
             type: 'input',
             lookupCode: '',
-            column: 1
+            column: 1,
+            dateType: 'datetime',
+            valueFormat: 'yyyy-MM-dd HH:mm:ss',
+            filter: '',
+            rows: 1,
+            resize: 'none'
         }
     }
+
+    /**
+     * 排除掉
+     * year
+     * week
+     * dates
+     * datetimerange
+     * daterange
+     */
+    const dateTypes = [
+        // 'year',
+        'month',
+        'date',
+        // 'dates',
+        // 'week',
+        // 'datetimerange',
+        // 'daterange',
+        'datetime'
+    ]
+
+    /**
+     * resizes
+     */
+    const resizes = [
+        'none',
+        'both',
+        'horizontal',
+        'vertical'
+    ]
+
+    const dateTypeFormateMapper = {
+        // year: 'yyyy',
+        month: 'yyyy-MM',
+        date: 'yyyy-MM-dd',
+        datetime: 'yyyy-MM-dd HH:mm:ss'
+    }
+
+    const dateFilterMapper = {
+        // yyyy: '',
+        month: 'month',
+        date: 'date',
+        datetime: 'time'
+    }
+
+    const fieldTypes = [{
+        value: 'input',
+        disabeld: false
+    }, {
+        value: 'textarea',
+        disabeld: false
+    }, {
+        value: 'select',
+        disabeld: false
+    }, {
+        value: 'datePicker',
+        disabeld: false
+    }, {
+        value: 'number',
+        disabled: true
+    }, {
+        value: 'searchTips',
+        disabled: true
+    }, {
+        value: 'area',
+        disabled: true
+    }]
+
+    const filters = [
+        'lookup',
+        'date',
+        'month',
+        'time',
+        'minute',
+        'second',
+        'money',
+        'thousands',
+    ]
 
     const AddFieldDialog = {
         template: '#add-field-dialog-template',
@@ -36,7 +118,10 @@
                         value: false
                     }
                 ],
-                fieldTypes: ['input', 'number', 'textarea', 'select', 'datePicker', 'autocomplete', 'area']
+                fieldTypes,
+                dateTypes,
+                filters,
+                resizes
             }
         },
         watch: {
@@ -51,6 +136,27 @@
             addField () {
                 this.show = false
                 this.$emit('add-field', JSON.parse(JSON.stringify(this.model)))
+            },
+            /**
+             * 表单字段更新
+             * @property {String} fieldType - 字段类型
+             */
+            fieldTypeChange (fieldType) {
+                switch (fieldType) {
+                    case 'select':
+                        this.model.filter = 'lookup'
+                        break
+                    case 'datePicker':
+                        this.model.filter = 'time'
+                }
+            },
+            /**
+             * 日期类型选中 
+             * @property {String} dateType - 日期类型
+             */
+            dateTypeChange (dateType) {
+                this.model.valueFormat = dateTypeFormateMapper[dateType]
+                this.model.filter = dateFilterMapper[dateType]
             }
         }
     }

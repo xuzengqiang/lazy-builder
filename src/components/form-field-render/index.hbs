@@ -10,8 +10,9 @@
     </div>
     <div class="form-field-editor"
          v-else>
-        <div class="title">
-            <label v-text="title"></label>
+        <div class="title"
+             v-if="model.title">
+            <label v-text="model.title"></label>
         </div>
         <el-row :gutter="4"
                 v-for="(row, rownum) in rowFields"
@@ -21,11 +22,30 @@
                     :span="field.span">
                 <el-form-item :label="field.label"
                               :prop="field.key">
-                    <el-input v-if="!field.type || field.type === 'input'"
+                    <el-input v-if="!field.type || field.type === 'input' || field.type === 'textarea'"
                               clearable
-                              :disabled="field.disabled || false">
-
+                              :disabled="field.disabled || false"
+                              :rows="field.rows || 1"
+                              :resize="fields.resize || 'none'">
                     </el-input>
+                    <el-select v-else-if="field.type === 'select'"
+                               clearable
+                               :disabled="field.disabled || false">
+                    </el-select>
+                    <el-date-picker v-else-if="field.type === 'datePicker'"
+                                    clearable
+                                    :disabled="field.disabled || false"
+                                    :type="field.dateType"
+                                    :format="field.valueFormat"
+                                    :value-format="field.valueFormat">
+                    </el-date-picker>
+                    <p class="key-message">
+                        <el-tooltip effect="dark"
+                                    :content="field.key"
+                                    placement="bottom">
+                            <label v-text="'字段key:' + field.key"></label>
+                        </el-tooltip>
+                    </p>
                 </el-form-item>
             </el-col>
         </el-row>

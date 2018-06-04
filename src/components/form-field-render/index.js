@@ -29,9 +29,14 @@
         /**
          * 属性列表
          * @property {Boolean} hasTitle - 父栏目是否存在标题
+         * @property {Object} model - 模块对象
          */
         props: {
-            hasTitle: Boolean
+            hasTitle: Boolean,
+            model: {
+                type: Object,
+                required: true
+            }
         },
         computed: {
             rowFields () {
@@ -40,9 +45,9 @@
                 let arr = []
                 let totalspan = DEFAULT_MAX_SPAN
                 // 默认一列所占的span数
-                let span = totalspan / this.column
+                let span = totalspan / this.model.column
 
-                this.fields.forEach(field => {
+                this.model.fields.forEach(field => {
                     field.span = Math.min(totalspan, (/^[1-9]\d*$/.test(field.column) ? parseInt(field.column) : 1) * span)
                     if (sum + field.span < totalspan) {
                         arr.push(field)
@@ -79,7 +84,7 @@
              * @param {Object} field - 字段信息
              */
             addFieldHandle (field) {
-                this.fields.push(field)
+                this.model.fields.push(field)
             },
             /**
              * 栏目点击事件
@@ -95,8 +100,9 @@
              * @param {Object} model - 栏目信息
              */
             setColumn (model) {
-                this.title = model.title
-                this.column = model.column
+                console.error(model.title)
+                this.model.title = model.title
+                this.model.column = model.column
                 this.status = 'editor'
             }
         }

@@ -28,14 +28,16 @@
         },
         watch: {
             show (value) {
-                console.error('hello kitty')
                 value && (this.model = ModelConfig())
             }
         },
         methods: {
             setColumn () {
                 this.show = false
-                this.$emit('set-column', this.model)
+                this.$emit('set-column', {
+                    title: this.model.title,
+                    column: this.model.column
+                })
             }
         }
     }

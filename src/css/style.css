@@ -56,6 +56,12 @@ a {
   font-size:30px;
   color:#BBB
 }
+.form-field-render .key-message{
+  line-height:13px;
+  font-size:13px;
+  color:#AFAFAF;
+  font-weight: normal
+}
 .layout-category {
   width:120px;
   height:50px;
