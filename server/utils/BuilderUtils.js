@@ -7,15 +7,15 @@ const fs = require('fs')
 const path = require('path')
 const Template = require('./template/Template')
 const StringUtils = require('./StringUtils')
+const Handlebars = require('handlebars')
 
 class BuilderUtils {
-
     /**
      * 根据前端响应回来的formToolList转换为接口可识别的数组对象
      * @param {Array} formToolList
      * @return {Array}
      */
-    static createFormTools (formToolList) {
+    static createFormTools(formToolList) {
         let formTools = []
         let content
         const formToolTemplate = Template.formToolsIndex()
@@ -48,7 +48,7 @@ class BuilderUtils {
      * @param {Array} toolList
      * @return {Array}
      */
-    static createTools (toolList) {
+    static createTools(toolList) {
         let tools = []
         let content
         const toolTemplate = Template.toolsIndex()
@@ -68,7 +68,17 @@ class BuilderUtils {
      * 生成FormFieldsRender
      * @param {Array} columns - 栏目信息
      */
-    static createFormFieldsRender (columns) {
+    static createFormFieldsRender(columns) {
+        const template = new Template('addIndexHandlebars').getContent()
+        console.error('handlebars:')
+        console.error(template)
+        const templateX = Handlebars.compile(template)
+        console.error(
+            templateX({
+                hasDialog: true
+            })
+        )
+
         if (!Array.isArray(columns)) {
             return ''
         }
@@ -82,7 +92,7 @@ class BuilderUtils {
      * 生成单个FormFieldsRender
      * @param {Object} column - 栏目信息
      */
-    static createSingleFormFieldsRender (column) {
+    static createSingleFormFieldsRender(column) {
         const template = new Template('formFieldsRender')
         const title = column.title ? (column.title + '').trim() : ''
         const rightcontent = column.rightcontent
@@ -93,7 +103,7 @@ class BuilderUtils {
         const hasMain = main && /^[1-9]\d*$/.test(main.totalspan)
 
         let content = []
-        if (!title) {
+        if (title) {
             content.push('<form-fields-render :model="model"')
             content.push(`                    :title="${title}"`)
             if (hasLeftContent) {
@@ -107,6 +117,12 @@ class BuilderUtils {
             content.push(BuilderUtils._getFormFieldsRender(main))
             content.push(BuilderUtils._getFormFieldsRender(rightcontent, 'rightcontent'))
             content.push('</form-fields-render>')
+        } else {
+            content.push('<el-row>')
+
+            content.push('  <el-col>')
+            content.push('  </el-col>')
+            content.push('</el-row>')
         }
 
         return content.join('\n')
@@ -115,7 +131,7 @@ class BuilderUtils {
     /**
      * 创建
      */
-    static _getFormFieldsRender (subcolumn, location = 'main') {
+    static _getFormFieldsRender(subcolumn, location = 'main') {
         if (!subcolumn) {
             return ''
         }

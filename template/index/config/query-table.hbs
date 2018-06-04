@@ -1,0 +1,79 @@
+/**
+ * @fileOverview query-table配置
+ * @author {{author}}
+ * @date {{creationDate}}
+ */
+
+export default vm => ({
+  option: '{{customSearchCode}}',
+  tables: [{
+    searchCode: '{{customColumnCode}}',
+    url: {
+      method: '{{method}}'
+    },
+    {{#if hasOperation}}
+    operation: {
+      type: '操作',
+      fixed: 'right',
+      width: '60px',
+      options: [{
+        type: 'link',
+        label: '修改',
+        func: row => {}
+      }]
+    },
+    {{/if}}
+    option: {
+      {{#if hasSelection}}
+      type: 'selection',
+      selectionChange: selection => vm.selection = selection,
+      {{/if}}
+      beforeFormReset: data => {},
+      beforeFormSubmit: data => {},
+      rowDblclick: row => {},
+      currentChange: row => vm.selectedRow = row
+    }
+  }],
+  tools: [
+  {{#each tools}}
+    {
+      label: '{{label}}',
+      icon: '{{icon}}',
+      disabled: {{disabled}},
+      func: () => {}
+    },
+  {{/each}}
+  ],
+  formTools: [
+  {{#each formTools}}
+    {{#if refresh}}
+    {
+      label: '刷新',
+      icon: 'refresh',
+      func: vm.reload
+    },
+    {{else if customFilter}}
+    {
+      label: '通用查询',
+      icon: 'search',
+      disabled: false,
+      func: vm.showCustomFilter
+    },
+    {{else if queryTable}}
+    {
+      label: '个性设置',
+      icon: 'custom',
+      disabled: true,
+      func: vm.showQueryTable
+    },
+    {{else}}
+    {
+      label: '{{label}}',
+      icon: '{{icon}}',
+      disabled: {{disabled}},
+      func: () => {}
+    },
+    {{/if}}
+  {{/each}}
+  ]
+})

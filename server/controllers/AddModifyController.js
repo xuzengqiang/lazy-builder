@@ -10,45 +10,41 @@ const Template = require('../utils/template/Template')
 const log4js = require('koa-log4')
 const logger = log4js.getLogger('index')
 const BuilderUtils = require('../utils/BuilderUtils')
+const Handlebars = require('handlebars')
 
 class AddModifyController {
-    /**
-     * 构造函数
-     * @param {Object} model - 请求的参数信息
-     * @param {Object} menu - 菜单配置
-     */
-    constructor(model, menu) {
-        this.model = model
-        this.menu = menu
-    }
+  /**
+   * 构造函数
+   * @param {Object} model - 请求的参数信息
+   * @param {Object} menu - 菜单配置
+   */
+  constructor(model, menu) {
+    this.model = model
+    this.menu = menu
+  }
 
-    /**
-     * 构建
-     */
-    builder () {
-        try {
-            this._createIndexFile()
-        } catch (e) {
-            console.error(e)
-        }
+  /**
+   * 构建
+   */
+  builder() {
+    try {
+      this._createIndexFile()
+    } catch (e) {
+      console.error(e)
     }
+  }
 
-    /**
-     * 生成入口文件
-     */
-    _createIndexFile () {
-        console.error('构建编辑页入口文件')
-        const file = FileUtils.createFile(`${rootPath}/build/add/index.vue`)
-        const dialog = this.dialogFlag ? Template.dialog() : ''
-        console.error(this.model)
-        console.error('builderr>>>')
-        const formFieldsRender = BuilderUtils.createFormFieldsRender(this.model.columns)
-        console.error(formFieldsRender)
-        const template = new Template('addIndex')
-        template.escape('dialog.tpl', dialog)
-            .escape('form-fields-render', formFieldsRender)
-        template.writeIn(file)
-    }
+  /**
+   * 生成入口文件
+   */
+  _createIndexFile() {
+    console.error('构建编辑页入口文件')
+    const file = FileUtils.createFile(`${rootPath}/build/add/index.vue`)
+    const template = new Template('addIndex')
+    template.compile(file, {
+      hasDialog: false
+    })
+  }
 }
 
 module.exports = AddModifyController

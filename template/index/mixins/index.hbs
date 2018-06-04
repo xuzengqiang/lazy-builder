@@ -1,0 +1,20 @@
+/**
+ * @fileOverview 首页混合入口
+ * @author {{author}}
+ * @date {{creationDate}}
+ */
+import data from './data'
+import beforeRouteEnter from './beforeRouteEnter'
+import methods from './methods'
+{{#if hasComponents}}
+import components from './components'
+{{/if}}
+
+export default [
+  data,
+  beforeRouteEnter,
+  {{#if hasComponents}}
+  components,
+  {{/if}}
+  methods
+]

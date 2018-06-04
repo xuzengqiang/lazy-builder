@@ -2,122 +2,85 @@
  * @fileOverview: 模板工具方法
  * @author: xuzengqiang
  * @date: 2018-06-04 10:23:29
+ * 
+ * @update xuzengqiang
+ * @date 2018-6-5 00:26:38
+ * @since 1.0.1
+ * @description 采用artTemplate编译模板文件
  */
 const fs = require('fs')
 const moment = require('moment')
 const path = require('path')
 const TemplateEngine = require('./TemplateEngine').getInstance()
 const rootPath = process.cwd()
+const Handlebars = require('handlebars')
+const artTemplate = require('art-template')
 
 const TemplateMapper = {
-    index: 'index/index.vue',
-    indexMixin: 'index/mixins/index.tpl',
-    indexData: 'index/mixins/data.tpl',
-    indexMethods: 'index/mixins/methods.tpl',
-    indexActivated: 'index/mixins/activated.tpl',
-    indexComponents: 'index/mixins/components.tpl',
-    indexBeforeRouteEnter: 'index/mixins/beforeRouteEnter.tpl',
-    indexCustomFilter: 'index/config/custom-filter.tpl',
-    indexQueryTable: 'index/config/query-table.tpl',
-    dialog: 'dialog/dialog.tpl',
-    dialogData: 'dialog/dialog.data.tpl',
-    dialogMethods: 'dialog/dialog.methods.tpl',
-    formToolsIndex: 'formTools/index.tpl',
-    formToolsRefresh: 'formTools/refresh.tpl',
-    formToolsCustomFilter: 'formTools/custom-filter.tpl',
-    formToolsQueryTable: 'formTools/query-table.tpl',
-    toolsIndex: 'tools/index.tpl',
-    tableSelection: 'table/selection.tpl',
-    tableOption: 'table/option.tpl',
-    tableOperation: 'table/operation.tpl',
-    addIndex: 'add/index.vue',
-    formFieldsRender: 'form-fields-render/index.tpl'
+  index: 'index/index.hbs',
+  indexMixin: 'index/mixins/index.hbs',
+  indexData: 'index/mixins/data.hbs',
+  indexMethods: 'index/mixins/methods.hbs',
+  indexComponents: 'index/mixins/components.hbs',
+  indexBeforeRouteEnter: 'index/mixins/beforeRouteEnter.hbs',
+  indexCustomFilter: 'index/config/custom-filter.hbs',
+  indexQueryTable: 'index/config/query-table.hbs',
+  addIndex: 'add/index.hbs'
 }
 
 class Template {
+  /**
+   * 构造函数
+   * @param {String} template - 模板key
+   * @example
+   * new Template('index')
+   */
+  constructor(template) {
+    template = template ? (template + '').trim() : ''
+    if (template && TemplateMapper.hasOwnProperty(template)) {
+      this.content = TemplateEngine.cacheReadFile(template, TemplateMapper[template])
+    } else {
+      console.error('无效的模板名称')
+      this.content = ''
+    }
+  }
 
-    /**
-     * 构造函数
-     * @param {String} template - 模板key
-     * @example
-     * new Template('index')
-     */
-    constructor(template) {
-        template = template ? (template + '').trim() : ''
-        if (template && TemplateMapper.hasOwnProperty(template)) {
-            this.content = TemplateEngine.cacheReadFile(template, TemplateMapper[template])
-        } else {
-            console.error('无效的模板名称')
-            this.content = ''
-        }
+  /**
+   * 编译模板文件
+   * @param {File} file - 文件信息
+   * @param {Object} params - 参数信息
+   * @since 1.0.0
+   */
+  compile(file, params = {}) {
+    if (!file || typeof file.write !== 'function') {
+      console.error('无效的文件信息,模板编译失败!')
+      return
     }
 
-    /**
-     * 转译
-     * @param {String} content - 原始内容
-     * @param {String} name - 模板名称
-     * @param {String} value - 替换内容
-     */
-    static escape (content, name, value) {
-        return content.replace(`[[${name}]]`, value)
+    const template = Handlebars.compile(this.content)
+    const author = fs
+      .readFileSync(`${rootPath}/module.author`)
+      .toString()
+      .trim()
+
+    const creationdate = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
+    params.author = author
+    params.creationDate = creationdate
+
+    try {
+      const content = template(params)
+      file.write(content)
+    } catch (e) {
+      console.error('模板编译失败,文件写入失败...')
+      console.error(e)
     }
-
-    /**
-     * 写文件
-     * @param {File} file - 文件信息
-     * @param {String} content - 文件信息
-     */
-    static writeFile (file, content) {
-        const author = fs
-            .readFileSync(`${rootPath}/module.author`)
-            .toString()
-            .trim()
-
-        const currentTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
-
-        content = content.replace(`[[author]]`, 'xuzengqiang')
-        content = content.replace(`[[creationDate]]`, currentTime)
-        file.write(content)
-    }
-
-    /**
-     * 获取模板内容
-     * @return {String}
-     */
-    getContent () {
-        return this.content
-    }
-
-    /**
-     * 转义
-     * @param {String} name - 模板名称
-     * @param {String} value - 替换内容
-     * @chainable
-     */
-    escape (...params) {
-        this.content = Template.escape(this.content, ...params)
-        return this
-    }
-
-    /**
-     * 模板写入文件
-     * @param {File} file - 文件信息
-     * @description 会自动解析注释文件
-     */
-    writeIn (file) {
-        if (!file || typeof file.write !== 'function') {
-            console.error('无效的文件信息,写文件失败')
-            return
-        }
-
-        Template.writeFile(file, this.content)
-    }
+  }
 }
 
 for (let template in TemplateMapper) {
-    Template[template] = () => {
-        return TemplateEngine.cacheReadFile(template, TemplateMapper[template])
-    }
+  Template[template] = () => {
+    return TemplateEngine.cacheReadFile(template, TemplateMapper[template])
+  }
 }
 
 module.exports = Template
