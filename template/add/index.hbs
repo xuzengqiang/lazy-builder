@@ -6,7 +6,18 @@
         <kye-form ref="form"
                   :model="model"
                   :rules="rules">
-            [[form-fields-render]]
+            {{#each columns}}
+            {{#if title}}
+            {{else}}
+            <el-row>
+            	{{#if leftcontent}}
+            	<el-col :span="{{leftcontent.totalspan}}">
+            		
+            	</el-col>
+            	{{/if}}
+            </el-row>	
+            {{/if}}
+            {{/each}}
         </kye-form>
         {{#if hasDialog}}
         <!-- 弹出层 -->
