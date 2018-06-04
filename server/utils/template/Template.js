@@ -29,7 +29,9 @@ const TemplateMapper = {
     toolsIndex: 'tools/index.tpl',
     tableSelection: 'table/selection.tpl',
     tableOption: 'table/option.tpl',
-    tableOperation: 'table/operation.tpl'
+    tableOperation: 'table/operation.tpl',
+    addIndex: 'add/index.vue',
+    formFieldsRender: 'form-fields-render/index.tpl'
 }
 
 class Template {
