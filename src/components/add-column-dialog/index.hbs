@@ -6,7 +6,8 @@
              ref="toolsForm"
              label-position="left">
         <el-form-item label="栏目名称">
-            <el-input placeholder="可以不填写,如果填写会生成栏目标题"></el-input>
+            <el-input v-model="model.title"
+                      placeholder="可以不填写,如果填写会生成栏目标题"></el-input>
         </el-form-item>
         <el-form-item label="布局方式">
             <!-- 单栏 -->
@@ -15,7 +16,7 @@
                  :class="{
                     selected: layout === 'one-column'
                  }"
-                 @click="layout='one-column'">
+                 @click="layoutClicked('one-column')">
                 <label></label>
                 <div class="shade">单栏</div>
             </div>
@@ -26,7 +27,7 @@
                  :class="{
                     selected: layout === 'two-column'
                  }"
-                 @click="layout='two-column'">
+                 @click="layoutClicked('two-column')">
                 <label></label>
                 <label></label>
                 <div class="shade">两栏</div>
@@ -38,12 +39,51 @@
                  :class="{
                     selected: layout === 'three-column'
                  }"
-                 @click="layout='three-column'">
+                 @click="layoutClicked('three-column')">
                 <label></label>
                 <label></label>
                 <label></label>
                 <div class="shade">三栏</div>
             </div>
+        </el-form-item>
+        <el-form-item label="列数配置">
+            <el-input v-if="layout==='one-column'"
+                      disabled
+                      v-model="column.main" />
+            <template v-if="layout==='two-column'">
+                <el-input-number v-model="column.leftcontent"
+                                 placeholder="第一栏所占列数"
+                                 style="width:45%"
+                                 :min="1"
+                                 :max="24">
+                </el-input-number>
+                <el-input-number v-model="column.main"
+                                 placeholder="第二栏所占列数"
+                                 style="width:45%"
+                                 :min="1"
+                                 :max="24">
+                </el-input-number>
+            </template>
+            <template v-if="layout==='three-column'">
+                <el-input-number v-model="column.leftcontent"
+                                 placeholder="第一栏所占列数"
+                                 style="width:30%"
+                                 :min="1"
+                                 :max="24">
+                </el-input-number>
+                <el-input-number v-model="column.main"
+                                 placeholder="第二栏所占列数"
+                                 style="width:30%"
+                                 :min="1"
+                                 :max="24">
+                </el-input-number>
+                <el-input-number v-model="column.rightcontent"
+                                 placeholder="第三栏所占列数"
+                                 style="width:30%"
+                                 :min="1"
+                                 :max="24">
+                </el-input-number>
+            </template>
         </el-form-item>
     </el-form>
     <dialog-footer slot="footer"

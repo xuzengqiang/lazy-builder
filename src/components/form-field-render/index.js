@@ -3,7 +3,7 @@
  * @author: xuzengqiang
  * @date: 2018-06-02 16:01:31
  */
-;(window => {
+; (window => {
     const isPositionNumber = number => /^(0|[1-9]\d*)$/.test(number)
     const isInt = number => /^[1-9]\d*$/.test(number)
 
@@ -16,9 +16,10 @@
     const FormFieldRender = {
         template: '#form-field-render-template',
         name: 'FormFieldRender',
-        data() {
+        data () {
             return {
-                dialogVisible: false
+                dialogVisible: false,
+                status: 'setting'
             }
         },
         props: {
@@ -30,13 +31,13 @@
             column: {
                 type: Number,
                 default: DEFAULT_COLUMN,
-                validator(value) {
+                validator (value) {
                     return isInt(value) && parseInt(value) % 2 === 0
                 }
             }
         },
         computed: {
-            rowFields() {
+            rowFields () {
                 let rows = []
                 let sum = 0
                 let arr = []
@@ -73,14 +74,14 @@
             /**
              * 添加字段
              */
-            addField() {
+            addField () {
                 this.$refs.dialog.show = true
             },
             /**
              * 弹窗关闭之后的处理
              * @param {Object} field - 字段信息
              */
-            addFieldHandle(field) {
+            addFieldHandle (field) {
                 this.fields.push(field)
             }
         }

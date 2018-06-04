@@ -1,10 +1,14 @@
 {{!-- 新增修改子栏目首页 --}}
 
-<el-form label-position="left"
-         label-width="80px">
-    <el-row v-for="column in columns">
+<el-form label-position="right"
+         label-width="100px">
+    <el-row v-for="column in addModifyModel.columns">
         <el-row :gutter="20"
                 class="form-layout">
+            <div class="layout-title"
+                 v-if="column.title">
+                <label>${column.title}</label>
+            </div>
             <el-col :span="column.leftcontent.totalspan"
                     class="column-leftcontent"
                     v-if="column.leftcontent">
@@ -33,8 +37,10 @@
         </el-row>
     </el-row>
 </el-form>
-<el-button @click="showAddColumnDialog">添加栏目</el-button>
-<add-column-dialog ref="columnDialog"></add-column-dialog>
+<el-button @click="$refs.columnDialog.show = true">添加栏目</el-button>
+<add-column-dialog ref="columnDialog"
+                   @add-column="addColumn">
+</add-column-dialog>
 
 <!--
 表单字段渲染

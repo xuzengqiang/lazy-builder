@@ -1,28 +1,38 @@
 {{!-- 表单字段渲染组件 --}}
-<div class="form-field-render">
-    <div class="title">
-        <label v-text="title"></label>
+<div class="form-field-render"
+     :class="{
+        setting: status === 'setting'
+    }">
+    <div class="column-setting"
+         v-if="status==='setting'">
+        <label>双击修改栏目配置</label>
     </div>
-    <el-row :gutter="4"
-            v-for="(row, rownum) in rowFields"
-            :key="'row-'+rownum">
-        <el-col v-for="(field, column) in row"
-                :key="'field-' + column"
-                :span="field.span">
-            <el-form-item :label="field.label"
-                          :prop="field.key">
-                <el-input v-if="!field.type || field.type === 'input'"
-                          clearable
-                          :disabled="field.disabled || false">
+    <div class="form-field-editor"
+         v-else>
+        <div class="title">
+            <label v-text="title"></label>
+        </div>
+        <el-row :gutter="4"
+                v-for="(row, rownum) in rowFields"
+                :key="'row-'+rownum">
+            <el-col v-for="(field, column) in row"
+                    :key="'field-' + column"
+                    :span="field.span">
+                <el-form-item :label="field.label"
+                              :prop="field.key">
+                    <el-input v-if="!field.type || field.type === 'input'"
+                              clearable
+                              :disabled="field.disabled || false">
 
-                </el-input>
-            </el-form-item>
-        </el-col>
-    </el-row>
-    <el-row>
-        <el-button @click="addField">添加字段</el-button>
-    </el-row>
-    <add-field-dialog ref="dialog"
-                      @add-field="addFieldHandle">
-    </add-field-dialog>
+                    </el-input>
+                </el-form-item>
+            </el-col>
+        </el-row>
+        <el-row>
+            <el-button @click="addField">添加字段</el-button>
+        </el-row>
+        <add-field-dialog ref="dialog"
+                          @add-field="addFieldHandle">
+        </add-field-dialog>
+    </div>
 </div>

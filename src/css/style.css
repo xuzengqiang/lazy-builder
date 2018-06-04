@@ -23,23 +23,35 @@ a {
   vertical-align: bottom;
 }
 .form-layout {
-  border:1px dashed #AFAFAF;
+  border-bottom:1px solid #DDD;
   min-height: 100px;
+  padding: 10px 0px;
 }
-.form-layout .title{
+.form-layout .layout-title{
   height:30px;
   background: #f5f5fa;
   width: 100%;
   height: 30px;
   margin-bottom: 10px;
 }
-.form-layout .title label{
+.form-layout .layout-title label{
     font-weight: bold;
     color: #333;
     line-height: 30px;
     letter-spacing: 0px;
     font-size: 14px;
-    padding-left: 10px;
+    margin-left: 20px;
+}
+.form-field-render{
+  min-height:300px
+}
+.form-field-render.setting{
+  border:1px dashed #DEDEDE;
+}
+.form-field-render .column-setting{
+  padding:10px;
+  font-size:30px;
+  color:#DDD
 }
 .layout-category {
   width:120px;
@@ -60,7 +72,7 @@ a {
   text-align:center;
 }
 .layout-category.selected{
-  border:2px solid rgba(159, 110, 204, 0.959)
+  border:2px solid rgba(100, 145, 197, 0.959)
 }
 .layout-category.selected .shade{
   /* color:rgba(159, 110, 204, 0.959) */
