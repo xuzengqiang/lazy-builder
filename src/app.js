@@ -26,7 +26,7 @@ dom.ready(() => {
     new Vue({
         el: '#app',
         delimiters: ['${', '}'],
-        data() {
+        data () {
             return {
                 currentModule: 'index',
                 /**
@@ -46,7 +46,9 @@ dom.ready(() => {
                 indexModel: {
                     /**
                      * 首页参数配置
-                     * @property {Boolean} hasDialog - 是否有弹窗,
+                     * @property {Boolean} hasDialog - 是否有弹窗
+                     * @property {Boolean} hasSelection - 是否生成复选框
+                     * @property {Boolean} hasEdit - 是否生成编辑操作
                      * @property {String} method - 请求方法名称
                      * @property {String} searchCode - 通用查询code
                      * @property {String} customColumnCode - 自定义列code
@@ -54,6 +56,8 @@ dom.ready(() => {
                      */
                     option: {
                         hasDialog: true,
+                        hasSelection: false,
+                        hasEdit: true,
                         method: '',
                         searchCode: '',
                         customColumnCode: '',
@@ -155,7 +159,7 @@ dom.ready(() => {
             /**
              * 开始构建
              */
-            builder() {
+            builder () {
                 let params = {
                     menu: this.$refs.menu.toJSON(),
                     /** 首页配置 */
@@ -180,7 +184,7 @@ dom.ready(() => {
              * @date 2018-6-4 00:23:57
              * @param {Object} model - formTool信息
              */
-            addFormTool(model) {
+            addFormTool (model) {
                 let formTool = JSON.parse(JSON.stringify(model))
                 this.indexModel.formToolList.push(formTool)
             },
@@ -191,7 +195,7 @@ dom.ready(() => {
              * @since 1.0.0
              * @param {Number} index - 索引
              */
-            removeFormTool(index) {
+            removeFormTool (index) {
                 this.indexModel.formToolList.splice(index, 1)
             },
 
@@ -201,7 +205,7 @@ dom.ready(() => {
              * @since 1.0.0
              * @param {Object} model - formTool信息
              */
-            addTool(model) {
+            addTool (model) {
                 let tool = JSON.parse(JSON.stringify(model))
                 this.indexModel.toolList.push(tool)
             },
@@ -212,11 +216,11 @@ dom.ready(() => {
              * @since 1.0.0
              * @param {Number} index - 索引
              */
-            removeTool(index) {
+            removeTool (index) {
                 this.indexModel.toolList.splice(index, 1)
             },
 
-            showAddColumnDialog() {
+            showAddColumnDialog () {
                 console.error('show column')
                 console.error(this.$refs.columnDialog)
                 this.$refs.columnDialog.show = true

@@ -9,6 +9,7 @@ const rootPath = process.cwd()
 const Template = require('../utils/template/Template')
 const log4js = require('koa-log4')
 const logger = log4js.getLogger('index')
+const BuilderUtils = require('../utils/BuilderUtils')
 
 class IndexController {
     /**
@@ -24,7 +25,13 @@ class IndexController {
          * 是否生成复选框
          * @type {Boolean}
          */
-        this.selectionFlag = true
+        this.selectionFlag = model.option.hasSelection
+
+        /**
+         * 是否有编辑操作
+         * @type {Boolean}
+         */
+        this.editFlag = model.option.hasEdit
 
         /**
          * 是否有弹出层
@@ -175,11 +182,19 @@ class IndexController {
         console.error('构建首页query-table.js文件')
         const file = FileUtils.createFile(`${rootPath}/build/index/config/query-table.js`)
         const option = this.model.option
+        const formTools = BuilderUtils.createFormTools(this.model.formToolList)
+        const tools = BuilderUtils.createTools(this.model.toolList)
+        const selection = this.selectionFlag ? Template.tableSelection() : ''
+        const operation = this.editFlag ? Template.tableOperation() : ''
 
         const template = new Template('indexQueryTable')
         template.escape('customSearchCode', option.customSearchCode)
             .escape('customColumnCode', option.customColumnCode)
             .escape('method', option.method)
+            .escape('formTools', formTools)
+            .escape('selection', selection)
+            .escape('tools', tools)
+            .escape('operation', operation)
         template.writeIn(file)
     }
 }

@@ -21,7 +21,15 @@ const TemplateMapper = {
     indexQueryTable: 'index/config/query-table.tpl',
     dialog: 'dialog/dialog.tpl',
     dialogData: 'dialog/dialog.data.tpl',
-    dialogMethods: 'dialog/dialog.methods.tpl'
+    dialogMethods: 'dialog/dialog.methods.tpl',
+    formToolsIndex: 'formTools/index.tpl',
+    formToolsRefresh: 'formTools/refresh.tpl',
+    formToolsCustomFilter: 'formTools/custom-filter.tpl',
+    formToolsQueryTable: 'formTools/query-table.tpl',
+    toolsIndex: 'tools/index.tpl',
+    tableSelection: 'table/selection.tpl',
+    tableOption: 'table/option.tpl',
+    tableOperation: 'table/operation.tpl'
 }
 
 class Template {

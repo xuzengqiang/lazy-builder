@@ -72,7 +72,7 @@
         <div>表格配置>></div>
         <el-col :span="4">
             <el-form-item label="是否生成复选框">
-                <el-select>
+                <el-select v-model="indexModel.option.hasSelection">
                     <el-option v-for="item in yesOrNo"
                                :key="item.value"
                                :value="item.value"
@@ -82,8 +82,8 @@
             </el-form-item>
         </el-col>
         <el-col :span="4">
-            <el-form-item label="修改操作">
-                <el-select>
+            <el-form-item label="是否有修改操作">
+                <el-select v-model="indexModel.option.hasEdit">
                     <el-option v-for="item in yesOrNo"
                                :key="item.value"
                                :value="item.value"

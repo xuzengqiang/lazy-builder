@@ -13,9 +13,13 @@ export default vm => ({
     },
     [[operation]]
     option: {
-    
+      [[selection]]
+      beforeFormReset: data => {},
+      beforeFormSubmit: data => {},
+      rowDblclick: row => {},
+      currentChange: row => vm.selectedRow = row
     }
   }],
-  tools: [[tools]],
-  formTools: [[formTools]]
+  tools: [[[tools]]],
+  formTools: [[[formTools]]]
 })
