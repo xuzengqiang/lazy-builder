@@ -5,7 +5,130 @@
  */
 import { mapGetters } from 'vuex'
 import rules from '../config/rules'
+import ModelConfig from '../config/model'
+{{#each columns}}
+{{#if leftcontent}}
+{{#not_null_array leftcontent.fields}}
+import {{leftcontent.fieldsConfig}} from '../config/{{leftcontent.fileName}}'
+{{/not_null_array}}
+{{/if}}
+{{#if main}}
+{{#not_null_array main.fields}}
+import {{main.fieldsConfig}} from '../config/{{main.fileName}}'
+{{/not_null_array}}
+{{/if}}
+{{#if rightcontent}}
+{{#not_null_array rightcontent.fields}}
+import {{rightcontent.fieldsConfig}} from '../config/{{rightcontent.fileName}}'
+{{/not_null_array}}
+{{/if}}
+{{/each}}
 
 export default {
-	
+  data() {
+    return {
+      loading: false,
+      rules,
+      {{#if hasDialog}}
+      dialogOption: {
+        width: '1200px',
+        show: false,
+        title: '', 
+        view: ''
+      },
+      {{/if}}
+      {{#each columns}}
+	  {{#if leftcontent}}
+	  {{#not_null_array leftcontent.fields}}
+	    {{leftcontent.fieldsConfig}}: {{leftcontent.fieldsConfig}}(this),
+	  {{/not_null_array}}
+	  {{/if}}
+	  {{#if main}}
+	  {{#not_null_array main.fields}}
+	    {{main.fieldsConfig}}: {{main.fieldsConfig}}(this),
+	  {{/not_null_array}}
+	  {{/if}}
+	  {{#if rightcontent}}
+	  {{#not_null_array rightcontent.fields}}
+	    {{rightcontent.fieldsConfig}}: {{rightcontent.fieldsConfig}}(this),
+	  {{/not_null_array}}
+	  {{/if}}
+	  {{/each}}
+      model: ModelConfig(this)
+    }
+  },
+  /**
+   * 路由进入之前清空验证规则
+   */
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      vm.$refs.form.clearValidate()
+    })
+  },
+  methods: {
+    {{#if hasDialog}}
+    /**
+     * 显示弹出窗
+     * @param {String} view - 需要显示的组件
+     * @param {String} title - 弹出窗标题
+     * @param {String} width - 弹出层宽度
+     */
+    showDynamicDialog (view, title, width = '1200px') {
+      Object.assign(this.dialogOption, {
+        title: title,
+        width: width,
+        view: view,
+        show: true
+      })
+    },
+    /**
+     * 关闭弹窗
+     */
+    closeDynamicDialog () {
+      this.dialogOption = {
+        show: false,
+        view: null,
+        title: '',
+        width: '0px'
+      }
+    },
+    {{/if}}
+    /**
+     * 表单提交之前的处理
+     * @param {Function} callback - 表单验证成功之后的回调函数
+     */
+    beforeFormSubmit(callback) {
+      this.$refs.form.validate(valid => {
+        if(valid) {
+          if(typeof callback === 'function') {
+            callback()
+          }
+        } else {
+          this.$rule.error(this, this.$refs.form)
+        }
+      })
+    },
+    /**
+     * 新增时表单提交
+     */
+    addFormSubmit() {
+      this.beforeFormSubmit(() => {
+      	// 业务处理
+      })
+    },
+    /**
+     * 修改时表单提交
+     */
+    modifyFormSubmit() {
+      this.beforeFormSubmit(() => {
+        // 业务处理
+      })
+    },
+    /**
+     * 返回主页面
+     */
+    back() {
+      this.$router.push('{{router}}')
+    } 
+  }
 }

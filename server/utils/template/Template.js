@@ -28,7 +28,8 @@ const TemplateMapper = {
     indexQueryTable: 'index/config/query-table.hbs',
     addIndex: 'add/index.hbs',
     configFormFields: 'config/form-fields.hbs',
-    configRules: 'config/rules.hbs'
+    configRules: 'config/rules.hbs',
+    mixinsAddModify: 'mixins/add.modify.hbs'
 }
 
 class Template {

@@ -19,6 +19,11 @@ class AddModifyController {
     constructor(model, menu) {
         this.model = model
         this.menu = menu
+
+        /**
+         * 是否有弹出窗
+         */
+        this.hasDialog = true
     }
 
     /**
@@ -29,6 +34,7 @@ class AddModifyController {
             this._createIndexFile()
             this._createFormFieldsFiles()
             this._createRulesFile()
+            this._createAddModifyFile()
         } catch (e) {
             console.error(e)
         }
@@ -42,7 +48,7 @@ class AddModifyController {
         const file = FileUtils.createFile(`${rootPath}/build/add/index.vue`)
         const template = new Template('addIndex')
         template.compile(file, {
-            hasDialog: false,
+            hasDialog: this.hasDialog,
             columns: this.model.columns
         })
     }
@@ -68,6 +74,20 @@ class AddModifyController {
         const file = FileUtils.createFile(`${rootPath}/build/config/rules.js`)
         const template = new Template('configRules')
         template.compile(file)
+    }
+
+    /**
+     * 开始创建add.modify配置文件
+     */
+    _createAddModifyFile () {
+        console.error('构建新增修改配置文件...')
+        const file = FileUtils.createFile(`${rootPath}/build/mixins/add.modify.js`)
+        const template = new Template('mixinsAddModify')
+        template.compile(file, {
+            hasDialog: this.hasDialog,
+            router: this.menu.router,
+            columns: this.model.columns
+        })
     }
 
     /**
