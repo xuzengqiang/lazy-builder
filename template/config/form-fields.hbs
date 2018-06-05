@@ -41,7 +41,7 @@ export default vm => {
       disabled: {{disabled}},
       {{/if}}
       column: {{column}}
-    },
+    }{{#array_last_index ../subcolumn.fields @index}}{{else}},{{/array_last_index}}
     {{/each}}
   ]
 }

@@ -41,7 +41,7 @@ export default vm => ({
       icon: '{{icon}}',
       disabled: {{disabled}},
       func: () => {}
-    },
+    }{{#array_last_index ../tools @index}}{{else}},{{/array_last_index}}
   {{/each}}
   ],
   formTools: [
@@ -51,28 +51,28 @@ export default vm => ({
       label: '刷新',
       icon: 'refresh',
       func: vm.reload
-    },
+    }{{#array_last_index ../formTools @index}}{{else}},{{/array_last_index}}
     {{else if customFilter}}
     {
       label: '通用查询',
       icon: 'search',
       disabled: false,
       func: vm.showCustomFilter
-    },
+    }{{#array_last_index ../formTools @index}}{{else}},{{/array_last_index}}
     {{else if queryTable}}
     {
       label: '个性设置',
       icon: 'custom',
       disabled: true,
       func: vm.showQueryTable
-    },
+    }{{#array_last_index ../formTools @index}}{{else}},{{/array_last_index}}
     {{else}}
     {
       label: '{{label}}',
       icon: '{{icon}}',
       disabled: {{disabled}},
       func: () => {}
-    },
+    }{{#array_last_index ../formTools @index}}{{else}},{{/array_last_index}}
     {{/if}}
   {{/each}}
   ]

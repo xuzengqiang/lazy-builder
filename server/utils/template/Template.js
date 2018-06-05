@@ -29,6 +29,7 @@ const TemplateMapper = {
     addIndex: 'add/index.hbs',
     configFormFields: 'config/form-fields.hbs',
     configRules: 'config/rules.hbs',
+    configModel: 'config/model.hbs',
     mixinsAddModify: 'mixins/add.modify.hbs'
 }
 

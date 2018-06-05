@@ -9,6 +9,7 @@ const rootPath = process.cwd()
 const Template = require('../utils/template/Template')
 const log4js = require('koa-log4')
 const logger = log4js.getLogger('index')
+const lodash = require('lodash')
 
 class AddModifyController {
     /**
@@ -34,6 +35,7 @@ class AddModifyController {
             this._createIndexFile()
             this._createFormFieldsFiles()
             this._createRulesFile()
+            this._createModelFile()
             this._createAddModifyFile()
         } catch (e) {
             console.error(e)
@@ -70,10 +72,57 @@ class AddModifyController {
      * 创建验证规则配置文件
      */
     _createRulesFile () {
-        console.error('创建验证规则配置文件')
+        console.error('创建rules.js配置文件')
         const file = FileUtils.createFile(`${rootPath}/build/config/rules.js`)
         const template = new Template('configRules')
         template.compile(file)
+    }
+
+    /**
+     * 创建model文件
+     */
+    _createModelFile () {
+        console.error('创建model.js配置文件')
+        const file = FileUtils.createFile(`${rootPath}/build/config/model.js`)
+        const template = new Template('configModel')
+
+        const obj = {}
+        const emptyKeys = []
+
+        const setObj = subcolumn => {
+            if (subcolumn && Array.isArray(subcolumn.fields) && subcolumn.fields.length) {
+                let label
+                let key
+                subcolumn.fields.forEach(field => {
+                    label = field.label ? (field.label + '').trim() : ''
+                    key = field.key ? (field.key + '').trim() : ''
+                    if (label) {
+                        if (key) {
+                            lodash.set(obj, key, {
+                                isleaf: true,
+                                label
+                            })
+                        } else {
+                            emptyKeys.push({
+                                label: label,
+                                key: ''
+                            })
+                        }
+                    }
+                })
+            }
+        }
+
+        this.model.columns.forEach(column => {
+            setObj(column.leftcontent)
+            setObj(column.main)
+            setObj(column.rightcontent)
+        })
+
+        template.compile(file, {
+            emptyKeys,
+            nodes: this.createTreeNodeList(obj)
+        })
     }
 
     /**
@@ -103,6 +152,53 @@ class AddModifyController {
                 subcolumn
             })
         }
+    }
+
+    /**
+     * 创建树节点
+     */
+    createTreeNodeList (fieldObject) {
+        let treeNodeList = []
+        let treeNode
+        for (let property in fieldObject) {
+            treeNode = this.getTreeNode(fieldObject, property)
+            if (treeNode) {
+                treeNodeList.push(treeNode)
+            }
+        }
+        return treeNodeList
+    }
+
+    /**
+     * 获取字段树
+     * @author xuzengqiang
+     * @date 2018-06-05 17:27:00
+     */
+    getTreeNode (fieldObject, property) {
+        let node = fieldObject[property]
+        if (!node) {
+            return null
+        }
+
+        let treeNode = {
+            key: property,
+            childrens: []
+        }
+        let subTreeNode = null
+
+        if (node.isleaf) {
+            treeNode.isleaf = true
+            treeNode.label = node.label
+        } else if (lodash.isPlainObject(node)) {
+            for (let property in node) {
+                subTreeNode = this.getTreeNode(node, property)
+                if (subTreeNode) {
+                    treeNode.childrens.push(subTreeNode)
+                }
+            }
+        }
+
+        return treeNode
     }
 }
 
