@@ -32,7 +32,8 @@ class AddModifyController {
      */
     builder () {
         try {
-            this._createIndexFile()
+            this._createAddIndexFile()
+            this._createModifyIndexFile()
             this._createFormFieldsFiles()
             this._createRulesFile()
             this._createModelFile()
@@ -46,11 +47,25 @@ class AddModifyController {
     /**
      * 生成入口文件
      */
-    _createIndexFile () {
-        console.error('构建编辑页入口文件')
+    _createAddIndexFile () {
+        console.error('构建新增页入口文件')
         const file = FileUtils.createFile(`${rootPath}/build/add/index.vue`)
         FileUtils.createFile(`${rootPath}/build/add/${this.menu.name}新增.md`)
         const template = new Template('addIndex')
+        template.compile(file, {
+            hasDialog: this.hasDialog,
+            columns: this.model.columns
+        })
+    }
+
+    /**
+     * 生成入口文件
+     */
+    _createModifyIndexFile () {
+        console.error('构建编辑页入口文件')
+        const file = FileUtils.createFile(`${rootPath}/build/modify/index.vue`)
+        FileUtils.createFile(`${rootPath}/build/modify/${this.menu.name}修改.md`)
+        const template = new Template('modifyIndex')
         template.compile(file, {
             hasDialog: this.hasDialog,
             columns: this.model.columns

@@ -31,7 +31,8 @@ const TemplateMapper = {
     configRules: 'config/rules.hbs',
     configModel: 'config/model.hbs',
     mixinsAddModify: 'mixins/add.modify.hbs',
-    mixinsModifyDetail: 'mixins/modify.detail.hbs'
+    mixinsModifyDetail: 'mixins/modify.detail.hbs',
+    modifyIndex: 'modify/index.hbs',
 }
 
 class Template {
