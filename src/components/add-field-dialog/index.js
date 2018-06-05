@@ -20,7 +20,8 @@
             valueFormat: 'yyyy-MM-dd HH:mm:ss',
             filter: '',
             rows: 1,
-            resize: 'none'
+            resize: 'none',
+            slot: false
         }
     }
 

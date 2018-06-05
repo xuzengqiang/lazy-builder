@@ -11,39 +11,79 @@ const log4js = require('koa-log4')
 const logger = log4js.getLogger('index')
 
 class AddModifyController {
-  /**
-   * 构造函数
-   * @param {Object} model - 请求的参数信息
-   * @param {Object} menu - 菜单配置
-   */
-  constructor(model, menu) {
-    this.model = model
-    this.menu = menu
-  }
-
-  /**
-   * 构建
-   */
-  builder() {
-    try {
-      this._createIndexFile()
-    } catch (e) {
-      console.error(e)
+    /**
+     * 构造函数
+     * @param {Object} model - 请求的参数信息
+     * @param {Object} menu - 菜单配置
+     */
+    constructor(model, menu) {
+        this.model = model
+        this.menu = menu
     }
-  }
 
-  /**
-   * 生成入口文件
-   */
-  _createIndexFile() {
-    console.error('构建编辑页入口文件')
-    const file = FileUtils.createFile(`${rootPath}/build/add/index.vue`)
-    const template = new Template('addIndex')
-    template.compile(file, {
-      hasDialog: false,
-      columns: this.model.columns
-    })
-  }
+    /**
+     * 构建
+     */
+    builder () {
+        try {
+            this._createIndexFile()
+            this._createFormFieldsFiles()
+            this._createRulesFile()
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
+    /**
+     * 生成入口文件
+     */
+    _createIndexFile () {
+        console.error('构建编辑页入口文件')
+        const file = FileUtils.createFile(`${rootPath}/build/add/index.vue`)
+        const template = new Template('addIndex')
+        template.compile(file, {
+            hasDialog: false,
+            columns: this.model.columns
+        })
+    }
+
+    /**
+     * 创建form-fields配置文件
+     */
+    _createFormFieldsFiles () {
+        console.error('构建字段配置文件...')
+        const columns = this.model.columns
+        columns.forEach(column => {
+            this._createSingleFormFieldsFile(column.leftcontent)
+            this._createSingleFormFieldsFile(column.main)
+            this._createSingleFormFieldsFile(column.rightcontent)
+        })
+    }
+
+    /**
+     * 创建验证规则配置文件
+     */
+    _createRulesFile () {
+        console.error('创建验证规则配置文件')
+        const file = FileUtils.createFile(`${rootPath}/build/config/rules.js`)
+        const template = new Template('configRules')
+        template.compile(file)
+    }
+
+    /**
+     * 创建单个字段配置文件
+     */
+    _createSingleFormFieldsFile (subcolumn) {
+        const fileName = subcolumn && subcolumn.fileName ? (subcolumn.fileName + '').trim() : ''
+        if (fileName && subcolumn.fields.length) {
+            console.error(`构建字段配置文件${fileName}.js`)
+            const file = FileUtils.createFile(`${rootPath}/build/config/${fileName}.js`)
+            const template = new Template('configFormFields')
+            template.compile(file, {
+                subcolumn
+            })
+        }
+    }
 }
 
 module.exports = AddModifyController

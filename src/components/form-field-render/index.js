@@ -109,11 +109,11 @@
              * @param {Object} model - 栏目信息
              */
             setColumn (model) {
-                console.error(model.title)
+                const fileName = model.fileName ? (model.fileName + '').trim() : ''
                 this.model.title = model.title
                 this.model.column = model.column
-                this.model.fileName = model.fileName
-                this.model.fieldsConfig = `${hump(model.fileName)}Config`
+                this.model.fileName = fileName
+                this.model.fieldsConfig = `${hump(fileName)}Config`
                 this.status = 'editor'
             }
         }

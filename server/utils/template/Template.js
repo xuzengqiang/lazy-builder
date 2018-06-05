@@ -26,7 +26,9 @@ const TemplateMapper = {
     indexBeforeRouteEnter: 'index/mixins/beforeRouteEnter.hbs',
     indexCustomFilter: 'index/config/custom-filter.hbs',
     indexQueryTable: 'index/config/query-table.hbs',
-    addIndex: 'add/index.hbs'
+    addIndex: 'add/index.hbs',
+    configFormFields: 'config/form-fields.hbs',
+    configRules: 'config/rules.hbs'
 }
 
 class Template {
