@@ -48,7 +48,7 @@ class IndexController {
   /**
    * 首页配置构建
    */
-  builder() {
+  builder () {
     try {
       this._createIndexFile()
       this._createDataFile()
@@ -66,7 +66,7 @@ class IndexController {
   /**
    * 创建首页入口文件
    */
-  _createIndexFile() {
+  _createIndexFile () {
     console.error('构建首页入口文件')
     const file = FileUtils.createFile(`${rootPath}/build/index/index.vue`)
     const template = new Template('index')
@@ -78,7 +78,7 @@ class IndexController {
   /**
    * 创建首页data文件
    */
-  _createDataFile() {
+  _createDataFile () {
     console.error('构建首页data.js')
     const file = FileUtils.createFile(`${rootPath}/build/index/mixins/data.js`)
     const template = new Template('indexData')
@@ -92,7 +92,7 @@ class IndexController {
    * 创建首页method文件
    * @param {Boolean}
    */
-  _createMethodFile() {
+  _createMethodFile () {
     console.error('构建首页methods.js')
     const file = FileUtils.createFile(`${rootPath}/build/index/mixins/methods.js`)
     const template = new Template('indexMethods')
@@ -104,7 +104,7 @@ class IndexController {
   /**
    * 创建首页beforeRouteEnter文件
    */
-  _createBeforeRouteEnterFile() {
+  _createBeforeRouteEnterFile () {
     console.error('构建首页beforeRouteEnter.js')
     const file = FileUtils.createFile(`${rootPath}/build/index/mixins/beforeRouteEnter.js`)
     const template = new Template('indexBeforeRouteEnter')
@@ -114,7 +114,7 @@ class IndexController {
   /**
    * 创建components文件
    */
-  _createComponentsFile() {
+  _createComponentsFile () {
     if (!this.componentsFlag) return
     console.error('构建首页components.js')
     const file = FileUtils.createFile(`${rootPath}/build/index/mixins/components.js`)
@@ -125,7 +125,7 @@ class IndexController {
   /**
    * 创建混合入口文件
    */
-  _createMixinFile() {
+  _createMixinFile () {
     console.error('构建首页mixins.js')
     const file = FileUtils.createFile(`${rootPath}/build/index/mixins/index.js`)
     const template = new Template('indexMixin')
@@ -137,7 +137,7 @@ class IndexController {
   /**
    * 创建CustomFilter文件
    */
-  _createCustomFilterFile() {
+  _createCustomFilterFile () {
     console.error('构建首页custom-filter.js文件')
     const file = FileUtils.createFile(`${rootPath}/build/index/config/custom-filter.js`)
     const option = this.model.option
@@ -152,7 +152,7 @@ class IndexController {
   /**
    * 生成query-table
    */
-  _createQueryTableFile() {
+  _createQueryTableFile () {
     console.error('构建首页query-table.js文件')
     const file = FileUtils.createFile(`${rootPath}/build/index/config/query-table.js`)
     const option = this.model.option

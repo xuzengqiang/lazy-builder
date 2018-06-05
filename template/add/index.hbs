@@ -7,16 +7,87 @@
                   :model="model"
                   :rules="rules">
             {{#each columns}}
+            {{!-- column存在标题的情况,子栏目则不能再出现标题 --}}
             {{#if title}}
+            {{#not_null_array main.fields}}
+            <form-fields-render title="{{title}}"
+                                :model="model"
+                                :fields="{{model.fileName}}">
             {{else}}
+            <form-fields-render title="{{title}}"
+                                :model="model">
+            {{/not_null_array}}
+                {{!-- 左侧如果有字段,则生成form-fields-render,否则生成插槽 --}}
+                {{#if leftcontent}}
+                {{#not_null_array leftcontent.fields}}
+                <!-- 左侧form表单 -->
+                <form-fields-render :model="model"
+                                    :fields="{{leftcontent.file}}"
+                                    :column="{{leftcontent.column}}">
+                </form-fields-render>
+                {{else}}
+                <!-- 左侧插槽 -->
+                <template slot="leftcontent"></template>
+                {{/not_null_array}}
+                {{/if}}
+                {{!-- 右侧侧如果有字段,则生成form-fields-render,否则生成插槽 --}}
+                {{#if rightcontent}}
+                {{#not_null_array rightcontent.fields}}
+                <!-- 右侧form表单 -->
+                <form-fields-render :model="model"
+                                    :fields="{{rightcontent.file}}"
+                                    :column="{{rightcontent.column}}">
+                </form-fields-render>
+                {{else}}
+                <!-- 右侧插槽 -->
+                <template slot="rightcontent"></template>
+                {{/not_null_array}}
+                {{/if}}   
+            </form-fields-render> 
+            {{else}}
+            {{!-- column不存在标题的情况 --}}
             <el-row>
-            	{{#if leftcontent}}
-            	<el-col :span="{{leftcontent.totalspan}}">
-            		
-            	</el-col>
-            	{{/if}}
-            </el-row>	
-            {{/if}}
+                {{!-- 如果包含左侧区域 --}}
+                {{#if leftcontent}}
+                <el-col :span="{{leftcontent.totalspan}}"
+                        class="leftcontent">
+                    {{#not_null_array leftcontent.fields}}
+                    <form-fields-render :model="model"
+                                        :title="{{leftcontent.title}}"
+                                        :fields="{{leftcontent.file}}"
+                                        :column="{{leftcontent.column}}">
+                    </form-fields-render>
+                    {{/not_null_array}}                  
+                </el-col>
+                {{/if}}
+                {{!-- 如果包含中间主体区域 --}}
+                {{#if main}}
+                <el-col :span="{{main.totalspan}}"
+                        class="maincontent">
+                    {{#not_null_array main.fields}}
+                    <form-fields-render :model="model" 
+                                        title="{{main.title}}"
+                                        :fields="{{main.file}}"
+                                        :column="{{main.column}}">
+                    </form-fields-render>
+                    {{/not_null_array}}                  
+                </el-col>
+                {{/if}}
+                {{!-- 如果包含右侧区域 --}}
+                {{#if rightcontent}}
+                <el-col :span="{{rightcontent.totalspan}}"
+                        class="rightcontent">
+                    {{#not_null_array rightcontent.fields}}
+                    <form-fields-render :model="model"
+                                        :title="{{rightcontent.title}}"
+                                        :fields="{{rightcontent.file}}"
+                                        :column="{{leftcontent.column}}">
+                    </form-fields-render>
+                    {{/not_null_array}}
+                </el-col>
+                {{/if}}
+            </el-row>
+            {{/if}} 
             {{/each}}
         </kye-form>
         {{#if hasDialog}}
