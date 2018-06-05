@@ -1,10 +1,10 @@
 body {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 14px 'Lucida Grande', Helvetica, Arial, sans-serif;
 }
 
 a {
-  color: #00B7FF;
+  color: #00b7ff;
 }
 
 .el-tag + .el-tag {
@@ -23,92 +23,86 @@ a {
   vertical-align: bottom;
 }
 .form-layout {
-  border-bottom:1px solid #DDD;
+  border-bottom: 1px solid #ddd;
   min-height: 100px;
   padding: 10px 0px;
 }
 .form-layout .layout-title,
-.form-field-render .title{
-  height:30px;
+.form-field-render .title {
+  height: 30px;
   background: #f5f5fa;
   width: 100%;
   height: 30px;
   margin-bottom: 10px;
 }
 .form-layout .layout-title label,
-.form-field-render .title label{
-    font-weight: bold;
-    color: #333;
-    line-height: 30px;
-    letter-spacing: 0px;
-    font-size: 14px;
-    margin-left: 20px;
+.form-field-render .title label {
+  font-weight: bold;
+  color: #333;
+  line-height: 30px;
+  letter-spacing: 0px;
+  font-size: 14px;
+  margin-left: 20px;
 }
-.form-field-render{
-  min-height:300px
+.form-field-render {
+  min-height: 300px;
 }
-.form-field-render.setting{
-  border:1px dashed #DEDEDE;
-  background:#EEE
+.form-field-render.setting {
+  border: 1px dashed #dedede;
+  background: #eee;
 }
-.form-field-render .column-setting{
-  padding:10px;
-  font-size:30px;
-  color:#BBB
+.form-field-render .column-setting {
+  padding: 10px;
+  font-size: 30px;
+  color: #bbb;
 }
-.form-field-render .key-message{
-  line-height:13px;
-  font-size:13px;
-  color:#AFAFAF;
-  font-weight: normal
+.form-field-render .key-message {
+  line-height: 13px;
+  font-size: 13px;
+  color: #afafaf;
+  font-weight: normal;
 }
 .layout-category {
-  width:120px;
-  height:50px;
-  float:left;
-  margin-right:15px;
-  cursor:pointer;
+  width: 120px;
+  height: 50px;
+  float: left;
+  margin-right: 15px;
+  cursor: pointer;
   position: relative;
-  border:2px solid transparent
+  border: 2px solid transparent;
 }
 .layout-category .shade {
   position: absolute;
-  left:0px;
-  top:0px;
-  right:0px;
-  bottom:0px;
-  line-height:50px;
-  text-align:center;
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  line-height: 50px;
+  text-align: center;
+  color: #fff;
 }
-.layout-category.selected{
-  border:2px solid rgba(100, 145, 197, 0.959)
+.layout-category.selected {
+  border: 2px solid rgba(197, 100, 153, 0.986);
 }
-.layout-category.selected .shade{
+.layout-category.selected .shade {
   /* color:rgba(159, 110, 204, 0.959) */
+  color: #fff;
 }
-.layout-category[layout=one-column] label{
-  width:120px;
-  height:50px;
-  background:#DDD;
-  float:left
+.layout-category[layout='one-column'] label {
+  width: 120px;
+  height: 50px;
+  background: rgb(121, 153, 206);
+  float: left;
 }
-.layout-category[layout=two-column] label{
-  width:58px;
-  height:50px;
-  background:#DDD;
-  margin-left:4px;
-  float:left;
+.layout-category[layout='two-column'] label {
+  width: 60px;
+  height: 50px;
+  background: #ddd;
+  float: left;
+  background: #ddcbf8;
+  transition: all 0.5s;
 }
-.layout-category[layout=two-column] label:first-child{
-  margin-left:0px;
-}
-.layout-category[layout=three-column] label{
-  width:38px;
-  height:50px;
-  background:#DDD;
-  margin-left:3px;
-  float:left
-}
-.layout-category[layout=three-column] label:first-child{
-  margin-left:0px;
+.layout-category[layout='two-column'] label:first-child {
+  margin-left: 0px;
+  background: rgb(121, 153, 206);
 }

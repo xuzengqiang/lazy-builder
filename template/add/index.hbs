@@ -8,84 +8,64 @@
                   :rules="rules">
             {{#each columns}}
             {{!-- column存在标题的情况,子栏目则不能再出现标题 --}}
+            {{!-- 这种情况稍微复杂一点 --}}
             {{#if title}}
-            {{#not_null_array main.fields}}
-            <form-fields-render title="{{title}}"
-                                :model="model"
-                                :fields="{{model.fieldsConfig}}">
-            {{else}}
-            <form-fields-render title="{{title}}"
-                                :model="model">
-            {{/not_null_array}}
-                {{!-- 左侧如果有字段,则生成form-fields-render,否则生成插槽 --}}
-                {{#if leftcontent}}
-                {{#not_null_array leftcontent.fields}}
-                <!-- 左侧form表单 -->
-                <form-fields-render :model="model"
-                                    :fields="{{leftcontent.fieldsConfig}}"
-                                    :column="{{leftcontent.column}}">
-                </form-fields-render>
-                {{else}}
-                <!-- 左侧插槽 -->
-                <template slot="leftcontent"></template>
-                {{/not_null_array}}
-                {{/if}}
-                {{!-- 右侧侧如果有字段,则生成form-fields-render,否则生成插槽 --}}
-                {{#if rightcontent}}
-                {{#not_null_array rightcontent.fields}}
-                <!-- 右侧form表单 -->
-                <form-fields-render :model="model"
-                                    :fields="{{rightcontent.fieldsConfig}}"
-                                    :column="{{rightcontent.column}}">
+            {{!-- 如果有一个栏目不为空,则把第一个有字段的栏目作为主栏目 --}}
+            {{!-- 假设第一个栏目有字段,则作为主栏目,生成右插槽 --}}
+            {{#not_null_array childrens.[0].fields}}
+            <form-fields-render :model="model"
+                                :fields="{{childrens.[0].fieldsConfig}}">
+                {{!-- 如果第二个栏目字段是空的,好办,生成右插槽,否则仍然生成form-fields-render --}}
+                {{#not_null_array childrens.[1].fields}}
+                <form-fields-render slot="rightcontent"
+                                    :model="model"
+                                    :fields="{{childrens.[1].fieldConfig}}">
                 </form-fields-render>
                 {{else}}
                 <!-- 右侧插槽 -->
-                <template slot="rightcontent"></template>
+                <template slot="rightcontent">
+                </template>    
                 {{/not_null_array}}
-                {{/if}}   
-            </form-fields-render> 
+            </form-fields-render>
             {{else}}
-            {{!-- column不存在标题的情况 --}}
+            {{!-- 假设第二个栏目有字段,则作为主栏目,生成左插槽 --}}
+            {{#not_null_array childrens.[1].fields}}
+            <form-fields-render :model="model"
+                                :fields="{{childrens.[1].fieldsConfig}}">
+                {{!-- 如果第一个栏目字段是空的,好办,生成左插槽,否则仍然生成form-fields-render --}}
+                {{#not_null_array childrens.[0].fields}}
+                <form-fields-render slot="leftcontent"
+                                    :model="model"
+                                    :fields="{{childrens.[0].fieldConfig}}">
+                </form-fields-render>
+                {{else}}
+                <!-- 左侧插槽 -->
+                <template slot="leftcontent">
+                </template>    
+                {{/not_null_array}}
+            </form-fields-render>
+            {{!-- 两个都为空,生成form-fields-render即可 --}}
+            {{else}}
+            <form-fields-render :model="model"
+                                title="{{title}}">
+            </form-fields-render>
+            {{/not_null_array}}
+            {{/not_null_array}}
+            {{else}}
+            {{!-- column不存在标题的情况,这种比较简单 --}}
+            {{!-- 直接遍历即可 --}}
             <el-row>
-                {{!-- 如果包含左侧区域 --}}
-                {{#if leftcontent}}
-                <el-col :span="{{leftcontent.totalspan}}"
-                        class="leftcontent">
-                    {{#not_null_array leftcontent.fields}}
+            	{{#each childrens}}
+        		<el-col :span="{{totalspan}}">
+            		{{#not_null_array fields}}
                     <form-fields-render :model="model"
-                                        :title="{{leftcontent.title}}"
-                                        :fields="{{leftcontent.fieldsConfig}}"
-                                        :column="{{leftcontent.column}}">
+                                        :title="{{title}}"
+                                        :fields="{{fieldsConfig}}"
+                                        :column="{{column}}">
                     </form-fields-render>
-                    {{/not_null_array}}                  
-                </el-col>
-                {{/if}}
-                {{!-- 如果包含中间主体区域 --}}
-                {{#if main}}
-                <el-col :span="{{main.totalspan}}"
-                        class="maincontent">
-                    {{#not_null_array main.fields}}
-                    <form-fields-render :model="model" 
-                                        title="{{main.title}}"
-                                        :fields="{{main.fieldsConfig}}"
-                                        :column="{{main.column}}">
-                    </form-fields-render>
-                    {{/not_null_array}}                  
-                </el-col>
-                {{/if}}
-                {{!-- 如果包含右侧区域 --}}
-                {{#if rightcontent}}
-                <el-col :span="{{rightcontent.totalspan}}"
-                        class="rightcontent">
-                    {{#not_null_array rightcontent.fields}}
-                    <form-fields-render :model="model"
-                                        :title="{{rightcontent.title}}"
-                                        :fields="{{rightcontent.fieldsConfig}}"
-                                        :column="{{leftcontent.column}}">
-                    </form-fields-render>
-                    {{/not_null_array}}
-                </el-col>
-                {{/if}}
+                	{{/not_null_array}}   
+        		</el-col>
+            	{{/each}}
             </el-row>
             {{/if}} 
             {{/each}}

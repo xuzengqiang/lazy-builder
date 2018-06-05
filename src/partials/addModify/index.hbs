@@ -9,27 +9,10 @@
                  v-if="column.title">
                 <label>${column.title}</label>
             </div>
-            <el-col :span="column.leftcontent.totalspan"
-                    class="column-leftcontent"
-                    v-if="column.leftcontent">
+            <el-col v-for="children in column.childrens"
+                    :span="children.totalspan">
                 <form-field-render :has-title="!!column.title"
-                                   :model="column.leftcontent">
-                </form-field-render>
-            </el-col>
-
-            <el-col :span="column.main.totalspan"
-                    class="column-main"
-                    v-if="column.main">
-                <form-field-render :has-title="!!column.title"
-                                   :model="column.main">
-                </form-field-render>
-            </el-col>
-
-            <el-col :span="column.rightcontent.totalspan"
-                    class="column-rightcontent"
-                    v-if="column.rightcontent">
-                <form-field-render :has-title="!!column.title"
-                                   :model="column.rightcontent">
+                                   :model="children">
                 </form-field-render>
             </el-col>
         </el-row>
