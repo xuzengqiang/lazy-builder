@@ -6,6 +6,15 @@
 ; (window => {
     const isPositionNumber = number => /^(0|[1-9]\d*)$/.test(number)
     const isInt = number => /^[1-9]\d*$/.test(number)
+    const hump = (string) => {
+        return string.replace(/-([a-z])|(\d)/ig, (str, char, number) => {
+            if (char) {
+                return char.toUpperCase()
+            } else if (number) {
+                return String.fromCharCode(parseInt(number) + 97)
+            }
+        })
+    }
 
     /**
      * 最大列数
@@ -103,6 +112,8 @@
                 console.error(model.title)
                 this.model.title = model.title
                 this.model.column = model.column
+                this.model.fileName = model.fileName
+                this.model.fieldsConfig = `${hump(model.fileName)}Config`
                 this.status = 'editor'
             }
         }

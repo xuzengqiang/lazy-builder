@@ -26,6 +26,8 @@
         return {
             title: '',
             fields: [],
+            fileName: '',
+            fieldsConfig: '',
             column: DEFAULT_COLUMN,
             totalspan: totalspan
         }

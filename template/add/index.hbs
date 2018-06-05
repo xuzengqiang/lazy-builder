@@ -12,7 +12,7 @@
             {{#not_null_array main.fields}}
             <form-fields-render title="{{title}}"
                                 :model="model"
-                                :fields="{{model.fileName}}">
+                                :fields="{{model.fieldsConfig}}">
             {{else}}
             <form-fields-render title="{{title}}"
                                 :model="model">
@@ -22,7 +22,7 @@
                 {{#not_null_array leftcontent.fields}}
                 <!-- 左侧form表单 -->
                 <form-fields-render :model="model"
-                                    :fields="{{leftcontent.file}}"
+                                    :fields="{{leftcontent.fieldsConfig}}"
                                     :column="{{leftcontent.column}}">
                 </form-fields-render>
                 {{else}}
@@ -35,7 +35,7 @@
                 {{#not_null_array rightcontent.fields}}
                 <!-- 右侧form表单 -->
                 <form-fields-render :model="model"
-                                    :fields="{{rightcontent.file}}"
+                                    :fields="{{rightcontent.fieldsConfig}}"
                                     :column="{{rightcontent.column}}">
                 </form-fields-render>
                 {{else}}
@@ -54,7 +54,7 @@
                     {{#not_null_array leftcontent.fields}}
                     <form-fields-render :model="model"
                                         :title="{{leftcontent.title}}"
-                                        :fields="{{leftcontent.file}}"
+                                        :fields="{{leftcontent.fieldsConfig}}"
                                         :column="{{leftcontent.column}}">
                     </form-fields-render>
                     {{/not_null_array}}                  
@@ -67,7 +67,7 @@
                     {{#not_null_array main.fields}}
                     <form-fields-render :model="model" 
                                         title="{{main.title}}"
-                                        :fields="{{main.file}}"
+                                        :fields="{{main.fieldsConfig}}"
                                         :column="{{main.column}}">
                     </form-fields-render>
                     {{/not_null_array}}                  
@@ -80,7 +80,7 @@
                     {{#not_null_array rightcontent.fields}}
                     <form-fields-render :model="model"
                                         :title="{{rightcontent.title}}"
-                                        :fields="{{rightcontent.file}}"
+                                        :fields="{{rightcontent.fieldsConfig}}"
                                         :column="{{leftcontent.column}}">
                     </form-fields-render>
                     {{/not_null_array}}

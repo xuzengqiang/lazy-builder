@@ -7,7 +7,8 @@
     const ModelConfig = () => {
         return {
             title: '',
-            column: 6
+            column: 6,
+            fileName: ''
         }
     }
     const ColumnConfigDialog = {
@@ -16,7 +17,14 @@
         data () {
             return {
                 model: ModelConfig(),
-                show: false
+                show: false,
+                rules: {
+                    fileName: [{
+                        required: true,
+                        message: '文件名称不能为空',
+                        trigger: 'blur'
+                    }]
+                }
             }
         },
         /**
@@ -33,10 +41,15 @@
         },
         methods: {
             setColumn () {
-                this.show = false
-                this.$emit('set-column', {
-                    title: this.model.title,
-                    column: this.model.column
+                this.$refs.form.validate(valid => {
+                    if (valid) {
+                        this.show = false
+                        this.$emit('set-column', {
+                            title: this.model.title,
+                            column: this.model.column,
+                            fileName: this.model.fileName
+                        })
+                    }
                 })
             }
         }
