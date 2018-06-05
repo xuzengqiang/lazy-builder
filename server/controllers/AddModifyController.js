@@ -37,6 +37,7 @@ class AddModifyController {
             this._createRulesFile()
             this._createModelFile()
             this._createAddModifyFile()
+            this._createModifyDetailFile()
         } catch (e) {
             console.error(e)
         }
@@ -48,6 +49,7 @@ class AddModifyController {
     _createIndexFile () {
         console.error('构建编辑页入口文件')
         const file = FileUtils.createFile(`${rootPath}/build/add/index.vue`)
+        FileUtils.createFile(`${rootPath}/build/add/${this.menu.name}新增.md`)
         const template = new Template('addIndex')
         template.compile(file, {
             hasDialog: this.hasDialog,
@@ -129,13 +131,25 @@ class AddModifyController {
      * 开始创建add.modify配置文件
      */
     _createAddModifyFile () {
-        console.error('构建新增修改配置文件...')
+        console.error('构建add.modify.js配置文件...')
         const file = FileUtils.createFile(`${rootPath}/build/mixins/add.modify.js`)
         const template = new Template('mixinsAddModify')
         template.compile(file, {
             hasDialog: this.hasDialog,
             router: this.menu.router,
             columns: this.model.columns
+        })
+    }
+
+    /**
+     * 开始创建modify.detail配置文件
+     */
+    _createModifyDetailFile () {
+        console.error('构建modify.detail.js配置文件...')
+        const file = FileUtils.createFile(`${rootPath}/build/mixins/modify.detail.js`)
+        const template = new Template('mixinsModifyDetail')
+        template.compile(file, {
+            router: this.menu.router
         })
     }
 

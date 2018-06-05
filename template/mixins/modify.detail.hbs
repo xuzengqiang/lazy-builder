@@ -1,0 +1,43 @@
+/**
+ * @fileOverview 修改详情混合
+ * @author {{author}}
+ * @date {{creationDate}}
+ */
+
+export default {
+  data() {
+    return {
+      loading: false
+    }
+  },
+  /**
+   * 路由进入之前加载数据信息
+   */
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      vm.loadModel()
+    })
+  },
+  methods: {
+    /**
+     * 加载数据信息
+     */
+    async loadModel() {
+      // @fixed 菜单切换填写的数据消失的BUG
+      if (this.$route.meta.layout) {
+        return
+      }
+
+      const back = () => {
+        this.$message.error('无效的数据信息')
+        this.$router.replace('{{router}}')
+      }
+
+      this.loading = true
+      
+      // 请求数据
+
+      this.loading = false
+    }
+  }
+}

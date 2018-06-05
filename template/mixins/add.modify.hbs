@@ -1,5 +1,5 @@
 /**
- * @fileOverview 首页components配置
+ * @fileOverview 新增修改混合配置
  * @author {{author}}
  * @date {{creationDate}}
  */
@@ -23,6 +23,8 @@ import {{rightcontent.fieldsConfig}} from '../config/{{rightcontent.fileName}}'
 {{/not_null_array}}
 {{/if}}
 {{/each}}
+import FormFieldsRender from '@/fms/components/form-fields-render'
+import FormFooter from '@/fms/components/form-footer'
 
 export default {
   data() {
@@ -54,8 +56,17 @@ export default {
 	  {{/not_null_array}}
 	  {{/if}}
 	  {{/each}}
-      model: ModelConfig(this)
+      model: ModelConfig(this),
+      searchPagerConfig: {
+        option: {
+          back: '{{router}}'
+        }
+      }
     }
+  },
+  components: {
+    FormFieldsRender,
+    FormFooter
   },
   /**
    * 路由进入之前清空验证规则

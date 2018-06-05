@@ -69,6 +69,7 @@ class IndexController {
   _createIndexFile () {
     console.error('构建首页入口文件')
     const file = FileUtils.createFile(`${rootPath}/build/index/index.vue`)
+    FileUtils.createFile(`${rootPath}/build/index/${this.menu.name}首页.md`)
     const template = new Template('index')
     template.compile(file, {
       hasDialog: this.hasDialog
