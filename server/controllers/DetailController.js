@@ -4,8 +4,13 @@
  * @date: 2018-05-31 16:16:43
  */
 class DetailController {
-    constructor() {
-
+    /**
+     * 构造函数
+     */
+    constructor(model, addModifyModel, menu) {
+        this.model = model
+        this.addModifyModel = addModifyModel
+        this.menu = menu
     }
 
     /**

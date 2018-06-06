@@ -33,6 +33,14 @@ const TemplateMapper = {
     mixinsAddModify: 'mixins/add.modify.hbs',
     mixinsModifyDetail: 'mixins/modify.detail.hbs',
     modifyIndex: 'modify/index.hbs',
+    detailIndex: 'detail/index.hbs',
+    detailMixinsIndex: 'detail/mixins/index.hbs',
+    detailMixinsComponents: 'detail/mixins/components.hbs',
+    detailMixinsComputed: 'detail/mixins/computed.hbs',
+    detailMixinsData: 'detail/mixins/data.hbs',
+    detailMixinsMethods: 'detail/mixins/methods.hbs',
+    detailConfigFormFields: 'detail/config/form-fields.hbs',
+    detailConfigSearchPager: 'detail/config/search-pager.hbs'
 }
 
 class Template {
