@@ -15,17 +15,17 @@
     <kye-dialog v-bind="dialogOption"
                 @close="closeDynamicDialog"
                 :visible.sync="dialogOption.show">
-        <component :is="dialogOption.view"
-                   :dialogData="dialogData"
-                   @close="closeDynamicDialog">
-        </component>
+      <component :is="dialogOption.view"
+                 :dialogData="dialogData"
+                 @close="closeDynamicDialog">
+      </component>
     </kye-dialog>
     {{/if}}
   </section>
 </template>
 <script>
-import mixins from './mixins'
-export default {
-  mixins
-}
+  import mixins from './mixins'
+  export default {
+    mixins
+  }
 </script>

@@ -18,7 +18,7 @@
       {{else}}
       <!-- 右侧插槽 -->
       <template slot="rightcontent">
-      </template>    
+      </template>
       {{/not_null_array}}
     </fields-detail-render>
     {{else}}
@@ -35,7 +35,7 @@
       {{else}}
       <!-- 左侧插槽 -->
       <template slot="leftcontent">
-      </template>    
+      </template>
     {{/not_null_array}}
     </fields-detail-render>
     {{!-- 两个都为空,生成form-fields-render即可 --}}
@@ -78,13 +78,13 @@
 </template>
 
 <script>
-import mixins from './mixins'
-import ModifyDetailMixin from '../../mixins/modify.detail'
+  import mixins from './mixins'
+  import ModifyDetailMixin from '../mixins/modify.detail'
 
-export default {
-  mixins: [
-    mixins,
-    ModifyDetailMixin
-  ]
-}
+  export default {
+    mixins: [
+      mixins,
+      ModifyDetailMixin
+    ]
+  }
 </script>

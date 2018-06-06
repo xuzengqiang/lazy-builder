@@ -28,16 +28,18 @@ export default {
         return
       }
 
-      const back = () => {
-        this.$message.error('无效的数据信息')
-        this.$router.replace('{{router}}')
-      }
-
       this.loading = true
       
       // 请求数据
 
       this.loading = false
+    },
+    /**
+     * 数据无效返回
+     */
+    errorBack() {
+      this.$message.error('无效的数据信息')
+      this.$router.replace('{{router}}')
     }
   }
 }

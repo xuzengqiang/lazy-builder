@@ -46,7 +46,7 @@ export default {
     const params = options.params || {}
     const response = await this.$http(options.method, params)
 
-    if(typeof optionis.success === 'function') {
+    if (typeof options.success === 'function') {
       options.success(response)
     } else {
       this.$message.success(options.successMsg)

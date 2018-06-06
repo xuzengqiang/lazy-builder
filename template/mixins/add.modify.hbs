@@ -3,7 +3,6 @@
  * @author {{author}}
  * @date {{creationDate}}
  */
-import { mapGetters } from 'vuex'
 import rules from '../config/rules'
 import ModelConfig from '../config/model'
 {{#each columns}}
@@ -18,7 +17,7 @@ import FormFieldsRender from '@/fms/components/form-fields-render'
 import FormFooter from '@/fms/components/form-footer'
 
 export default {
-  data() {
+  data () {
     return {
       loading: false,
       rules,
@@ -26,7 +25,7 @@ export default {
       dialogOption: {
         width: '1200px',
         show: false,
-        title: '', 
+        title: '',
         view: ''
       },
       {{/if}}
@@ -92,8 +91,8 @@ export default {
      */
     beforeFormSubmit(callback) {
       this.$refs.form.validate(valid => {
-        if(valid) {
-          if(typeof callback === 'function') {
+        if (valid) {
+          if (typeof callback === 'function') {
             callback()
           }
         } else {
@@ -106,7 +105,7 @@ export default {
      */
     addFormSubmit() {
       this.beforeFormSubmit(() => {
-      	// 业务处理
+        // 业务处理
       })
     },
     /**
@@ -122,6 +121,6 @@ export default {
      */
     back() {
       this.$router.push('{{router}}')
-    } 
+    }
   }
 }

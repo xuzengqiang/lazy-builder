@@ -7,7 +7,7 @@
 export default {
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      if(from.$params.$refresh) {
+      if (from.$params.$refresh) {
         this.reload()
       }
     })
