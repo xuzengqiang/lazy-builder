@@ -7,7 +7,6 @@
  */
 dom.ready(() => {
   const rint = /^(0|[1-9]\d*)$/i
-  const CACHE_KEY = '__LAZY_BUILDER__'
 
   /**
    * 是否数组
@@ -29,16 +28,13 @@ dom.ready(() => {
     delimiters: ['${', '}'],
     data () {
       return {
-        cache: '',
         currentModule: 'index',
         /**
-         * 模块配置
-         * @property {String} author - 作者名称
+         * 菜单配置
          * @property {String} router - 菜单路由
          * @property {String} name - 菜单名称
          */
-        module: {
-          author: '',
+        menu: {
           router: '',
           name: ''
         },
@@ -107,26 +103,20 @@ dom.ready(() => {
       }
     },
     mounted () {
-      this.cache = window.localStorage.getItem(CACHE_KEY)
+      window.__LAZY_BUILDER__ = this
     },
+    mixins: [CacheEngine],
     methods: {
       /**
-       * 写入缓存
+       * 重置所有数据
        */
-      addStorage () {
-        window.localStorage.setItem(CACHE_KEY, '12122')
-      },
-
-      /**
-       * 清除缓存
-       */
-      clearStorage () {
-        this.$confirm('清除的缓存无法恢复,确定清空吗?', '温馨提示', {
+      resetData () {
+        this.$confirm('数据重置后无法恢复,确定重置吗?', '温馨提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(data => {
-          window.localStorage.removeItem(CACHE_KEY)
+          Object.assign(this.$data, this.$options.data.apply(this))
         })
       },
 
@@ -135,7 +125,7 @@ dom.ready(() => {
        */
       builder () {
         let params = {
-          menu: this.$refs.menu.toJSON(),
+          menu: this.menu,
           /** 首页配置 */
           indexModel: this.indexModel,
           /** 新增修改页配置 */

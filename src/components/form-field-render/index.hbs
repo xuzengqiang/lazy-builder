@@ -1,11 +1,11 @@
 {{!-- 表单字段渲染组件 --}}
 <div class="form-field-render"
      :class="{
-        setting: status === 'setting'
+        setting: !model.created
     }"
      @click="columnClicked">
     <div class="column-setting"
-         v-if="status==='setting'">
+         v-if="!model.created">
         <label>单击修改栏目配置</label>
     </div>
     <div class="form-field-editor"

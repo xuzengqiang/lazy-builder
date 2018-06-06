@@ -13,7 +13,9 @@
       fileName: '',
       fieldsConfig: '',
       column: DEFAULT_COLUMN,
-      totalspan: totalspan
+      totalspan: totalspan,
+      // @fixed 从缓存中获取之后,无法恢复可编辑状态的BUG
+      created: false
     }
   }
 

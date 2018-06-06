@@ -7,12 +7,12 @@
 
 <body>
     <div id="app">
-        {{cache}}
         <el-row style="padding:10px 0px">
             <el-button type="primary"
                        size="small"
                        icon="el-icon-edit"
-                       round>
+                       round
+                       @click="addStorage">
                 写入缓存
             </el-button>
             <el-button type="danger"
@@ -22,11 +22,28 @@
                        round>
                 清空缓存
             </el-button>
+            <el-button type="danger"
+                       size="small"
+                       @click="resetData"
+                       icon="el-icon-delete"
+                       round>
+                重置所有数据
+            </el-button>
         </el-row>
         <el-row>
             <el-col :span="8">
                 {{!-- 菜单配置 --}}
-                <menu-config ref="menu" />
+                <el-form label-width="150px"
+                         ref="form"
+                         :model="menu"
+                         label-position="left">
+                    <el-form-item label="菜单主页面路由">
+                        <el-input v-model="menu.router"></el-input>
+                    </el-form-item>
+                    <el-form-item label="菜单名称">
+                        <el-input v-model="menu.name"></el-input>
+                    </el-form-item>
+                </el-form>
             </el-col>
         </el-row>
         <el-tabs v-model="currentModule">

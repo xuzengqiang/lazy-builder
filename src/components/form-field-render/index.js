@@ -100,7 +100,7 @@
              * @description 如果是设置状态,那么则弹出设置层
              */
             columnClicked () {
-                if (this.status === 'setting') {
+                if (!this.model.created) {
                     this.$refs.columnConfigDialog.show = true
                 }
             },
@@ -113,6 +113,8 @@
                 this.model.title = model.title
                 this.model.column = model.column
                 this.model.fileName = fileName
+                // @fixed 如果已经构建,加上标识
+                this.model.created = true
                 this.model.fieldsConfig = `${hump(fileName)}Config`
                 this.status = 'editor'
             }
