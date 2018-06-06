@@ -2,9 +2,27 @@
 
 <el-form label-position="right"
          label-width="100px">
-    <el-row v-for="column in addModifyModel.columns">
+    <el-row v-for="(column, index) in addModifyModel.columns"
+            class="form-column">
         <el-row :gutter="20"
                 class="form-layout">
+            <div class="layout-oper">
+                <el-button type="primary"
+                           icon="el-icon-edit"
+                           size="small"
+                           round
+                           disabled
+                           @click="editColumn(column, index)">
+                    编辑栏目
+                </el-button>
+                <el-button type="danger"
+                           icon="el-icon-delete"
+                           round
+                           size="small"
+                           @click="deleteColumn(column, index)">
+                    删除栏目
+                </el-button>
+            </div>
             <div class="layout-title"
                  v-if="column.title">
                 <label>${column.title}</label>

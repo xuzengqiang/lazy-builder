@@ -225,6 +225,38 @@ dom.ready(() => {
       },
 
       /**
+       * 栏目点击事件处理
+       * @param {Object} column - 栏目信息
+       */
+      columnClicked (column) {
+        console.error(column)
+      },
+
+      /**
+       * 删除当前栏目
+       * @param {Object} column - 栏目信息
+       * @param {Integer} index - 当前栏目的索引
+       */
+      deleteColumn (column, index) {
+        this.$confirm('删除之后的栏目无法恢复,确定删除吗?', '温馨提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(data => {
+          this.addModifyModel.columns.splice(index, 1)
+        })
+      },
+
+      /**
+       * 修改栏目信息
+       * @param {Object} column - 栏目信息
+       * @param {Integer} index - 当前栏目的索引
+       */
+      editColumn (column, index) {
+        this.$refs.columnDialog.show = true
+      },
+
+      /**
        * tool右移
        */
       toolMoveRight () {

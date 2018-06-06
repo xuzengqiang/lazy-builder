@@ -3,7 +3,7 @@
  * @author: xuzengqiang
  * @date: 2018-06-02 17:49:18
  */
-;(window => {
+; (window => {
   const DEFAULT_COLUMN = 4
 
   const getModel = totalspan => {
@@ -20,7 +20,7 @@
   const AddColumnDialog = {
     template: '#add-column-dialog-template',
     name: 'AddColumnDialog',
-    data() {
+    data () {
       return {
         layout: 'one-column',
         show: false,
@@ -29,7 +29,7 @@
       }
     },
     watch: {
-      show(value) {
+      show (value) {
         if (value) {
           this.title = ''
           this.column = 12
@@ -37,7 +37,7 @@
       }
     },
     methods: {
-      addColumn() {
+      addColumn () {
         const column = this.column
         let childrens = []
 
@@ -54,6 +54,7 @@
         this.show = false
         this.$emit('add-column', {
           title: this.title,
+          layout: this.layout,
           childrens
         })
       },
@@ -61,7 +62,7 @@
        * 点击布局方式之后的处理
        * @param {String} layout - 布局方式
        */
-      layoutClicked(layout) {
+      layoutClicked (layout) {
         this.layout = layout
         if (layout === 'two-column') {
           this.column = 12

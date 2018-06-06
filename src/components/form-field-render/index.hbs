@@ -10,6 +10,16 @@
     </div>
     <div class="form-field-editor"
          v-else>
+        <div class="form-field-oper">
+            <el-button type="primary"
+                       icon="el-icon-edit"
+                       size="small"
+                       round
+                       disabled
+                       @click="editSubColumn(column, index)">
+                编辑子栏目
+            </el-button>
+        </div>
         <div class="title"
              v-if="model.title">
             <label v-text="model.title"></label>
