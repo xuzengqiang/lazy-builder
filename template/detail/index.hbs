@@ -1,6 +1,80 @@
 <template>
-	<div v-loading="loading">
-	</div>
+  <div v-loading="loading">
+    {{#each columns}}
+    {{!-- column存在标题的情况,子栏目则不能再出现标题 --}}
+    {{!-- 这种情况稍微复杂一点 --}}
+    {{#if title}}
+    {{!-- 如果有一个栏目不为空,则把第一个有字段的栏目作为主栏目 --}}
+    {{!-- 假设第一个栏目有字段,则作为主栏目,生成右插槽 --}}
+    {{#not_null_array childrens.[0].fields}}
+    <fields-detail-render :model="model"
+                          :fields="{{childrens.[0].fieldsConfig}}">
+      {{!-- 如果第二个栏目字段是空的,好办,生成右插槽,否则仍然生成fields-detail-render --}}
+      {{#not_null_array childrens.[1].fields}}
+      <fields-detail-render slot="rightcontent"
+                            :model="model"
+                            :fields="{{childrens.[1].fieldConfig}}">
+      </fields-detail-render>
+      {{else}}
+      <!-- 右侧插槽 -->
+      <template slot="rightcontent">
+      </template>    
+      {{/not_null_array}}
+    </fields-detail-render>
+    {{else}}
+    {{!-- 假设第二个栏目有字段,则作为主栏目,生成左插槽 --}}
+    {{#not_null_array childrens.[1].fields}}
+    <fields-detail-render :model="model"
+                          :fields="{{childrens.[1].fieldsConfig}}">
+      {{!-- 如果第一个栏目字段是空的,好办,生成左插槽,否则仍然生成fields-detail-render --}}
+      {{#not_null_array childrens.[0].fields}}
+      <fields-detail-render slot="leftcontent"
+                            :model="model"
+                            :fields="{{childrens.[0].fieldConfig}}">
+      </fields-detail-render>
+      {{else}}
+      <!-- 左侧插槽 -->
+      <template slot="leftcontent">
+      </template>    
+    {{/not_null_array}}
+    </fields-detail-render>
+    {{!-- 两个都为空,生成form-fields-render即可 --}}
+    {{else}}
+    <fields-detail-render :model="model"
+                          title="{{title}}">
+    </fields-detail-render>
+    {{/not_null_array}}
+    {{/not_null_array}}
+    {{else}}
+    {{!-- column不存在标题的情况,这种比较简单 --}}
+    {{!-- 直接遍历即可 --}}
+    <el-row>
+    {{#each childrens}}
+      <el-col :span="{{totalspan}}">
+        {{#not_null_array fields}}
+        <fields-detail-render :model="model"
+                              :title="{{title}}"
+                              :fields="{{fieldsConfig}}"
+                              :column="{{column}}">
+        </fields-detail-render>
+        {{/not_null_array}}   
+      </el-col>
+    {{/each}}
+    </el-row>
+    {{/if}} 
+    {{/each}}
+    {{#if hasDialog}}
+    <!-- 弹出层 -->
+    <kye-dialog v-bind="dialogOption"
+                @close="closeDynamicDialog"
+                :visible.sync="dialogOption.show">
+      <component :is="dialogOption.view"
+                 :dialogData="dialogData"
+                 @close="closeDynamicDialog">
+      </component>
+    </kye-dialog>
+    {{/if}}
+  </div>
 </template>
 
 <script>
@@ -8,9 +82,9 @@ import mixins from './mixins'
 import ModifyDetailMixin from '../../mixins/modify.detail'
 
 export default {
-	mixins: [
-		mixins,
-		ModifyDetailMixin
-	]
+  mixins: [
+    mixins,
+    ModifyDetailMixin
+  ]
 }
 </script>
