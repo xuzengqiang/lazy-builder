@@ -3,9 +3,7 @@
  * @author: xuzengqiang
  * @date: 2018-06-03 14:29:54
  */
-;(window => {
-    const icons = ['voice', 'novoice', 'next', 'previous', 'unie038', 'remind', 'xiangzuo4', 'xiangyou4']
-
+; (window => {
     /**
      * 是否数组
      * @type {Array}
@@ -38,16 +36,15 @@
     const FormToolDialog = {
         template: '#form-tool-dialog-template',
         name: 'FormToolDialog',
-        data() {
+        data () {
             return {
                 model: ModelConfig(),
-                icons,
                 show: false,
                 yesOrNo
             }
         },
         watch: {
-            show(value) {
+            show (value) {
                 value && (this.model = ModelConfig())
             }
         },
@@ -55,9 +52,25 @@
             /**
              * 增加FormTool按钮
              */
-            addFormTool() {
+            addFormTool () {
                 this.show = false
                 this.$emit('add-form-tool', this.model)
+            },
+            /**
+             * 搜索图标
+             * @param {String} name - 图标
+             * @param {Function} callback - 搜索完成的回掉
+             */
+            iconSearch (name, callback) {
+                let matchs = IconSearch(name)
+                let icons = []
+                matchs.forEach(icon => {
+                    icons.push({
+                        value: icon
+                    })
+                })
+
+                return callback(icons)
             }
         }
     }

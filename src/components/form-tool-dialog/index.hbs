@@ -11,13 +11,14 @@
             <el-input v-model="model.label"></el-input>
         </el-form-item>
         <el-form-item label="图标">
-            <el-select v-model="model.icon">
-                <el-option v-for="icon in icons"
-                           :key="icon"
-                           :value="icon"
-                           :label="icon">
-                </el-option>
-            </el-select>
+            <el-autocomplete v-model="model.icon"
+                             value-key="value"
+                             clearable
+                             :fetch-suggestions="iconSearch">
+                <template slot-sope="scope">
+                    {{scope.item.value}}
+                </template>
+            </el-autocomplete>
         </el-form-item>
         <el-form-item label="是否禁用">
             <el-select v-model="model.disabled">
