@@ -6,7 +6,7 @@
  * @version 1.0.0
  */
 dom.ready(() => {
-  const icons = ['voice', 'novoice', 'next', 'previous', 'unie038', 'remind', 'xiangzuo4', 'xiangyou4']
+  const rint = /^(0|[1-9]\d*)$/i
 
   /**
    * 是否数组
@@ -26,7 +26,7 @@ dom.ready(() => {
   new Vue({
     el: '#app',
     delimiters: ['${', '}'],
-    data() {
+    data () {
       return {
         currentModule: 'index',
         /**
@@ -92,59 +92,23 @@ dom.ready(() => {
         },
         yesOrNo: yesOrNo,
         addModifyModel: {
-          columns: [
-            // {
-            //     main: {
-            //         totalspan: 24,
-            //         column: 6,
-            //         title: '录入信息',
-            //         fields: [
-            //             {
-            //                 label: '融资编码',
-            //                 disabled: true,
-            //                 key: 'financingNumber'
-            //             },
-            //             {
-            //                 label: '借款总额',
-            //                 key: 'borrowAmount'
-            //             },
-            //             {
-            //                 label: '实际借款',
-            //                 slot: 'actualLoanAmount'
-            //             },
-            //             {
-            //                 label: '到账借款',
-            //                 disabled: true,
-            //                 key: 'payLoanAmount'
-            //             },
-            //             {
-            //                 label: '未到账借款',
-            //                 slot: 'unpayLoanAmount'
-            //             },
-            //             {
-            //                 label: '年利率',
-            //                 slot: 'annualRate'
-            //             },
-            //             {
-            //                 label: '融资类型',
-            //                 type: 'select',
-            //                 lookupCode: 'fms_financing_type',
-            //                 key: 'financingType'
-            //             }
-            //         ]
-            //     }
-            //     // leftcontent:
-            //     // rightcontent:
-            // }
-          ]
-        }
+          columns: []
+        },
+        /**
+         * 选中FormTool的index
+         */
+        selectedFormToolIndex: 0,
+        /**
+         * 选中tool的index
+         */
+        selectedToolIndex: 0
       }
     },
     methods: {
       /**
        * 开始构建
        */
-      builder() {
+      builder () {
         let params = {
           menu: this.$refs.menu.toJSON(),
           /** 首页配置 */
@@ -169,7 +133,7 @@ dom.ready(() => {
        * @date 2018-6-4 00:23:57
        * @param {Object} model - formTool信息
        */
-      addFormTool(model) {
+      addFormTool (model) {
         let formTool = JSON.parse(JSON.stringify(model))
         this.indexModel.formToolList.push(formTool)
       },
@@ -180,7 +144,7 @@ dom.ready(() => {
        * @since 1.0.0
        * @param {Number} index - 索引
        */
-      removeFormTool(index) {
+      removeFormTool (index) {
         this.indexModel.formToolList.splice(index, 1)
       },
 
@@ -190,7 +154,7 @@ dom.ready(() => {
        * @since 1.0.0
        * @param {Object} model - formTool信息
        */
-      addTool(model) {
+      addTool (model) {
         let tool = JSON.parse(JSON.stringify(model))
         this.indexModel.toolList.push(tool)
       },
@@ -201,7 +165,7 @@ dom.ready(() => {
        * @since 1.0.0
        * @param {Number} index - 索引
        */
-      removeTool(index) {
+      removeTool (index) {
         this.indexModel.toolList.splice(index, 1)
       },
 
@@ -210,9 +174,84 @@ dom.ready(() => {
        * @date 2018-06-04 15:59:18
        * @since 1.0.0
        */
-      addColumn(column) {
-        console.error(column)
+      addColumn (column) {
         this.addModifyModel.columns.push(column)
+      },
+
+      /**
+       * formTool点击之后的处理
+       * @param {Number} index - 点击的formTool的索引
+       */
+      formToolClicked (index) {
+        this.selectedFormToolIndex = index
+      },
+
+      /**
+       * formTool左移
+       */
+      formToolMoveLeft () {
+        const index = this.selectedFormToolIndex
+        this.swap(this.indexModel.formToolList, index, index - 1, () => {
+          this.selectedFormToolIndex = index - 1
+        })
+      },
+
+      /**
+       * formTool右移
+       */
+      formToolMoveRight () {
+        const index = this.selectedFormToolIndex
+        this.swap(this.indexModel.formToolList, index, index + 1, () => {
+          this.selectedFormToolIndex = index + 1
+        })
+      },
+
+      /**
+       * tool点击之后的处理
+       * @param {Number} index - 点击的formTool的索引
+       */
+      toolClicked (index) {
+        this.selectedToolIndex = index
+      },
+
+      /**
+       * tool左移
+       */
+      toolMoveLeft () {
+        const index = this.selectedToolIndex
+        this.swap(this.indexModel.toolList, index, index - 1, () => {
+          this.selectedToolIndex = index - 1
+        })
+      },
+
+      /**
+       * tool右移
+       */
+      toolMoveRight () {
+        const index = this.selectedToolIndex
+        this.swap(this.indexModel.toolList, index, index + 1, () => {
+          this.selectedToolIndex = index + 1
+        })
+      },
+
+      /**
+       * 交换数组中两个值
+       * @param {Array} array - 需要操作的数组
+       * @param {Integer} indexa - 索引a
+       * @param {Integer} indexb - 索引b
+       * @param {Function} callback - 交换成功的function
+       */
+      swap (array, indexa, indexb, callback) {
+        if (Array.isArray(array) && array.length >= 2 && rint.test(indexa) && rint.test(indexb)) {
+          if (indexa < array.length && indexb < array.length) {
+            let temp = array[indexa]
+            this.$set(array, indexa, array[indexb])
+            this.$set(array, indexb, temp)
+            if (typeof callback === 'function') {
+              callback()
+            }
+          }
+        }
       }
     }
   })

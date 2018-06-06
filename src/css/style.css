@@ -10,6 +10,11 @@ a {
 .el-tag + .el-tag {
   margin-left: 10px;
 }
+#app .el-tag.selected{
+  border:1px solid #0b445a;
+  background:#256f8d;
+  color:#FFF;
+}
 .button-new-tag {
   margin-left: 10px;
   height: 32px;

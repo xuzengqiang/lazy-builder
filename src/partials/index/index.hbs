@@ -36,11 +36,26 @@
         </el-col>
     </el-row>
     <el-row>
-        <el-form-item label="formTools配置">
-            <el-tag :key="tag"
-                    v-for="(tag, index) in indexModel.formToolList"
+        <el-form-item label="formTools配置(单击选中后可以按方向键左右移动排序)">
+            <el-button style="padding:8px 20px"
+                       @click="formToolMoveLeft">
+                左移
+            </el-button>
+            <el-button style="padding:8px 20px;margin-right:20px"
+                       @click="formToolMoveRight">
+                右移
+            </el-button>
+            <el-tag v-for="(tag, index) in indexModel.formToolList"
                     closable
+                    :key="tag"
+                    :class="{
+                        selected: selectedFormToolIndex === index
+                    }"
                     :disable-transitions="false"
+                    {{!--
+                    监听原生的点击事件
+                    --}}
+                    @click.native="formToolClicked(index)"
                     @close="removeFormTool(index)">
                 ${tag.label}
             </el-tag>
@@ -54,10 +69,22 @@
     </el-row>
     <el-row>
         <el-form-item label="tools配置">
+            <el-button style="padding:8px 20px"
+                       @click="toolMoveLeft">
+                左移
+            </el-button>
+            <el-button style="padding:8px 20px;margin-right:20px"
+                       @click="toolMoveRight">
+                右移
+            </el-button>
             <el-tag :key="tool"
                     v-for="(tool, index) in indexModel.toolList"
                     closable
                     :disable-transitions="false"
+                    :class="{
+                        selected: selectedToolIndex === index
+                    }"
+                    @click.native="toolClicked(index)"
                     @close="removeTool(index)">
                 ${tool.label}
             </el-tag>
