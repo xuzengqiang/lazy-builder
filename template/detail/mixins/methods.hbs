@@ -22,17 +22,13 @@ export default {
   },
   /**
    * 关闭弹窗
-   * @param {Boolean} needRrefresh - 是否需要刷新
    */
-  closeDynamicDialog (needRrefresh) {
+  closeDynamicDialog () {
     this.dialogOption = {
       show: false,
       view: null,
       title: '',
       width: '0px'
-    }
-    if (needRrefresh) {
-      this.reload()
     }
   },
   {{/if}} 

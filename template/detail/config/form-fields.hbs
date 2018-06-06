@@ -1,6 +1,6 @@
 /*
  * @fileOverview 字段配置
- * @author {author}}
+ * @author {{author}}
  * @date {{creationDate}}
  */
 
@@ -22,10 +22,9 @@ export default vm => {
         args: [
           '{{lookupCode}}'
         ]
-      }
-      {{/if}}
+      },
       {{!-- 如果存在filter --}}
-      {{#if filter}}
+      {{else if filter}}
       filter: '{{filter}}',
       {{/if}}
       column: {{column}}
