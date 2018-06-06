@@ -108,6 +108,9 @@ dom.ready(() => {
     },
     mounted () {
       this.cache = window.localStorage.getItem(CACHE_KEY)
+      adfasjdf
+      asdflkjaf
+      asdfaf
     },
     methods: {
       /**
