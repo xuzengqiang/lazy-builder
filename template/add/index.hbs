@@ -14,6 +14,8 @@
       {{!-- 假设第一个栏目有字段,则作为主栏目,生成右插槽 --}}
       {{#not_null_array childrens.[0].fields}}
       <form-fields-render :model="model"
+                          title="{{title}}"
+                          :column="{{childrens.[0].column}}"
                           :fields="{{childrens.[0].fieldsConfig}}">
         {{!-- 如果第二个栏目字段是空的,好办,生成右插槽,否则仍然生成form-fields-render --}}
         {{#not_null_array childrens.[1].fields}}
@@ -31,6 +33,8 @@
       {{!-- 假设第二个栏目有字段,则作为主栏目,生成左插槽 --}}
       {{#not_null_array childrens.[1].fields}}
       <form-fields-render :model="model"
+                          title="{{title}}"
+                          :column="{{childrens.[0].column}}"
                           :fields="{{childrens.[1].fieldsConfig}}">
         {{!-- 如果第一个栏目字段是空的,好办,生成左插槽,否则仍然生成form-fields-render --}}
         {{#not_null_array childrens.[0].fields}}
