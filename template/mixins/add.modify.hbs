@@ -20,7 +20,7 @@ export default {
   data () {
     return {
       loading: false,
-      rules,
+      rules: rules(this),
       {{#if hasDialog}}
       dialogOption: {
         width: '1200px',

@@ -69,7 +69,7 @@
     }
 
     const fieldTypes = [{
-        value: 'input',
+        value: 'text',
         disabeld: false
     }, {
         value: 'textarea',

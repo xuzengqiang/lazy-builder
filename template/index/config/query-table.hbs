@@ -5,7 +5,9 @@
  */
 
 export default vm => ({
-  option: '{{customSearchCode}}',
+  option: {
+    searchCode: '{{customSearchCode}}'
+  },
   tables: [{
     searchCode: '{{customColumnCode}}',
     url: {
