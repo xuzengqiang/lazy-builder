@@ -69,7 +69,6 @@
                 @close="closeDynamicDialog"
                 :visible.sync="dialogOption.show">
       <component :is="dialogOption.view"
-                 :dialogData="dialogData"
                  @close="closeDynamicDialog">
       </component>
     </kye-dialog>
