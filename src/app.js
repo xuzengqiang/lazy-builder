@@ -27,7 +27,7 @@ dom.ready(() => {
   new Vue({
     el: '#app',
     delimiters: ['${', '}'],
-    data () {
+    data() {
       return {
         cache: '',
         currentModule: 'index',
@@ -106,21 +106,25 @@ dom.ready(() => {
         selectedToolIndex: 0
       }
     },
-    mounted () {
+    mounted() {
       this.cache = window.localStorage.getItem(CACHE_KEY)
+      addEventListener
+      cadj
+      addColumn
+      asdff
     },
     methods: {
       /**
        * 写入缓存
        */
-      addStorage () {
+      addStorage() {
         window.localStorage.setItem(CACHE_KEY, '12122')
       },
 
       /**
        * 清除缓存
        */
-      clearStorage () {
+      clearStorage() {
         this.$confirm('清除的缓存无法恢复,确定清空吗?', '温馨提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -133,7 +137,7 @@ dom.ready(() => {
       /**
        * 开始构建
        */
-      builder () {
+      builder() {
         let params = {
           menu: this.$refs.menu.toJSON(),
           /** 首页配置 */
@@ -158,7 +162,7 @@ dom.ready(() => {
        * @date 2018-6-4 00:23:57
        * @param {Object} model - formTool信息
        */
-      addFormTool (model) {
+      addFormTool(model) {
         let formTool = JSON.parse(JSON.stringify(model))
         this.indexModel.formToolList.push(formTool)
       },
@@ -169,7 +173,7 @@ dom.ready(() => {
        * @since 1.0.0
        * @param {Number} index - 索引
        */
-      removeFormTool (index) {
+      removeFormTool(index) {
         this.indexModel.formToolList.splice(index, 1)
       },
 
@@ -179,7 +183,7 @@ dom.ready(() => {
        * @since 1.0.0
        * @param {Object} model - formTool信息
        */
-      addTool (model) {
+      addTool(model) {
         let tool = JSON.parse(JSON.stringify(model))
         this.indexModel.toolList.push(tool)
       },
@@ -190,7 +194,7 @@ dom.ready(() => {
        * @since 1.0.0
        * @param {Number} index - 索引
        */
-      removeTool (index) {
+      removeTool(index) {
         this.indexModel.toolList.splice(index, 1)
       },
 
@@ -199,7 +203,7 @@ dom.ready(() => {
        * @date 2018-06-04 15:59:18
        * @since 1.0.0
        */
-      addColumn (column) {
+      addColumn(column) {
         this.addModifyModel.columns.push(column)
       },
 
@@ -207,14 +211,14 @@ dom.ready(() => {
        * formTool点击之后的处理
        * @param {Number} index - 点击的formTool的索引
        */
-      formToolClicked (index) {
+      formToolClicked(index) {
         this.selectedFormToolIndex = index
       },
 
       /**
        * formTool左移
        */
-      formToolMoveLeft () {
+      formToolMoveLeft() {
         const index = this.selectedFormToolIndex
         this.swap(this.indexModel.formToolList, index, index - 1, () => {
           this.selectedFormToolIndex = index - 1
@@ -224,7 +228,7 @@ dom.ready(() => {
       /**
        * formTool右移
        */
-      formToolMoveRight () {
+      formToolMoveRight() {
         const index = this.selectedFormToolIndex
         this.swap(this.indexModel.formToolList, index, index + 1, () => {
           this.selectedFormToolIndex = index + 1
@@ -235,14 +239,14 @@ dom.ready(() => {
        * tool点击之后的处理
        * @param {Number} index - 点击的formTool的索引
        */
-      toolClicked (index) {
+      toolClicked(index) {
         this.selectedToolIndex = index
       },
 
       /**
        * tool左移
        */
-      toolMoveLeft () {
+      toolMoveLeft() {
         const index = this.selectedToolIndex
         this.swap(this.indexModel.toolList, index, index - 1, () => {
           this.selectedToolIndex = index - 1
@@ -253,7 +257,7 @@ dom.ready(() => {
        * 栏目点击事件处理
        * @param {Object} column - 栏目信息
        */
-      columnClicked (column) {
+      columnClicked(column) {
         console.error(column)
       },
 
@@ -262,7 +266,7 @@ dom.ready(() => {
        * @param {Object} column - 栏目信息
        * @param {Integer} index - 当前栏目的索引
        */
-      deleteColumn (column, index) {
+      deleteColumn(column, index) {
         this.$confirm('删除之后的栏目无法恢复,确定删除吗?', '温馨提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -277,14 +281,14 @@ dom.ready(() => {
        * @param {Object} column - 栏目信息
        * @param {Integer} index - 当前栏目的索引
        */
-      editColumn (column, index) {
+      editColumn(column, index) {
         this.$refs.columnDialog.show = true
       },
 
       /**
        * tool右移
        */
-      toolMoveRight () {
+      toolMoveRight() {
         const index = this.selectedToolIndex
         this.swap(this.indexModel.toolList, index, index + 1, () => {
           this.selectedToolIndex = index + 1
@@ -298,7 +302,7 @@ dom.ready(() => {
        * @param {Integer} indexb - 索引b
        * @param {Function} callback - 交换成功的function
        */
-      swap (array, indexa, indexb, callback) {
+      swap(array, indexa, indexb, callback) {
         if (Array.isArray(array) && array.length >= 2 && rint.test(indexa) && rint.test(indexb)) {
           if (indexa < array.length && indexb < array.length) {
             let temp = array[indexa]
