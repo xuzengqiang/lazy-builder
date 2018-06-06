@@ -7,6 +7,7 @@
  */
 dom.ready(() => {
   const rint = /^(0|[1-9]\d*)$/i
+  const CACHE_KEY = '__LAZY_BUILDER__'
 
   /**
    * 是否数组
@@ -28,6 +29,7 @@ dom.ready(() => {
     delimiters: ['${', '}'],
     data () {
       return {
+        cache: '',
         currentModule: 'index',
         /**
          * 模块配置
@@ -104,7 +106,30 @@ dom.ready(() => {
         selectedToolIndex: 0
       }
     },
+    mounted () {
+      this.cache = window.localStorage.getItem(CACHE_KEY)
+    },
     methods: {
+      /**
+       * 写入缓存
+       */
+      addStorage () {
+        window.localStorage.setItem(CACHE_KEY, '12122')
+      },
+
+      /**
+       * 清除缓存
+       */
+      clearStorage () {
+        this.$confirm('清除的缓存无法恢复,确定清空吗?', '温馨提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(data => {
+          window.localStorage.removeItem(CACHE_KEY)
+        })
+      },
+
       /**
        * 开始构建
        */

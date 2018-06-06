@@ -7,6 +7,22 @@
 
 <body>
     <div id="app">
+        {{cache}}
+        <el-row style="padding:10px 0px">
+            <el-button type="primary"
+                       size="small"
+                       icon="el-icon-edit"
+                       round>
+                写入缓存
+            </el-button>
+            <el-button type="danger"
+                       size="small"
+                       @click="clearStorage"
+                       icon="el-icon-delete"
+                       round>
+                清空缓存
+            </el-button>
+        </el-row>
         <el-row>
             <el-col :span="8">
                 {{!-- 菜单配置 --}}
