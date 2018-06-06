@@ -1,0 +1,60 @@
+/*
+ * @fileOverview: 详情页方法
+ * @author: xuzengqiang
+ * @date: 2018-05-22 09:54:41
+ */
+
+export default {
+  {{#if hasDialog}}
+  /**
+   * 显示弹出窗
+   * @param {String} view - 需要显示的组件
+   * @param {String} title - 弹出窗标题
+   * @param {String} width - 弹出层宽度
+   */
+  showDynamicDialog (view, title, width = '1200px') {
+    Object.assign(this.dialogOption, {
+      title: title,
+      width: width,
+      view: view,
+      show: true
+    })
+  },
+  /**
+   * 关闭弹窗
+   * @param {Boolean} needRrefresh - 是否需要刷新
+   */
+  closeDynamicDialog (needRrefresh) {
+    this.dialogOption = {
+      show: false,
+      view: null,
+      title: '',
+      width: '0px'
+    }
+    if (needRrefresh) {
+      this.reload()
+    }
+  },
+  {{/if}} 
+  /**
+   * 确认操作
+   * @param {Object} options - 参数信息
+   */
+  async _confirmOperation (options) {
+    await this.$confirm(options.confirm, '温馨提示', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning'
+    })
+
+    const params = options.params || {}
+    const response = await this.$http(options.method, params)
+
+    if(typeof optionis.success === 'function') {
+      options.success(response)
+    } else {
+      this.$message.success(options.successMsg)
+      this.loadModel()
+    }
+  }
+}

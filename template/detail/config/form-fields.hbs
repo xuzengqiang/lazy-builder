@@ -1,0 +1,35 @@
+/*
+ * @fileOverview 字段配置
+ * @author {author}}
+ * @date {{creationDate}}
+ */
+
+export default vm => {
+  return [
+    {{#each subcolumn.fields}}
+    {
+      label: '{{label}}',
+      {{!-- 详情页统一先不生成插槽,后续如果有需要可以再自行处理 --}}
+      {{#if key}}
+      key: '{{key}}',
+      {{else}}
+      key: '@TODO',
+      {{/if}}
+      {{!-- 过滤条件 --}}
+      {{#if lookupCode}}
+      filter: {
+        type:'lookup',
+        args: [
+          '{{lookupCode}}'
+        ]
+      }
+      {{/if}}
+      {{!-- 如果存在filter --}}
+      {{#if filter}}
+      filter: '{{filter}}',
+      {{/if}}
+      column: {{column}}
+    }{{#array_last_index ../subcolumn.fields @index}}{{else}},{{/array_last_index}}
+    {{/each}}
+  ]
+}

@@ -1,0 +1,16 @@
+<template>
+	<div v-loading="loading">
+	</div>
+</template>
+
+<script>
+import mixins from './mixins'
+import ModifyDetailMixin from '../../mixins/modify.detail'
+
+export default {
+	mixins: [
+		mixins,
+		ModifyDetailMixin
+	]
+}
+</script>
