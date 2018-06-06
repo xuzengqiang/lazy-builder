@@ -116,7 +116,7 @@ class IndexController {
    * 创建components文件
    */
   _createComponentsFile () {
-    if (!this.componentsFlag) return
+    if (!this.hasComponents) return
     console.error('构建首页components.js')
     const file = FileUtils.createFile(`${rootPath}/build/index/mixins/components.js`)
     const template = new Template('indexComponents')
