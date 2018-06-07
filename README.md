@@ -4,7 +4,7 @@
 
 ```
 // 将代码clone到本地
-git clone master -b https://github.com/xuzengqiang/lazy-builder.git
+git clone -b master https://github.com/xuzengqiang/lazy-builder.git
 npm install
 npm run dev
 ```
