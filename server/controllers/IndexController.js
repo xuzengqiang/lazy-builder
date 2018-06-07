@@ -53,7 +53,7 @@ class IndexController {
       this._createIndexFile()
       this._createDataFile()
       this._createMethodFile()
-      this._createBeforeRouteEnterFile()
+      this._createHooksFile()
       this._createComponentsFile()
       this._createMixinFile()
       this._createCustomFilterFile()

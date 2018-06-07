@@ -1,0 +1,37 @@
+/**
+ * @fileOverview 路由配置文件
+ * @author {{author}}
+ * @date {{creationDate}}
+ */
+
+const {{#hump moduleFolder}}Index = () => import(/* webpackChunkName: "fms" */ '../pages/{{moduleFolder}}/index')
+const {{#hump moduleFolder}}Detail = () => import(/* webpackChunkName: "fms" */ '../pages/{{moduleFolder}}/detail')
+const {{#hump moduleFolder}}Modify = () => import(/* webpackChunkName: "fms" */ '../pages/{{moduleFolder}}/modify')
+const {{#hump moduleFolder}}Add = () => import(/* webpackChunkName: "fms" */ '../pages/{{moduleFolder}}/add')
+
+export default [
+  // {{menuName}}首页
+  {
+    path: '{{moduleFolder}}/index',
+    component: {{#hump moduleFolder}}Index,
+    meta: { tag: '/fms/{{moduleFolder}}/index', title: '{{menuName}}' }
+  },
+  // {{menuName}}详情
+  {
+    path: '{{moduleFolder}}/detail/:id',
+    component: {{#hump moduleFolder}}Detail,
+    meta: { tag: '/fms/{{moduleFolder}}/index', title: '{{menuName}}-详情' }
+  },
+  // {{menuName}}修改
+  {
+    path: '{{moduleFolder}}/modify/:id',
+    component: {{#hump moduleFolder}}Modify,
+    meta: { tag: '/fms/{{moduleFolder}}/index', title: '{{menuName}}-修改' }
+  },
+  // {{menuName}}新增
+  {
+    path: '{{moduleFolder}}/add',
+    component: {{#hump moduleFolder}}Add,
+    meta: { tag: '/fms/{{moduleFolder}}/index', title: '{{menuName}}-新增' }
+  }
+]

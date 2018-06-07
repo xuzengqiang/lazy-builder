@@ -40,7 +40,8 @@ const TemplateMapper = {
     detailMixinsData: 'detail/mixins/data.hbs',
     detailMixinsMethods: 'detail/mixins/methods.hbs',
     detailConfigFormFields: 'detail/config/form-fields.hbs',
-    detailConfigSearchPager: 'detail/config/search-pager.hbs'
+    detailConfigSearchPager: 'detail/config/search-pager.hbs',
+    routerIndex: 'router/index.hbs'
 }
 
 class Template {
