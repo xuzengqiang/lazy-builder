@@ -10,10 +10,10 @@ a {
 .el-tag + .el-tag {
   margin-left: 10px;
 }
-#app .el-tag.selected{
-  border:1px solid #0b445a;
-  background:#256f8d;
-  color:#FFF;
+#app .el-tag.selected {
+  border: 1px solid #0b445a;
+  background: #256f8d;
+  color: #fff;
 }
 .button-new-tag {
   margin-left: 10px;
@@ -27,27 +27,27 @@ a {
   margin-left: 10px;
   vertical-align: bottom;
 }
-.el-autocomplete .el-input .el-input__inner{
-  height:40px;
-  width:220px;
-  padding:0 20px;
+.el-autocomplete .el-input .el-input__inner {
+  height: 40px;
+  width: 220px;
+  padding: 0 20px;
 }
-.form-column{
+.form-column {
   /* padding:0px 10px; */
 }
 .form-layout {
   /* border: 2px solid #ddd; */
   min-height: 100px;
   padding: 0px 0px 20px;
-  margin:20px 0px;
+  margin: 20px 0px;
 }
 
-.form-layout:hover{
+.form-layout:hover {
   /* border:2px solid #279fce; */
 }
-.form-layout .layout-oper{
+.form-layout .layout-oper {
   height: 40px;
-  padding-left:10px;
+  padding-left: 10px;
 }
 .form-layout .layout-title,
 .form-field-render .title {
@@ -84,12 +84,12 @@ a {
   color: #afafaf;
   font-weight: normal;
 }
-.form-field-render .form-field-oper{
-  height:40px;
-  padding:5px;
+.form-field-render .form-field-oper {
+  height: 40px;
+  padding: 5px;
 }
-.form-field-render .form-field-oper button{
-  float:right;
+.form-field-render .form-field-oper button {
+  float: right;
 }
 .layout-category {
   width: 120px;

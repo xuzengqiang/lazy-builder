@@ -46,7 +46,8 @@
                 </el-form>
             </el-col>
         </el-row>
-        <el-tabs v-model="currentModule">
+        <el-tabs v-model="currentModule"
+                 style="padding:15px;border:1px solid #DDD;margin-bottom:20px">
             <el-tab-pane label="首页配置"
                          name="index">
                 {{>partials/index/index}}
@@ -59,8 +60,12 @@
                          name="detail">
             </el-tab-pane>
         </el-tabs>
+
         <el-button type="primary"
-                   @click="builder">开始构建</el-button>
+                   icon="el-icon-printer"
+                   @click="completeBuilder">
+            构建完整模块代码
+        </el-button>
     </div>
 </body>
 
