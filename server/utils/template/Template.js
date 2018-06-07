@@ -23,7 +23,7 @@ const TemplateMapper = {
     indexData: 'index/mixins/data.hbs',
     indexMethods: 'index/mixins/methods.hbs',
     indexComponents: 'index/mixins/components.hbs',
-    indexBeforeRouteEnter: 'index/mixins/beforeRouteEnter.hbs',
+    indexHooks: 'index/mixins/hooks.hbs',
     indexCustomFilter: 'index/config/custom-filter.hbs',
     indexQueryTable: 'index/config/query-table.hbs',
     addIndex: 'add/index.hbs',

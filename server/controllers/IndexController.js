@@ -103,12 +103,13 @@ class IndexController {
   }
 
   /**
-   * 创建首页beforeRouteEnter文件
+   * 创建首页hooks文件
+   * @description 修改beforeRouteEnter为hooks,因为文件命名不允许有驼峰式
    */
-  _createBeforeRouteEnterFile () {
-    console.error('构建首页beforeRouteEnter.js')
-    const file = FileUtils.createFile(`${rootPath}/build/index/mixins/beforeRouteEnter.js`)
-    const template = new Template('indexBeforeRouteEnter')
+  _createHooksFile () {
+    console.error('构建首页hooks.js')
+    const file = FileUtils.createFile(`${rootPath}/build/index/mixins/hooks.js`)
+    const template = new Template('indexHooks')
     template.compile(file)
   }
 
