@@ -104,7 +104,7 @@ export default {
      * 新增时表单提交
      */
     addFormSubmit() {
-      this.beforeFormSubmit(() => {
+      this.beforeFormSubmit(async () => {
         // 业务处理
       })
     },
@@ -112,14 +112,18 @@ export default {
      * 修改时表单提交
      */
     modifyFormSubmit() {
-      this.beforeFormSubmit(() => {
+      this.beforeFormSubmit(async () => {
         // 业务处理
       })
     },
     /**
      * 返回主页面
+     * @param {Boolean} refresh - 是否刷新主页面列表数据 
      */
-    back() {
+    back(refresh) {
+      if(refresh) {
+        this.$route.params.$refresh = true
+      }
       this.$router.push('{{router}}')
     }
   }
