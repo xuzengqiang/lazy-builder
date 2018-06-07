@@ -31,8 +31,11 @@ router.post('/index-builder', function(ctx, next) {
  * 首页单文件构建
  */
 router.post('/index-unifile-builder', function(ctx, next) {
-  const builderController = new IndexController(ctx.request.body)
-  builderController.unifileBuilder()
+  const options = ctx.request.body
+  const menu = options.menu
+  const indexModel = options.indexModel
+  const indexController = new IndexController(indexModel, menu)
+  indexController.unifileBuilder()
   ctx.body = 'builder'
 })
 

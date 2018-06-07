@@ -1,0 +1,231 @@
+<template>
+  <section>
+    <query-table ref="queryTable"
+                 :tables="queryTableConfig.tables"
+                 :tools="queryTableConfig.tools"
+                 :option="queryTableConfig.option"
+                 :form-tools="queryTableConfig.formTools">
+    </query-table>
+    <!-- 通用查询 -->
+    <custom-filter ref="customFilter"
+                   :module="customFilterConfig.module">
+    </custom-filter>
+    {{#if hasDialog}}
+    <!-- 弹出层 -->
+    <kye-dialog v-bind="dialogOption"
+                @close="closeDynamicDialog"
+                :visible.sync="dialogOption.show">
+      <component :is="dialogOption.view"
+                 @close="closeDynamicDialog">
+      </component>
+    </kye-dialog>
+    {{/if}}
+  </section>
+</template>
+<script>
+  import mixins from './mixins'
+  export default {
+    data() {
+      return {
+        loading: false,
+        {{#if hasSelection}}
+        selection:[],
+        {{/if}}
+        selectedRow: null,
+        {{#if hasDialog}}
+        dialogOption: {
+          width: '1200px',
+          show: false,
+          title: '',
+          view: ''
+        },
+        {{/if}}
+        queryTableConfig:{
+          option: {
+            searchCode: '{{customSearchCode}}'
+          },
+          tables: [{
+            searchCode: '{{customColumnCode}}',
+            url: {
+              method: '{{method}}'
+            },
+            {{#if hasOperation}}
+            operation: {
+              label: '操作',
+              fixed: 'right',
+              width: '60px',
+              options: [{
+                type: 'link',
+                label: '修改',
+                func: row => {}
+              }]
+            },
+            {{/if}}
+            option: {
+              {{#if hasSelection}}
+              type: 'selection',
+              selectionChange: selection => vm.selection = selection,
+              {{/if}}
+              beforeFormReset: data => {},
+              beforeFormSubmit: data => {},
+              rowDblclick: row => {},
+              currentChange: row => vm.selectedRow = row
+            }
+          }],
+          tools: [
+          {{#each tools}}
+            {
+              label: '{{label}}',
+              icon: '{{icon}}',
+              disabled: {{disabled}},
+              func: () => {}
+            }{{#array_last_index ../tools @index}}{{else}},{{/array_last_index}}
+          {{/each}}
+          ],
+          formTools: [
+          {{#each formTools}}
+            {{#if refresh}}
+            {
+              label: '刷新',
+              icon: 'refresh',
+              func: this.reload
+            }{{#array_last_index ../formTools @index}}{{else}},{{/array_last_index}}
+            {{else if customFilter}}
+            {
+              label: '通用查询',
+              icon: 'search',
+              disabled: false,
+              func: this.showCustomFilter
+            }{{#array_last_index ../formTools @index}}{{else}},{{/array_last_index}}
+            {{else if queryTable}}
+            {
+              label: '个性设置',
+              icon: 'custom',
+              disabled: false,
+              func: this.showQueryTable
+            }{{#array_last_index ../formTools @index}}{{else}},{{/array_last_index}}
+            {{else}}
+            {
+              label: '{{label}}',
+              icon: '{{icon}}',
+              disabled: {{disabled}},
+              func: () => {}
+            }{{#array_last_index ../formTools @index}}{{else}},{{/array_last_index}}
+            {{/if}}
+          {{/each}}
+          ]
+        },
+        customFilterConfig: {
+          module:{
+            menu: '{{menu}}',
+            method: '{{method}}',
+            searchCode: '{{searchCode}}'
+          }
+        }
+      }
+    },
+    {{#if hasComponents}}
+    components: {
+    },
+    {{/if}}
+    beforeRouteEnter (to, from, next) {
+      next(vm => {
+        if (from.params.$refresh) {
+          this.reload()
+        }
+      })
+    },
+    methods: {
+      {{#if hasDialog}}
+      /**
+       * 显示弹出窗
+       * @param {String} view - 需要显示的组件
+       * @param {String} title - 弹出窗标题
+       * @param {String} width - 弹出层宽度
+       */
+      showDynamicDialog (view, title, width = '1200px') {
+        Object.assign(this.dialogOption, {
+          title: title,
+          width: width,
+          view: view,
+          show: true
+        })
+      },
+      /**
+       * 关闭弹窗
+       * @param {Boolean} needRrefresh - 是否需要刷新
+       */
+      closeDynamicDialog (needRrefresh) {
+        this.dialogOption = {
+          show: false,
+          view: null,
+          title: '',
+          width: '0px'
+        }
+        if (needRrefresh) {
+          this.reload()
+        }
+      },
+      {{/if}}
+      /**
+       * 显示通用查询
+       */
+      showCustomFilter () {
+        this.$refs.customFilter.show = true
+      },
+      /**
+       * 显示个性设置
+       */
+      showQueryTable () {
+        this.$refs.queryTable.show = true
+      },
+      /**
+       * 重新加载页面数据
+       * @param {Boolean} params - 请求参数信息
+       */
+      reload (params = {}) {
+        this.$refs.queryTable.loadData(params)
+      },
+      /**
+       * 确认操作
+       * @param {Object} options - 参数信息
+       */
+      async _confirmOperation(options) {
+        await this.$confirm(options.confirm, '温馨提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        })
+
+        const response = await this.$http(options.method, options.params || {})
+        if (typeof options.success === 'function') {
+          options.success(response)
+        } else {
+          this.$message.success(options.successMsg)
+          this.reload()
+        }
+      },
+      /**
+       * 行敏感操作
+       * @param {Object} options - 参数信息
+       * @example
+       * this._rowSensitiveOperate({
+       *   confirm: '确认删除这条数据?',
+       *   method: 'fms.otherIncome.disabled',
+       *   successMsg: '删除成功!'
+       * })
+       */
+      _rowSensitiveOperate(options) {
+        if (!this.selectedRow) {
+          this.$message.warning('请选择需要操作的数据')
+          return
+        }
+
+        options.params = options.params || {
+          id: this.selectedRow.id
+        }
+        this._confirmOperation(options)
+      }
+    }
+  }
+</script>

@@ -218,6 +218,7 @@
        * 首页完整构建
        * @description
        * 会构建出首页代码
+       * @since 1.0.0
        */
       indexBuilder() {
         this.$confirm('确定单独构建首页代码吗?', '温馨提示', {
@@ -227,6 +228,31 @@
         }).then(data => {
           axios
             .post('http://localhost:3000/index-builder', {
+              menu: this.menu,
+              /** 首页配置 */
+              indexModel: this.indexModel
+            })
+            .then(data => {
+              console.error(data)
+            })
+            .catch(error => {
+              console.error(error)
+            })
+        })
+      },
+
+      /**
+       * 首页单文件构建
+       * @since 1.0.1
+       */
+      indexUnifileBuilder() {
+        this.$confirm('确定生成首页单文件代码吗?', '温馨提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(data => {
+          axios
+            .post('http://localhost:3000/index-unifile-builder', {
               menu: this.menu,
               /** 首页配置 */
               indexModel: this.indexModel

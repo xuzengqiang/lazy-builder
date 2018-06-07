@@ -19,6 +19,7 @@ class IndexController {
   constructor(model, menu) {
     this.model = model
     this.menu = menu
+    console.error(model)
 
     /**
      * 是否生成复选框
@@ -65,9 +66,26 @@ class IndexController {
 
   /**
    * 首页单文件构建
+   * @since  1.0.1
    */
   unifileBuilder() {
     console.error('首页单文件构建...')
+    const file = FileUtils.createFile(`${rootPath}/build/index.vue`)
+    const template = new Template('indexUnifile')
+    const option = this.model.option
+    template.compile(file, {
+      hasDialog: this.hasDialog,
+      hasSelection: this.hasSelection,
+      hasComponents: this.hasComponents,
+      hasOperation: this.hasOperation,
+      menu: this.menu.router,
+      searchCode: option.searchCode,
+      customSearchCode: option.customSearchCode,
+      customColumnCode: option.customColumnCode,
+      method: option.method,
+      formTools: this.model.formToolList,
+      tools: this.model.toolList
+    })
   }
 
   /**
