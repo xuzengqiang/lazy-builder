@@ -1,5 +1,9 @@
 <template>
   <div v-loading="loading">
+    <search-pager ref="searchPager"
+                  :option="searchPagerConfig.option"
+                  :tools="searchPagerConfig.tools">
+    </search-pager>
     {{#each columns}}
     {{!-- column存在标题的情况,子栏目则不能再出现标题 --}}
     {{!-- 这种情况稍微复杂一点 --}}
