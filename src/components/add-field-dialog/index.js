@@ -13,7 +13,7 @@
             label: '',
             key: '',
             disabled: false,
-            type: 'input',
+            type: 'text',
             lookupCode: '',
             column: 1,
             dateType: 'datetime',

@@ -86,6 +86,23 @@ Handlebars.registerHelper('array_last_index', function (array, index, options) {
     return options.inverse(this)
 })
 
+/**
+ * hump,caml-case转驼峰
+ */
+Handlebars.registerHelper('hump', function (string, options) {
+    string = string ? (string + '').trim() : ''
+    if (string) {
+        string = string.replace(/-([a-z])|(\d)/ig, (str, char, number) => {
+            if (char) {
+                return char.toUpperCase()
+            } else {
+                return String.fromCharCode(parseInt(number) + 97)
+            }
+        })
+    }
+    return string
+})
+
 Handlebars.registerHelper('not_null_array', function (array, options) {
     if (Array.isArray(array) && array.length) {
         return options.fn(this)
