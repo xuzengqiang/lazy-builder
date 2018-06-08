@@ -8,6 +8,11 @@ export default vm => ({
   option: {
     searchCode: '{{customSearchCode}}'
   },
+  generic: {
+    menu: '{{menu}}',
+    method: '{{method}}',
+    searchCode: '{{searchCode}}'
+  },
   tables: [{
     searchCode: '{{customColumnCode}}',
     url: {
@@ -59,14 +64,14 @@ export default vm => ({
       label: '通用查询',
       icon: 'search',
       disabled: false,
-      func: vm.showCustomFilter
+      func: () => vm.$refs.queryTable.showGenericDialog()
     }{{#array_last_index ../formTools @index}}{{else}},{{/array_last_index}}
     {{else if queryTable}}
     {
       label: '个性设置',
       icon: 'custom',
       disabled: false,
-      func: vm.showQueryTable
+      func: () => vm.$refs.queryTable.showDragDialog()
     }{{#array_last_index ../formTools @index}}{{else}},{{/array_last_index}}
     {{else}}
     {

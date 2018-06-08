@@ -4,12 +4,9 @@
                  :tables="queryTableConfig.tables"
                  :tools="queryTableConfig.tools"
                  :option="queryTableConfig.option"
+                 :generic="queryTableConfig.generic"
                  :form-tools="queryTableConfig.formTools">
     </query-table>
-    <!-- 通用查询 -->
-    <custom-filter ref="customFilter"
-                   :module="customFilterConfig.module">
-    </custom-filter>
     {{#if hasDialog}}
     <!-- 弹出层 -->
     <kye-dialog v-bind="dialogOption"
@@ -43,6 +40,11 @@
         queryTableConfig:{
           option: {
             searchCode: '{{customSearchCode}}'
+          },
+          generic: {
+            menu: '{{menu}}',
+            method: '{{method}}',
+            searchCode: '{{searchCode}}'
           },
           tables: [{
             searchCode: '{{customColumnCode}}',
@@ -95,14 +97,14 @@
               label: '通用查询',
               icon: 'search',
               disabled: false,
-              func: this.showCustomFilter
+              func: () => vm.$refs.queryTable.showGenericDialog()
             }{{#array_last_index ../formTools @index}}{{else}},{{/array_last_index}}
             {{else if queryTable}}
             {
               label: '个性设置',
               icon: 'custom',
               disabled: false,
-              func: this.showQueryTable
+              func: () => vm.$refs.queryTable.showDragDialog()
             }{{#array_last_index ../formTools @index}}{{else}},{{/array_last_index}}
             {{else}}
             {
@@ -114,13 +116,6 @@
             {{/if}}
           {{/each}}
           ]
-        },
-        customFilterConfig: {
-          module:{
-            menu: '{{menu}}',
-            method: '{{method}}',
-            searchCode: '{{searchCode}}'
-          }
         }
       }
     },
@@ -167,18 +162,6 @@
         }
       },
       {{/if}}
-      /**
-       * 显示通用查询
-       */
-      showCustomFilter () {
-        this.$refs.customFilter.show = true
-      },
-      /**
-       * 显示个性设置
-       */
-      showQueryTable () {
-        this.$refs.queryTable.show = true
-      },
       /**
        * 重新加载页面数据
        * @param {Boolean} params - 请求参数信息

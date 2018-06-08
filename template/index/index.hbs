@@ -3,13 +3,10 @@
     <query-table ref="queryTable"
                  :tables="queryTableConfig.tables"
                  :tools="queryTableConfig.tools"
+                 :generic="queryTableConfig.generic"
                  :option="queryTableConfig.option"
                  :form-tools="queryTableConfig.formTools">
     </query-table>
-    <!-- 通用查询 -->
-    <custom-filter ref="customFilter"
-                   :module="customFilterConfig.module">
-    </custom-filter>
     {{#if hasDialog}}
     <!-- 弹出层 -->
     <kye-dialog v-bind="dialogOption"
