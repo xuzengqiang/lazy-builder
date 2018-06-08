@@ -5,13 +5,12 @@
  */
 
 import queryTableConfig from '../config/query-table'
-import customFilterConfig from '../config/custom-filter'
 export default {
   data () {
     return {
       loading: false,
       {{#if hasSelection}}
-      selection:[],
+      selection: [],
       {{/if}}
       selectedRow: null,
       {{#if hasDialog}}
@@ -22,8 +21,7 @@ export default {
         view: ''
       },
       {{/if}}
-      queryTableConfig: queryTableConfig(this),
-      customFilterConfig: customFilterConfig(this)
+      queryTableConfig: queryTableConfig(this)
     }
   }
 }

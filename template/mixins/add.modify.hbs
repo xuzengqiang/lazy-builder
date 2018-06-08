@@ -118,10 +118,10 @@ export default {
     },
     /**
      * 返回主页面
-     * @param {Boolean} refresh - 是否刷新主页面列表数据 
+     * @param {Boolean} refresh - 是否刷新主页面列表数据
      */
     back(refresh) {
-      if(refresh) {
+      if (refresh) {
         this.$route.params.$refresh = true
       }
       this.$router.push('{{router}}')

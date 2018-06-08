@@ -32,7 +32,7 @@
                     :span="field.span">
                 <el-form-item :label="field.label"
                               :prop="field.key">
-                    <el-input v-if="!field.type || field.type === 'input' || field.type === 'textarea'"
+                    <el-input v-if="!field.type || field.type === 'text' || field.type === 'textarea'"
                               clearable
                               :disabled="field.disabled || false"
                               :rows="field.rows || 1"
