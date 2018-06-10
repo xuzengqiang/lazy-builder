@@ -17,6 +17,18 @@
     }
 
     /**
+     * 操作模式
+     * @enum
+     * @property {String} ADD - 新增
+     * @property {String} EDIT - 修改
+     * @since 1.0.1
+     */
+    const Mode = {
+        ADD: 'add',
+        EDIT: 'edit'
+    }
+
+    /**
      * 最大列数
      */
     const DEFAULT_MAX_SPAN = 24
@@ -32,6 +44,8 @@
                 fields: [],
                 title: '',
                 focused: true,
+                dialogData: null,
+                mode: Mode.ADD,
                 column: DEFAULT_COLUMN
             }
         },
@@ -87,6 +101,8 @@
              * 添加字段
              */
             addField () {
+                this.dialogData = null
+                this.mode = Mode.ADD
                 this.$refs.dialog.show = true
             },
             /**
@@ -95,6 +111,45 @@
              */
             addFieldHandle (field) {
                 this.model.fields.push(field)
+            },
+            /**
+             * 删除字段信息
+             * @param {Object} field - 字段信息
+             * @since 1.0.1
+             */
+            deleteField (field) {
+                const index = field.index
+                this.$confirm('删除的字段信息无法恢复,确认删除吗?', '温馨提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(data => {
+                    try {
+                        this.model.fields.splice(index, 1)
+                        this.$message.success('删除成功!')
+                    } catch (e) {
+                        this.$message.error(`删除失败:${e}`)
+                    }
+                })
+            },
+            /**
+             * 字段编辑
+             * @param {Object} field - 字段信息
+             * @since 1.0.1
+             */
+            editField (field) {
+                this.dialogData = field
+                this.mode = Mode.EDIT
+                this.$refs.dialog.show = true
+            },
+            /**
+             * 更新字段信息
+             * @param {Object} field - 字段信息
+             * @since 1.0.1
+             */
+            editFieldHandle (field) {
+                console.error(field, field.index)
+                this.$set(this.model.fields, field.index, field)
             },
             /**
              * 栏目点击事件
@@ -118,25 +173,6 @@
                 this.model.created = true
                 this.model.fieldsConfig = `${hump(fileName)}Config`
                 this.status = 'editor'
-            },
-            /**
-             * 删除字段信息
-             * @param {Object} field - 字段信息
-             */
-            deleteField (field) {
-                const index = field.index
-                this.$confirm('删除的字段信息无法恢复,确认删除吗?', '温馨提示', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    type: 'warning'
-                }).then(data => {
-                    try {
-                        this.model.fields.splice(index, 1)
-                        this.$message.success('删除成功!')
-                    } catch (e) {
-                        this.$message.error(`删除失败:${e}`)
-                    }
-                })
             }
         }
     }

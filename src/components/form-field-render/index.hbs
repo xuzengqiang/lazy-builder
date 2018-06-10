@@ -36,7 +36,7 @@
                               class="form-field-item">
                     <span slot="label"
                           class="label"
-                          @click="fieldEdit(field)"
+                          @click="editField(field)"
                           v-text="field.label">
                     </span>
                     <el-input v-if="!field.type || field.type === 'text' || field.type === 'textarea'"
@@ -76,7 +76,10 @@
             <el-button @click="addField">添加字段</el-button>
         </el-row>
         <add-field-dialog ref="dialog"
-                          @add-field="addFieldHandle">
+                          :mode="mode"
+                          :dialog-data="dialogData"
+                          @add-field="addFieldHandle"
+                          @edit-field="editFieldHandle">
         </add-field-dialog>
     </div>
     <column-config-dialog ref="columnConfigDialog"
