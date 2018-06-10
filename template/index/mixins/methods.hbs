@@ -48,7 +48,7 @@ export default {
      * 确认操作
      * @param {Object} options - 参数信息
      */
-    async _confirmOperation(options) {
+    async _confirmOperation (options) {
       await this.$confirm(options.confirm, '温馨提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -73,7 +73,7 @@ export default {
      *   successMsg: '删除成功!'
      * })
      */
-    _rowSensitiveOperate(options) {
+    _rowSensitiveOperate (options) {
       if (!this.selectedRow) {
         this.$message.warning('请选择需要操作的数据')
         return

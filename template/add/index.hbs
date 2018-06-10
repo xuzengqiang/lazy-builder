@@ -1,8 +1,16 @@
 <template>
+  {{!-- 如果在弹出层中 --}}
+  {{#if inDialog}}
+  <div class="kye-dialog-body">
+  {{else}}
   <div>
+  {{/if}}
+    {{!-- 弹出层中不存在search-page --}}
+    {{#unless inDialog}}
     <search-pager ref="searchPager"
                   :option="searchPagerConfig.option">
     </search-pager>
+    {{/unless}}
     <kye-form ref="form"
               :model="model"
               :rules="rules">
@@ -93,21 +101,24 @@
   import AddModifyMixin from '../mixins/add.modify'
   import ModelConfig from '../config/model'
   export default {
-    beforeRouteEnter(to, from, next) {
+    {{!-- 当不在弹出层内的时候,路由进入之前需要重写加载model信息 --}}
+    {{#unless inDialog}}
+    beforeRouteEnter (to, from, next) {
       next(vm => {
         vm.initModel()
       })
     },
-    mixins: [
-      AddModifyMixin
-    ],
     methods: {
-      async initModel() {
+      async initModel () {
         if (this.$route.meta.layout) {
           return
         }
         this.model = ModelConfig(this)
       }
-    }
+    },
+    {{/unless}}
+    mixins: [
+      AddModifyMixin
+    ]
   }
 </script>
