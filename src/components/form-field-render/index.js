@@ -56,8 +56,9 @@
                 // 默认一列所占的span数
                 let span = totalspan / this.model.column
 
-                this.model.fields.forEach(field => {
+                this.model.fields.forEach((field, index) => {
                     field.span = Math.min(totalspan, (/^[1-9]\d*$/.test(field.column) ? parseInt(field.column) : 1) * span)
+                    field.index = index
                     if (sum + field.span < totalspan) {
                         arr.push(field)
                         sum += field.span
@@ -117,6 +118,25 @@
                 this.model.created = true
                 this.model.fieldsConfig = `${hump(fileName)}Config`
                 this.status = 'editor'
+            },
+            /**
+             * 删除字段信息
+             * @param {Object} field - 字段信息
+             */
+            deleteField (field) {
+                const index = field.index
+                this.$confirm('删除的字段信息无法恢复,确认删除吗?', '温馨提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(data => {
+                    try {
+                        this.model.fields.splice(index, 1)
+                        this.$message.success('删除成功!')
+                    } catch (e) {
+                        this.$message.error(`删除失败:${e}`)
+                    }
+                })
             }
         }
     }
