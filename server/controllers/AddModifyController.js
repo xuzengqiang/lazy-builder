@@ -10,7 +10,8 @@ const Template = require('../utils/template/Template')
 const log4js = require('koa-log4')
 const logger = log4js.getLogger('index')
 const lodash = require('lodash')
-
+const symbols = require('log-symbols')
+const chalk = require('chalk')
 class AddModifyController {
   /**
    * 构造函数
@@ -55,15 +56,20 @@ class AddModifyController {
    * 生成入口文件
    */
   _createAddIndexFile () {
-    console.error('构建新增页入口文件')
-    const file = FileUtils.createFile(`${rootPath}/build/add/index.vue`)
-    FileUtils.createFile(`${rootPath}/build/add/${this.menu.name}新增.md`)
-    const template = new Template('addIndex')
-    template.compile(file, {
-      hasDialog: this.hasDialog,
-      inDialog: this.inDialog,
-      columns: this.model.columns
-    })
+    console.log('构建新增页入口文件...')
+    try {
+      const file = FileUtils.createFile(`${rootPath}/build/add/index.vue`)
+      FileUtils.createFile(`${rootPath}/build/add/${this.menu.name}新增.md`)
+      const template = new Template('addIndex')
+      template.compile(file, {
+        hasDialog: this.hasDialog,
+        inDialog: this.inDialog,
+        columns: this.model.columns
+      })
+      console.log(symbols.success, chalk.green('新增页入口文件构建成功!'))
+    } catch (e) {
+      console.error(symbols.error, chalk.red('新增页入口文件构建失败!'))
+    }
   }
 
   /**
