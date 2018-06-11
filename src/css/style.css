@@ -78,11 +78,8 @@ a {
   font-size: 30px;
   color: #bbb;
 }
-.form-field-render .key-message {
-  line-height: 13px;
-  font-size: 13px;
-  color: #afafaf;
-  font-weight: normal;
+.form-field-render .form-field-column{
+  position: relative;
 }
 .form-field-render .form-field-oper {
   height: 40px;
@@ -90,6 +87,40 @@ a {
 }
 .form-field-render .form-field-oper button {
   float: right;
+}
+.form-field-render .form-field-item{
+  border:1px dashed #DDD;
+  padding:2px;
+  border-radius:5px;
+  height:72px;
+  overflow: hidden;
+  position: relative;
+}
+.form-field-render .form-field-item .label{
+  color:#00b7ff;
+  cursor: pointer;
+}
+.form-field-render .key-message {
+  line-height: 13px;
+  font-size: 13px;
+  color: #afafaf;
+  display: block;
+  width:300px;
+  font-weight: normal;
+}
+.form-field-render .form-field-column .field-delete{
+  position: absolute;
+  top:-4px;
+  right:-2px;
+  color:#FFF;
+  cursor: pointer;
+  width:16px;
+  height:16px;
+  font-size:12px;
+  display: block;
+  padding:0px;
+  text-align: center;
+  line-height:13px;
 }
 .layout-category {
   width: 120px;

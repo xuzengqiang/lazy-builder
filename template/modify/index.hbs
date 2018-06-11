@@ -1,8 +1,17 @@
 <template>
-  <div>
+  {{!-- 如果在弹出层中 --}}
+  {{#if inDialog}}
+  <div class="kye-dialog-body"
+       v-loading="loading">
+  {{else}}
+  <div v-loading="loading">
+  {{/if}}
+    {{!-- 弹出层中不存在search-page --}}
+    {{#unless inDialog}}
     <search-pager ref="searchPager"
                   :option="searchPagerConfig.option">
     </search-pager>
+    {{/unless}}
     <kye-form ref="form"
               :model="model"
               :rules="rules">

@@ -37,18 +37,24 @@ export default {
       {{/not_null_array}}
       {{/each}}
       {{/each}}
-      model: ModelConfig(this),
+      {{!-- 在弹出层内部不需要使用search-pager --}}
+      {{!-- @since 1.0.1 --}}
+      {{#unless inDialog}}
       searchPagerConfig: {
         option: {
           back: '{{router}}'
         }
-      }
+      },
+      {{/unless}}
+      model: ModelConfig(this)
     }
   },
   components: {
     FormFieldsRender,
     FormFooter
   },
+  {{!-- 如果在弹出层中不存在路由进入 --}}
+  {{#unless inDialog}}
   /**
    * 路由进入之前清空验证规则
    */
@@ -57,6 +63,7 @@ export default {
       vm.$refs.form.clearValidate()
     })
   },
+  {{/unless}}
   methods: {
     {{#if hasDialog}}
     /**
@@ -89,7 +96,7 @@ export default {
      * 表单提交之前的处理
      * @param {Function} callback - 表单验证成功之后的回调函数
      */
-    beforeFormSubmit(callback) {
+    beforeFormSubmit (callback) {
       this.$refs.form.validate(valid => {
         if (valid) {
           if (typeof callback === 'function') {
@@ -103,7 +110,7 @@ export default {
     /**
      * 新增时表单提交
      */
-    addFormSubmit() {
+    addFormSubmit () {
       this.beforeFormSubmit(async () => {
         // 业务处理
       })
@@ -111,7 +118,7 @@ export default {
     /**
      * 修改时表单提交
      */
-    modifyFormSubmit() {
+    modifyFormSubmit () {
       this.beforeFormSubmit(async () => {
         // 业务处理
       })
@@ -120,11 +127,18 @@ export default {
      * 返回主页面
      * @param {Boolean} refresh - 是否刷新主页面列表数据
      */
-    back(refresh) {
+    {{#if inDialog}}
+    back (refresh = false) {
+      this.$emit('close', refresh)
+    }
+    {{!-- 如果没在弹出层内部,那么通过路由返回 --}}
+    {{else}}
+    back (refresh) {
       if (refresh) {
         this.$route.params.$refresh = true
       }
       this.$router.push('{{router}}')
     }
+    {{/if}}
   }
 }

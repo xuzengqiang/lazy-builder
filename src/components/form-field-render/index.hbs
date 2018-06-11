@@ -24,14 +24,21 @@
              v-if="model.title">
             <label v-text="model.title"></label>
         </div>
-        <el-row :gutter="4"
+        <el-row :gutter="6"
                 v-for="(row, rownum) in rowFields"
                 :key="'row-'+rownum">
             <el-col v-for="(field, column) in row"
                     :key="'field-' + column"
-                    :span="field.span">
+                    :span="field.span"
+                    class="form-field-column">
                 <el-form-item :label="field.label"
-                              :prop="field.key">
+                              :prop="field.key"
+                              class="form-field-item">
+                    <span slot="label"
+                          class="label"
+                          @click="editField(field)"
+                          v-text="field.label">
+                    </span>
                     <el-input v-if="!field.type || field.type === 'text' || field.type === 'textarea'"
                               clearable
                               :disabled="field.disabled || false"
@@ -53,17 +60,26 @@
                         <el-tooltip effect="dark"
                                     :content="field.key"
                                     placement="bottom">
-                            <label v-text="'字段key:' + field.key"></label>
+                            <label v-text="'字段key: ' + field.key"></label>
                         </el-tooltip>
                     </p>
                 </el-form-item>
+                <el-button class="field-delete"
+                           type="danger"
+                           icon="el-icon-close"
+                           @click="deleteField(field)"
+                           circle>
+                </el-button>
             </el-col>
         </el-row>
         <el-row>
             <el-button @click="addField">添加字段</el-button>
         </el-row>
         <add-field-dialog ref="dialog"
-                          @add-field="addFieldHandle">
+                          :mode="mode"
+                          :dialog-data="dialogData"
+                          @add-field="addFieldHandle"
+                          @edit-field="editFieldHandle">
         </add-field-dialog>
     </div>
     <column-config-dialog ref="columnConfigDialog"

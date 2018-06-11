@@ -45,7 +45,12 @@
     ]
 
     /**
-     * resizes
+     * textarea缩放类型
+     * @array
+     * @property none - 不允许缩放
+     * @property both - 允许水平垂直方向缩放
+     * @property horizontal - 允许水平方向缩放
+     * @property vertical - 允许垂直方向缩放
      */
     const resizes = [
         'none',
@@ -102,6 +107,18 @@
         'thousands',
     ]
 
+    /**
+     * 操作模式
+     * @enum
+     * @property {String} ADD - 新增
+     * @property {String} EDIT - 修改
+     * @since 1.0.0
+     */
+    const Mode = {
+        ADD: 'add',
+        EDIT: 'edit'
+    }
+
     const AddFieldDialog = {
         template: '#add-field-dialog-template',
         name: 'AddFieldDialog',
@@ -125,18 +142,47 @@
                 resizes
             }
         },
+        /**
+         * 属性列表
+         * @property {Object} dialogData - 弹出层数据信息
+         * @property {String} mode - 弹出层模式,默认为新增模式
+         */
+        props: {
+            dialogData: {},
+            mode: {
+                type: String,
+                default: Mode.ADD,
+                validator: (value) => {
+                    return value === Mode.ADD || value === Mode.EDIT
+                }
+            }
+        },
         watch: {
+            /**
+             * 当显示状态发生改变的时候修改model
+             * @param {Object} value 
+             */
             show (value) {
-                value && (this.model = ModelConfig())
+                if (!value) return
+                if (Mode.EDIT === this.mode) {
+                    this.model = JSON.parse(JSON.stringify(this.dialogData))
+                } else {
+                    this.model = ModelConfig()
+                }
             }
         },
         methods: {
             /**
-             * 新增字段
+             * 字段处理
              */
-            addField () {
+            fieldHandle () {
                 this.show = false
-                this.$emit('add-field', JSON.parse(JSON.stringify(this.model)))
+                const model = JSON.parse(JSON.stringify(this.model))
+                if (this.mode === Mode.ADD) {
+                    this.$emit('add-field', model)
+                } else {
+                    this.$emit('edit-field', model)
+                }
             },
             /**
              * 表单字段更新

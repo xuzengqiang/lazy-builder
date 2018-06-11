@@ -10,7 +10,8 @@ const Template = require('../utils/template/Template')
 const log4js = require('koa-log4')
 const logger = log4js.getLogger('index')
 const lodash = require('lodash')
-
+const symbols = require('log-symbols')
+const chalk = require('chalk')
 class AddModifyController {
   /**
    * 构造函数
@@ -23,14 +24,21 @@ class AddModifyController {
 
     /**
      * 是否有弹出窗
+     * @type {Boolean}
      */
-    this.hasDialog = true
+    this.hasDialog = model.option.hasDialog
+
+    /**
+     * 是否在弹窗内部
+     * @type {Boolean}
+     */
+    this.inDialog = model.option.inDialog
   }
 
   /**
    * 构建
    */
-  builder() {
+  builder () {
     try {
       this._createAddIndexFile()
       this._createModifyIndexFile()
@@ -47,27 +55,34 @@ class AddModifyController {
   /**
    * 生成入口文件
    */
-  _createAddIndexFile() {
-    console.error('构建新增页入口文件')
-    const file = FileUtils.createFile(`${rootPath}/build/add/index.vue`)
-    FileUtils.createFile(`${rootPath}/build/add/${this.menu.name}新增.md`)
-    const template = new Template('addIndex')
-    template.compile(file, {
-      hasDialog: this.hasDialog,
-      columns: this.model.columns
-    })
+  _createAddIndexFile () {
+    console.log('构建新增页入口文件...')
+    try {
+      const file = FileUtils.createFile(`${rootPath}/build/add/index.vue`)
+      FileUtils.createFile(`${rootPath}/build/add/${this.menu.name}新增.md`)
+      const template = new Template('addIndex')
+      template.compile(file, {
+        hasDialog: this.hasDialog,
+        inDialog: this.inDialog,
+        columns: this.model.columns
+      })
+      console.log(symbols.success, chalk.green('新增页入口文件构建成功!'))
+    } catch (e) {
+      console.error(symbols.error, chalk.red('新增页入口文件构建失败!'))
+    }
   }
 
   /**
    * 生成入口文件
    */
-  _createModifyIndexFile() {
+  _createModifyIndexFile () {
     console.error('构建编辑页入口文件')
     const file = FileUtils.createFile(`${rootPath}/build/modify/index.vue`)
     FileUtils.createFile(`${rootPath}/build/modify/${this.menu.name}修改.md`)
     const template = new Template('modifyIndex')
     template.compile(file, {
       hasDialog: this.hasDialog,
+      inDialog: this.inDialog,
       columns: this.model.columns
     })
   }
@@ -75,7 +90,7 @@ class AddModifyController {
   /**
    * 创建form-fields配置文件
    */
-  _createFormFieldsFiles() {
+  _createFormFieldsFiles () {
     console.error('构建字段配置文件...')
     const columns = this.model.columns
     let childrens
@@ -91,7 +106,7 @@ class AddModifyController {
   /**
    * 创建验证规则配置文件
    */
-  _createRulesFile() {
+  _createRulesFile () {
     console.error('创建rules.js配置文件')
     const file = FileUtils.createFile(`${rootPath}/build/config/rules.js`)
     const template = new Template('configRules')
@@ -101,7 +116,7 @@ class AddModifyController {
   /**
    * 创建model文件
    */
-  _createModelFile() {
+  _createModelFile () {
     console.error('创建model.js配置文件')
     const file = FileUtils.createFile(`${rootPath}/build/config/model.js`)
     const template = new Template('configModel')
@@ -147,12 +162,13 @@ class AddModifyController {
   /**
    * 开始创建add.modify配置文件
    */
-  _createAddModifyFile() {
+  _createAddModifyFile () {
     console.error('构建add.modify.js配置文件...')
     const file = FileUtils.createFile(`${rootPath}/build/mixins/add.modify.js`)
     const template = new Template('mixinsAddModify')
     template.compile(file, {
       hasDialog: this.hasDialog,
+      inDialog: this.inDialog,
       router: this.menu.router,
       columns: this.model.columns
     })
@@ -161,11 +177,13 @@ class AddModifyController {
   /**
    * 开始创建modify.detail配置文件
    */
-  _createModifyDetailFile() {
+  _createModifyDetailFile () {
     console.error('构建modify.detail.js配置文件...')
     const file = FileUtils.createFile(`${rootPath}/build/mixins/modify.detail.js`)
     const template = new Template('mixinsModifyDetail')
     template.compile(file, {
+      hasDialog: this.hasDialog,
+      inDialog: this.inDialog,
       router: this.menu.router
     })
   }
@@ -173,7 +191,7 @@ class AddModifyController {
   /**
    * 创建单个字段配置文件
    */
-  _createSingleFormFieldsFile(subcolumn) {
+  _createSingleFormFieldsFile (subcolumn) {
     const fileName = subcolumn && subcolumn.fileName ? (subcolumn.fileName + '').trim() : ''
     if (fileName && subcolumn.fields.length) {
       console.error(`构建字段配置文件${fileName}.js`)
@@ -188,7 +206,7 @@ class AddModifyController {
   /**
    * 创建树节点
    */
-  createTreeNodeList(fieldObject) {
+  createTreeNodeList (fieldObject) {
     let treeNodeList = []
     let treeNode
     for (let property in fieldObject) {
@@ -205,7 +223,7 @@ class AddModifyController {
    * @author xuzengqiang
    * @date 2018-06-05 17:27:00
    */
-  getTreeNode(fieldObject, property) {
+  getTreeNode (fieldObject, property) {
     let node = fieldObject[property]
     if (!node) {
       return null

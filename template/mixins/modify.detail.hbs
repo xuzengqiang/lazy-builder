@@ -5,7 +5,15 @@
  */
 
 export default {
-  data() {
+  {{!-- 如果在弹出层中,那么不存在路由进入 --}}
+  {{#if inDialog}}
+  data () {
+    return {
+      loading: false
+    }
+  }
+  {{else}}
+  data () {
     return {
       loading: false
     }
@@ -13,7 +21,7 @@ export default {
   /**
    * 路由进入之前加载数据信息
    */
-  beforeRouteEnter(to, from, next) {
+  beforeRouteEnter (to, from, next) {
     next(vm => {
       vm.loadModel()
     })
@@ -22,7 +30,7 @@ export default {
     /**
      * 加载数据信息
      */
-    async loadModel() {
+    async loadModel () {
       // @fixed 菜单切换填写的数据消失的BUG
       if (this.$route.meta.layout) {
         return
@@ -37,9 +45,10 @@ export default {
     /**
      * 数据无效返回
      */
-    errorBack() {
+    errorBack () {
       this.$message.error('无效的数据信息')
       this.$router.replace('{{router}}')
     }
   }
+  {{/if}}
 }
