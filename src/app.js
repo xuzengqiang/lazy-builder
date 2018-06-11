@@ -68,6 +68,25 @@ dom.ready(() => {
               console.error(error)
             })
         })
+      },
+      /**
+       *
+       */
+      artTemplateBuilder() {
+        this.$confirm('确定使用art-template构建一整套模块代码吗?', '温馨提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(data => {
+          axios
+            .post('http://localhost:3000/art-template')
+            .then(data => {
+              console.error(data)
+            })
+            .catch(error => {
+              console.error(error)
+            })
+        })
       }
     }
   })

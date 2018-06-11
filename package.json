@@ -11,6 +11,7 @@
   "dependencies": {
     "art-template": "^4.12.2",
     "debug": "^2.6.3",
+    "juicer": "^0.6.15",
     "koa": "^2.2.0",
     "koa-bodyparser": "^3.2.0",
     "koa-convert": "^1.2.0",

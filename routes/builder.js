@@ -7,6 +7,7 @@ const router = require('koa-router')()
 const fs = require('fs')
 const BuilderController = require('../server/controllers/BuilderController')
 const IndexController = require('../server/controllers/IndexController')
+const ArtTemplateController = require('../server/controllers/ArtTemplateController')
 
 /**
  * 完整构建项目文件夹
@@ -37,6 +38,15 @@ router.post('/index-unifile-builder', function(ctx, next) {
   const indexController = new IndexController(indexModel, menu)
   indexController.unifileBuilder()
   ctx.body = 'builder'
+})
+
+/**
+ * artTemplate模板测试
+ */
+router.post('/art-template', (ctx, next) => {
+  const artTemplateController = new ArtTemplateController()
+  artTemplateController.builder()
+  ctx.body = 'art-template'
 })
 
 module.exports = router
