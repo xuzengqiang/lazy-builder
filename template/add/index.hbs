@@ -99,7 +99,9 @@
 
 <script>
   import AddModifyMixin from '../mixins/add.modify'
+  {{#unless inDialog}}
   import ModelConfig from '../config/model'
+  {{/unless}}
   export default {
     {{!-- 当不在弹出层内的时候,路由进入之前需要重写加载model信息 --}}
     {{#unless inDialog}}
