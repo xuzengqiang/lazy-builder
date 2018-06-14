@@ -1,88 +1,78 @@
 {{!-- 表单字段渲染组件 --}}
-<div class="form-field-render"
-     :class="{
-        setting: !model.created
-    }"
-     @click="columnClicked">
-    <div class="column-setting"
-         v-if="!model.created">
-        <label>单击修改栏目配置</label>
+<div class="form-field-render">
+    <div class="form-field-oper">
+        <el-button type="primary"
+                   icon="el-icon-edit"
+                   size="small"
+                   round
+                   disabled
+                   @click="editSubColumn(column, index)">
+            编辑子栏目
+        </el-button>
     </div>
-    <div class="form-field-editor"
-         v-else>
-        <div class="form-field-oper">
-            <el-button type="primary"
-                       icon="el-icon-edit"
-                       size="small"
-                       round
-                       disabled
-                       @click="editSubColumn(column, index)">
-                编辑子栏目
+    <div class="title"
+         v-if="model.title">
+        <label v-text="model.title"></label>
+    </div>
+    {{!--
+    <el-row :gutter="6"
+            v-for="(row, rownum) in rowFields"
+            :key="'row-'+rownum"
+            style="padding:10px 0px">
+        <el-col v-for="(field, column) in row"
+                :key="'field-' + column"
+                :span="field.span"
+                class="form-field-column">
+            <el-form-item :label="field.label"
+                          :prop="field.key"
+                          class="form-field-item">
+                <span slot="label"
+                      class="label"
+                      @click="editField(field)"
+                      v-text="field.label">
+                </span>
+                <el-input v-if="!field.type || field.type === 'text' || field.type === 'textarea'"
+                          clearable
+                          :disabled="field.disabled || false"
+                          :rows="field.rows || 1"
+                          :resize="fields.resize || 'none'">
+                </el-input>
+                <el-select v-else-if="field.type === 'select'"
+                           clearable
+                           :disabled="field.disabled || false">
+                </el-select>
+                <el-date-picker v-else-if="field.type === 'datePicker'"
+                                clearable
+                                :disabled="field.disabled || false"
+                                :type="field.dateType"
+                                :format="field.valueFormat"
+                                :value-format="field.valueFormat">
+                </el-date-picker>
+                <p class="key-message">
+                    <el-tooltip effect="dark"
+                                :content="field.key"
+                                placement="bottom">
+                        <label v-text="'字段key: ' + field.key"></label>
+                    </el-tooltip>
+                </p>
+            </el-form-item>
+            <el-button class="field-delete"
+                       type="danger"
+                       icon="el-icon-close"
+                       @click="deleteField(field)"
+                       circle>
             </el-button>
-        </div>
-        <div class="title"
-             v-if="model.title">
-            <label v-text="model.title"></label>
-        </div>
-        <el-row :gutter="6"
-                v-for="(row, rownum) in rowFields"
-                :key="'row-'+rownum"
-                style="padding:10px 0px">
-            <el-col v-for="(field, column) in row"
-                    :key="'field-' + column"
-                    :span="field.span"
-                    class="form-field-column">
-                <el-form-item :label="field.label"
-                              :prop="field.key"
-                              class="form-field-item">
-                    <span slot="label"
-                          class="label"
-                          @click="editField(field)"
-                          v-text="field.label">
-                    </span>
-                    <el-input v-if="!field.type || field.type === 'text' || field.type === 'textarea'"
-                              clearable
-                              :disabled="field.disabled || false"
-                              :rows="field.rows || 1"
-                              :resize="fields.resize || 'none'">
-                    </el-input>
-                    <el-select v-else-if="field.type === 'select'"
-                               clearable
-                               :disabled="field.disabled || false">
-                    </el-select>
-                    <el-date-picker v-else-if="field.type === 'datePicker'"
-                                    clearable
-                                    :disabled="field.disabled || false"
-                                    :type="field.dateType"
-                                    :format="field.valueFormat"
-                                    :value-format="field.valueFormat">
-                    </el-date-picker>
-                    <p class="key-message">
-                        <el-tooltip effect="dark"
-                                    :content="field.key"
-                                    placement="bottom">
-                            <label v-text="'字段key: ' + field.key"></label>
-                        </el-tooltip>
-                    </p>
-                </el-form-item>
-                <el-button class="field-delete"
-                           type="danger"
-                           icon="el-icon-close"
-                           @click="deleteField(field)"
-                           circle>
-                </el-button>
-            </el-col>
-        </el-row>
-        <el-row style="padding:5px 0px">
-            <el-button @click="addColumn">添加子栏目</el-button>
-        </el-row>
-        <add-field-dialog ref="dialog"
-                          :mode="mode"
-                          :dialog-data="dialogData"
-                          @add-field="addFieldHandle"
-                          @edit-field="editFieldHandle">
-        </add-field-dialog>
-    </div>
+        </el-col>
+    </el-row> --}}
+    <el-row style="padding:5px 0px">
+        <el-button @click="addColumn">添加子栏目</el-button>
+    </el-row>
+    <add-field-dialog ref="dialog"
+                      :mode="mode"
+                      :dialog-data="dialogData"
+                      @add-field="addFieldHandle"
+                      @edit-field="editFieldHandle">
+    </add-field-dialog>
     <column-config-dialog ref="columnConfigDialog"
                           :has-title="hasTitle"
                           @set-column="setColumn" />

@@ -1,9 +1,10 @@
 {{!-- 新增修改子栏目首页 --}}
 
-<el-form label-position="right"
-         label-width="120px">
+<el-form label-position="left"
+         label-width="120px"
+         inline>
     <el-row>
-        <el-col :span="4">
+        <el-col :span="3">
             <el-form-item label="是否有弹窗">
                 <el-select v-model="addModifyModel.option.hasDialog">
                     <el-option v-for="item in yesOrNo"
@@ -14,7 +15,7 @@
                 </el-select>
             </el-form-item>
         </el-col>
-        <el-col :span="4">
+        <el-col :span="3">
             <el-form-item label="是否在弹窗内部">
                 <el-select v-model="addModifyModel.option.inDialog">
                     <el-option v-for="item in yesOrNo"
@@ -51,8 +52,8 @@
                  v-if="column.title">
                 <label>${column.title}</label>
             </div>
-            <el-col v-for="children in column.childrens"
-                    :span="children.totalspan">
+            <el-col v-for="children in column.cols"
+                    :span="children.span">
                 <form-field-render :has-title="!!column.title"
                                    :model="children">
                 </form-field-render>

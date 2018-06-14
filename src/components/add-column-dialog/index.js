@@ -47,18 +47,24 @@
         // 生成子栏目
         switch (this.layout) {
           case 'one-column':
-            childrens.push(getModel(24))
+            childrens.push({
+              span: 24
+            })
             break
           case 'two-column':
-            childrens.push(getModel(this.column))
-            childrens.push(getModel(24 - this.column))
+            childrens.push({
+              span: this.column
+            })
+            childrens.push({
+              span: 24 - this.column
+            })
         }
 
         this.show = false
         this.$emit('add-column', {
           title: this.title,
-          layout: this.layout,
-          childrens
+          cols: childrens,
+          layout: this.layout
         })
       },
       /**
