@@ -26,7 +26,8 @@
         </div>
         <el-row :gutter="6"
                 v-for="(row, rownum) in rowFields"
-                :key="'row-'+rownum">
+                :key="'row-'+rownum"
+                style="padding:10px 0px">
             <el-col v-for="(field, column) in row"
                     :key="'field-' + column"
                     :span="field.span"
@@ -72,8 +73,8 @@
                 </el-button>
             </el-col>
         </el-row>
-        <el-row>
-            <el-button @click="addField">添加字段</el-button>
+        <el-row style="padding:5px 0px">
+            <el-button @click="addColumn">添加子栏目</el-button>
         </el-row>
         <add-field-dialog ref="dialog"
                           :mode="mode"
@@ -83,6 +84,9 @@
         </add-field-dialog>
     </div>
     <column-config-dialog ref="columnConfigDialog"
+                          :has-title="hasTitle"
+                          @set-column="setColumn" />
+    <column-config-dialog ref="columnSetting"
                           :has-title="hasTitle"
                           @set-column="setColumn" />
 </div>

@@ -33,24 +33,20 @@ a {
   padding: 0 20px;
 }
 .form-column {
-  /* padding:0px 10px; */
+  padding: 0px 10px;
 }
-.form-layout {
-  /* border: 2px solid #ddd; */
+.form-column .form-layout {
   min-height: 100px;
   padding: 0px 0px 20px;
   margin: 20px 0px;
+  border: 1px dashed #ddd;
 }
 
-.form-layout:hover {
-  /* border:2px solid #279fce; */
+.form-column .form-layout .layout-oper {
+  padding: 10px;
 }
-.form-layout .layout-oper {
-  height: 40px;
-  padding-left: 10px;
-}
-.form-layout .layout-title,
-.form-field-render .title {
+.form-column .form-layout .layout-title,
+.form-column .form-field-render .title {
   height: 30px;
   background: #f5f5fa;
   width: 100%;
@@ -68,7 +64,6 @@ a {
 }
 .form-field-render {
   min-height: 300px;
-  border: 1px dashed #dedede;
 }
 .form-field-render.setting {
   background: #eee;
@@ -78,26 +73,38 @@ a {
   font-size: 30px;
   color: #bbb;
 }
-.form-field-render .form-field-column{
+.form-field-render .form-field-column {
   position: relative;
 }
 .form-field-render .form-field-oper {
-  height: 40px;
   padding: 5px;
+  overflow: hidden;
+  border: 1px solid #eee;
 }
 .form-field-render .form-field-oper button {
-  float: right;
+  float: left;
+  border: 0 none;
+  color: rgb(17, 82, 82);
+  background: transparent;
+  font-size: 14px;
 }
-.form-field-render .form-field-item{
-  border:1px dashed #DDD;
-  padding:2px;
-  border-radius:5px;
-  height:72px;
+.form-field-render .form-field-oper button[disabled] {
+  color: #afafaf;
+}
+.form-field-render .form-field-oper button:hover {
+  background: transparent;
+  color: #666;
+}
+.form-field-render .form-field-item {
+  border: 1px dashed #ddd;
+  padding: 2px;
+  border-radius: 5px;
+  height: 72px;
   overflow: hidden;
   position: relative;
 }
-.form-field-render .form-field-item .label{
-  color:#00b7ff;
+.form-field-render .form-field-item .label {
+  color: #00b7ff;
   cursor: pointer;
 }
 .form-field-render .key-message {
@@ -105,22 +112,22 @@ a {
   font-size: 13px;
   color: #afafaf;
   display: block;
-  width:300px;
+  width: 300px;
   font-weight: normal;
 }
-.form-field-render .form-field-column .field-delete{
+.form-field-render .form-field-column .field-delete {
   position: absolute;
-  top:-4px;
-  right:-2px;
-  color:#FFF;
+  top: -4px;
+  right: -2px;
+  color: #fff;
   cursor: pointer;
-  width:16px;
-  height:16px;
-  font-size:12px;
+  width: 16px;
+  height: 16px;
+  font-size: 12px;
   display: block;
-  padding:0px;
+  padding: 0px;
   text-align: center;
-  line-height:13px;
+  line-height: 13px;
 }
 .layout-category {
   width: 120px;
