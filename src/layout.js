@@ -348,5 +348,14 @@ export default vm => {
                 }]
             }]
         }]
+    }, {
+        title: '开票信息',
+        cols: [{
+            tabs: [{
+                label: '付款明细'
+            }, {
+                label: '出账明细'
+            }]
+        }]
     }]
 }
