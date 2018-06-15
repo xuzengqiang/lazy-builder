@@ -1,15 +1,5 @@
 {{!-- 表单字段渲染组件 --}}
 <div class="form-field-render">
-  <div class="form-field-oper">
-    <el-button type="primary"
-               icon="el-icon-edit"
-               size="small"
-               round
-               disabled
-               @click="editSubColumn(column, index)">
-      编辑子栏目
-    </el-button>
-  </div>
   <column-title :label="model.title"></column-title>
   <!-- 遍历当前栏目的子节点 -->
   <el-row v-for="column in model.childrens"
@@ -37,12 +27,6 @@
       添加子栏目
     </el-button>
   </el-row>
-  <add-field-dialog ref="dialog"
-                    :mode="mode"
-                    :dialog-data="dialogData"
-                    @add-field="addFieldHandle"
-                    @edit-field="editFieldHandle">
-  </add-field-dialog>
   <column-config-dialog ref="columnSetting"
                         @set-column="setColumn" />
 </div>

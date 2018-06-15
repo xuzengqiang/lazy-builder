@@ -39,7 +39,7 @@ a {
   min-height: 100px;
   padding: 0px 0px 20px;
   margin: 20px 0px;
-  border: 1px dashed #ddd;
+  border: 1px dashed rgb(223, 16, 16);
 }
 
 .form-column .form-layout .layout-oper {
