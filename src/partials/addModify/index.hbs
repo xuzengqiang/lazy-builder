@@ -2,65 +2,64 @@
 
 <el-form label-position="right"
          label-width="120px">
-    <el-row>
-        <el-col :span="4">
-            <el-form-item label="是否有弹窗">
-                <el-select v-model="addModifyModel.option.hasDialog">
-                    <el-option v-for="item in yesOrNo"
-                               :key="item.value"
-                               :value="item.value"
-                               :label="item.label">
-                    </el-option>
-                </el-select>
-            </el-form-item>
-        </el-col>
-        <el-col :span="4">
-            <el-form-item label="是否在弹窗内部">
-                <el-select v-model="addModifyModel.option.inDialog">
-                    <el-option v-for="item in yesOrNo"
-                               :key="item.value"
-                               :value="item.value"
-                               :label="item.label">
-                    </el-option>
-                </el-select>
-            </el-form-item>
-        </el-col>
+  <el-row>
+    <el-col :span="4">
+      <el-form-item label="是否有弹窗">
+        <el-select v-model="addModifyModel.option.hasDialog">
+          <el-option v-for="item in yesOrNo"
+                     :key="item.value"
+                     :value="item.value"
+                     :label="item.label">
+          </el-option>
+        </el-select>
+      </el-form-item>
+    </el-col>
+    <el-col :span="4">
+      <el-form-item label="是否在弹窗内部">
+        <el-select v-model="addModifyModel.option.inDialog">
+          <el-option v-for="item in yesOrNo"
+                     :key="item.value"
+                     :value="item.value"
+                     :label="item.label">
+          </el-option>
+        </el-select>
+      </el-form-item>
+    </el-col>
+  </el-row>
+  <el-row v-for="(column, index) in addModifyModel.columns"
+          class="form-column">
+    <el-row :gutter="20"
+            class="form-layout">
+      <div class="layout-oper">
+        <el-button type="primary"
+                   icon="el-icon-edit"
+                   size="small"
+                   round
+                   disabled
+                   @click="editColumn(column, index)">
+          编辑栏目
+        </el-button>
+        <el-button type="danger"
+                   icon="el-icon-delete"
+                   round
+                   size="small"
+                   @click="deleteColumn(column, index)">
+          删除栏目
+        </el-button>
+      </div>
+      <div class="layout-title"
+           v-if="column.title">
+        <label>${column.title}</label>
+      </div>
+      <el-col v-for="children in column.childrens"
+              :span="children.span">
+        <form-field-render :model="children">
+        </form-field-render>
+      </el-col>
     </el-row>
-    <el-row v-for="(column, index) in addModifyModel.columns"
-            class="form-column">
-        <el-row :gutter="20"
-                class="form-layout">
-            <div class="layout-oper">
-                <el-button type="primary"
-                           icon="el-icon-edit"
-                           size="small"
-                           round
-                           disabled
-                           @click="editColumn(column, index)">
-                    编辑栏目
-                </el-button>
-                <el-button type="danger"
-                           icon="el-icon-delete"
-                           round
-                           size="small"
-                           @click="deleteColumn(column, index)">
-                    删除栏目
-                </el-button>
-            </div>
-            <div class="layout-title"
-                 v-if="column.title">
-                <label>${column.title}</label>
-            </div>
-            <el-col v-for="children in column.childrens"
-                    :span="children.totalspan">
-                <form-field-render :has-title="!!column.title"
-                                   :model="children">
-                </form-field-render>
-            </el-col>
-        </el-row>
-    </el-row>
+  </el-row>
 </el-form>
-<el-button @click="$refs.columnDialog.show = true">添加栏目</el-button>
+<el-button @click="showColumnDialog">添加栏目</el-button>
 <add-column-dialog ref="columnDialog"
                    @add-column="addColumn">
 </add-column-dialog>
@@ -75,7 +74,7 @@
     {{>components/form-field-render/index}}
 </script>
 
-<!-- 
+<!--
 表单字段弹出层
 @author xuzengqiang
 @date 2018-06-02 16:05:41
@@ -88,20 +87,52 @@
 <!--
 新增栏目弹出层
 @author xuzengqiang
-@date 2018-06-03 11:22:12    
+@date 2018-06-03 11:22:12
 -->
 <script type="text/x-template"
         id="add-column-dialog-template">
     {{>components/add-column-dialog/index}}
 </script>
 
-
 <!--
 子栏目配置弹出层
 @author xuzengqiang
-@date 2018-06-04 16:51:36   
+@date 2018-06-04 16:51:36
 -->
 <script type="text/x-template"
         id="column-config-dialog-template">
     {{>components/column-config-dialog/index}}
+</script>
+
+<!--
+字段栏目组件
+@author xuzengqiang
+@date 2018-06-04 16:51:36
+@since 1.0.2
+-->
+<script type="text/x-template"
+        id="field-column-template">
+    {{>components/field-column/index}}
+</script>
+
+<!--
+选项卡栏目组件
+@author xuzengqiang
+@date 2018-06-04 16:51:36
+@since 1.0.2
+-->
+<script type="text/x-template"
+        id="tab-column-template">
+    {{>components/tab-column/index}}
+</script>
+
+<!--
+栏目标题组件
+@author xuzengqiang
+@date 2018-06-04 16:51:36
+@since 1.0.2
+-->
+<script type="text/x-template"
+        id="column-title-template">
+    {{>components/column-title/index}}
 </script>

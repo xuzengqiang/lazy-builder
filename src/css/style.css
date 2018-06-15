@@ -45,16 +45,14 @@ a {
 .form-column .form-layout .layout-oper {
   padding: 10px;
 }
-.form-column .form-layout .layout-title,
-.form-column .form-field-render .title {
+.form-column .form-layout .layout-title {
   height: 30px;
   background: #f5f5fa;
   width: 100%;
   height: 30px;
   margin-bottom: 10px;
 }
-.form-layout .layout-title label,
-.form-field-render .title label {
+.form-layout .layout-title label{
   font-weight: bold;
   color: #333;
   line-height: 30px;
@@ -62,7 +60,56 @@ a {
   font-size: 14px;
   margin-left: 20px;
 }
-.form-field-render {
+
+.layout-category {
+  width: 120px;
+  height: 50px;
+  float: left;
+  margin-right: 15px;
+  cursor: pointer;
+  position: relative;
+  border: 2px solid transparent;
+}
+.layout-category .shade {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  line-height: 50px;
+  text-align: center;
+  color: #fff;
+}
+.layout-category.selected {
+  border: 2px solid rgba(197, 100, 153, 0.986);
+}
+.layout-category.selected .shade {
+  /* color:rgba(159, 110, 204, 0.959) */
+  color: #fff;
+}
+.layout-category[layout='one-column'] label {
+  width: 120px;
+  height: 50px;
+  background: rgb(121, 153, 206);
+  float: left;
+}
+.layout-category[layout='two-column'] label {
+  width: 60px;
+  height: 50px;
+  background: #ddd;
+  float: left;
+  background: #ddcbf8;
+  transition: all 0.5s;
+}
+.layout-category[layout='two-column'] label:first-child {
+  margin-left: 0px;
+  background: rgb(121, 153, 206);
+}
+
+/**
+ * 表单渲染组件
+ */
+ .form-field-render {
   min-height: 300px;
 }
 .form-field-render.setting {
@@ -129,47 +176,62 @@ a {
   text-align: center;
   line-height: 13px;
 }
-.layout-category {
-  width: 120px;
-  height: 50px;
-  float: left;
-  margin-right: 15px;
-  cursor: pointer;
-  position: relative;
-  border: 2px solid transparent;
+
+/**
+ * 添加字段栏目
+ */
+.fields-column-container{
+  /* border:1px dashed rgb(110, 187, 191); */
+  /* margin:10px 0px;padding:4px; */
 }
-.layout-category .shade {
-  position: absolute;
-  left: 0px;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  line-height: 50px;
-  text-align: center;
-  color: #fff;
+.fields-column-container .add-field{
+  background:rgb(196, 71, 140);
+  color:#FFF;
+  border:0 none;
+  font-size:14px
 }
-.layout-category.selected {
-  border: 2px solid rgba(197, 100, 153, 0.986);
+
+/**
+ * 选项卡自栏目
+ */
+.tab-column-container {
+
 }
-.layout-category.selected .shade {
-  /* color:rgba(159, 110, 204, 0.959) */
-  color: #fff;
+.tab-column-container .tab-oper{
+  padding:5px 0px;
+  text-align:center
 }
-.layout-category[layout='one-column'] label {
-  width: 120px;
-  height: 50px;
-  background: rgb(121, 153, 206);
-  float: left;
+.tab-column-container .tab-oper .el-button{
+  background:rgb(60, 160, 147);
+  color:#FFF;
+  border:0 none;
+  font-size:14px;
 }
-.layout-category[layout='two-column'] label {
-  width: 60px;
-  height: 50px;
-  background: #ddd;
-  float: left;
-  background: #ddcbf8;
-  transition: all 0.5s;
+
+/**
+ * 栏目标题组件
+ */
+.column-title{
+  height: 30px;
+  background: #f5f5fa;
+  width: 100%;
+  height: 30px;
+  margin-bottom: 10px;
+  line-height: 30px;
 }
-.layout-category[layout='two-column'] label:first-child {
-  margin-left: 0px;
-  background: rgb(121, 153, 206);
+.column-title label{
+  font-weight: bold;
+  color: #333;
+  line-height: 30px;
+  letter-spacing: 0px;
+  font-size: 14px;
+  margin-left: 20px;
+}
+
+.column-block{
+  border:1px dashed rgb(110, 187, 191);
+  margin:10px 0px;padding:4px;
+}
+.column-block.outer{
+  border:1px dashed rgb(166, 70, 208);
 }

@@ -4,6 +4,7 @@
  * @date: 2018-06-04 16:45:59
  */
 (window => {
+  const rfileName = /^([a-z]{1,})(-?)([a-z]{1,})$/i
   const ModelConfig = () => {
     return {
       title: '',
@@ -67,6 +68,11 @@
             } else {
               if (!this.model.fileName) {
                 this.$message.warning('文件名称不能为空!')
+                return
+              }
+
+              if (!rfileName.test(this.model.fileName)) {
+                this.$message.warning('文件名字只能由字母和-组成,如:invoice-information')
                 return
               }
             }

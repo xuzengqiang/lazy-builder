@@ -1,20 +1,12 @@
 /*
- * @fileOverview: 表单字段处理
+ * @fileOverview: 添加字段栏目
  * @author: xuzengqiang
- * @date: 2018-06-02 16:01:31
+ * @date: 2018-06-15 14:55:20
  */
 ; (window => {
-  const isPositionNumber = number => /^(0|[1-9]\d*)$/.test(number)
+  const DEFAULT_COLUMN = 4
+  const DEFAULT_MAX_SPAN = 24
   const isInt = number => /^[1-9]\d*$/.test(number)
-  const hump = string => {
-    return string.replace(/-([a-z])|(\d)/gi, (str, char, number) => {
-      if (char) {
-        return char.toUpperCase()
-      } else if (number) {
-        return String.fromCharCode(parseInt(number) + 97)
-      }
-    })
-  }
 
   /**
    * 操作模式
@@ -28,35 +20,32 @@
     EDIT: 'edit'
   }
 
-  /**
-   * 最大列数
-   */
-  const DEFAULT_MAX_SPAN = 24
-  const DEFAULT_COLUMN = 4
-
-  const FormFieldRender = {
-    template: '#form-field-render-template',
-    name: 'FormFieldRender',
+  const FieldColumnComponent = {
+    template: '#field-column-template',
+    name: 'FieldColumn',
     data () {
       return {
         dialogVisible: false,
-        status: 'setting',
-        fields: [],
-        title: '',
-        focused: true,
         dialogData: null,
-        mode: Mode.ADD,
-        column: DEFAULT_COLUMN
+        mode: Mode.ADD
       }
     },
     /**
      * 属性列表
-     * @property {Object} model - 模块对象
+     * @property {Array} fields - 字段列表
+     * @property {String|Number} column - 列数
      */
     props: {
-      model: {
-        type: Object,
+      fields: {
+        type: Array,
         required: true
+      },
+      column: {
+        type: [String, Number],
+        default: DEFAULT_COLUMN,
+        validator (value) {
+          return isInt(value) && (parseInt(value) === 1 || parseInt(value) % 2 === 0)
+        }
       }
     },
     computed: {
@@ -66,9 +55,9 @@
         let arr = []
         let totalspan = DEFAULT_MAX_SPAN
         // 默认一列所占的span数
-        let span = totalspan / this.model.column
+        let span = totalspan / this.column
 
-        this.model.fields.forEach((field, index) => {
+        this.fields.forEach((field, index) => {
           field.span = Math.min(totalspan, (/^[1-9]\d*$/.test(field.column) ? parseInt(field.column) : 1) * span)
           field.index = index
           if (sum + field.span < totalspan) {
@@ -90,18 +79,11 @@
         if (arr.length) {
           rows.push(arr)
         }
-
+        console.error(rows)
         return rows
       }
     },
     methods: {
-      /**
-       * 添加栏目
-       * @since 1.0.2
-       */
-      addColumn () {
-        this.$refs.columnSetting.show = true
-      },
       /**
        * 添加字段
        */
@@ -115,7 +97,7 @@
        * @param {Object} field - 字段信息
        */
       addFieldHandle (field) {
-        this.model.fields.push(field)
+        this.fields.push(field)
       },
       /**
        * 删除字段信息
@@ -130,7 +112,7 @@
           type: 'warning'
         }).then(data => {
           try {
-            this.model.fields.splice(index, 1)
+            this.fields.splice(index, 1)
             this.$message.success('删除成功!')
           } catch (e) {
             this.$message.error(`删除失败:${e}`)
@@ -154,47 +136,10 @@
        */
       editFieldHandle (field) {
         console.error(field, field.index)
-        this.$set(this.model.fields, field.index, field)
-      },
-      /**
-       * 设置栏目信息
-       * @param {Object} model - 栏目信息
-       */
-      setColumn (model) {
-        const fileName = model.fileName ? (model.fileName + '').trim() : ''
-        console.error('append')
-        let panes = []
-        model.panes.forEach(pane => {
-          panes.push({
-            label: pane,
-            childrens: []
-          })
-        })
-
-        this.model.childrens.push({
-          title: model.title,
-          column: model.column,
-          fileName: fileName,
-          fields: [],
-          fieldsConfig: `${hump(fileName)}Config`,
-          pane: model.pane,
-          panes: panes
-        })
-
-        // this.model.title = model.title
-        // this.model.column = model.column
-        // this.model.fileName = fileName
-        // this.model.fieldsConfig = `${hump(fileName)}Config`
-        // this.status = 'editor'
-      },
-      /**
-       * 添加选项卡子节点
-       */
-      addPaneChildren () {
-
+        this.$set(this.fields, field.index, field)
       }
     }
   }
 
-  window.FormFieldRender = FormFieldRender
+  window.FieldColumnComponent = FieldColumnComponent
 })(window)
