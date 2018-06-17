@@ -3,19 +3,19 @@
  * @author: xuzengqiang
  * @date: 2018-06-03 12:18:39
  */
-;(window => {
-    const DialogFooter = {
-        template: '#dialog-footer-template',
-        name: 'DialogFooter',
-        methods: {
-            cancel() {
-                this.$emit('cancel')
-            },
-            ensure() {
-                this.$emit('ensure')
-            }
-        }
+; (window => {
+  const DialogFooter = {
+    template: '#dialog-footer-template',
+    name: 'DialogFooter',
+    methods: {
+      cancel () {
+        this.$emit('cancel')
+      },
+      ensure () {
+        this.$emit('ensure')
+      }
     }
+  }
 
-    window.DialogFooter = DialogFooter
+  window.DialogFooter = DialogFooter
 })(window)

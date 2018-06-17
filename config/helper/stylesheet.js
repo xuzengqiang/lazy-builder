@@ -7,7 +7,7 @@
  */
 const hbs = require('koahub-handlebars')
 hbs.registerHelper('stylesheet', path => {
-    path = hbs.Utils.escapeExpression(path)
-    const render = `<link type="text/css" rel="stylesheet" href="${path}">`
-    return new hbs.SafeString(render)
+  path = hbs.Utils.escapeExpression(path)
+  const render = `<link type="text/css" rel="stylesheet" href="${path}">`
+  return new hbs.SafeString(render)
 })

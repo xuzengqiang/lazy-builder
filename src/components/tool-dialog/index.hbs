@@ -3,34 +3,34 @@
            append-to-body
            width="360px"
            :visible.sync="show">
-    <el-form label-width="100px"
-             ref="toolsForm"
-             label-position="left">
-        <el-form-item label="按钮名称">
-            <el-input v-model="model.label"></el-input>
-        </el-form-item>
-        <el-form-item label="图标">
-            <el-autocomplete v-model="model.icon"
-                             value-key="value"
-                             clearable
-                             :fetch-suggestions="iconSearch">
-                <template slot-sope="scope">
-                    {{scope.item.value}}
-                </template>
-            </el-autocomplete>
-        </el-form-item>
-        <el-form-item label="是否禁用">
-            <el-select v-model="model.disabled">
-                <el-option v-for="item in yesOrNo"
-                           :key="item.value"
-                           :value="item.value"
-                           :label="item.label">
-                </el-option>
-            </el-select>
-        </el-form-item>
-    </el-form>
-    <dialog-footer slot="footer"
-                   @cancel="show=false"
-                   @ensure="addTool">
-    </dialog-footer>
+  <el-form label-width="100px"
+           ref="toolsForm"
+           label-position="left">
+    <el-form-item label="按钮名称">
+      <el-input v-model="model.label"></el-input>
+    </el-form-item>
+    <el-form-item label="图标">
+      <el-autocomplete v-model="model.icon"
+                       value-key="value"
+                       clearable
+                       :fetch-suggestions="iconSearch">
+        <template slot-sope="scope">
+          {{scope.item.value}}
+        </template>
+      </el-autocomplete>
+    </el-form-item>
+    <el-form-item label="是否禁用">
+      <el-select v-model="model.disabled">
+        <el-option v-for="item in yesOrNo"
+                   :key="item.value"
+                   :value="item.value"
+                   :label="item.label">
+        </el-option>
+      </el-select>
+    </el-form-item>
+  </el-form>
+  <dialog-footer slot="footer"
+                 @cancel="show=false"
+                 @ensure="addTool">
+  </dialog-footer>
 </el-dialog>

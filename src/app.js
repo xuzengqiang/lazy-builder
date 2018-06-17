@@ -9,7 +9,7 @@ dom.ready(() => {
   new Vue({
     el: '#app',
     delimiters: ['${', '}'],
-    data() {
+    data () {
       return {
         currentModule: 'index',
         /**
@@ -23,7 +23,7 @@ dom.ready(() => {
         }
       }
     },
-    mounted() {
+    mounted () {
       console.error(AddModifyMixin)
       window.__LAZY_BUILDER__ = this
     },
@@ -32,7 +32,7 @@ dom.ready(() => {
       /**
        * 重置所有数据
        */
-      resetData() {
+      resetData () {
         this.$confirm('数据重置后无法恢复,确定重置吗?', '温馨提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -47,7 +47,7 @@ dom.ready(() => {
        * @description
        * 会构建出一整套的模块代码
        */
-      completeBuilder() {
+      completeBuilder () {
         this.$confirm('确定构建一整套模块代码吗?', '温馨提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -72,7 +72,7 @@ dom.ready(() => {
       /**
        *
        */
-      artTemplateBuilder() {
+      artTemplateBuilder () {
         this.$confirm('确定使用art-template构建一整套模块代码吗?', '温馨提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',

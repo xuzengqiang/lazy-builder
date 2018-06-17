@@ -16,12 +16,12 @@ class ArtTemplateController {
   /**
    * 构造函数
    */
-  constructor(model, menu) {}
+  constructor(model, menu) { }
 
   /**
    * 首页配置构建
    */
-  builder() {
+  builder () {
     console.error('构建首页入口文件')
     const file = FileUtils.createFile(`${rootPath}/build/art-template.vue`)
     const template = new Template('artTemplate')

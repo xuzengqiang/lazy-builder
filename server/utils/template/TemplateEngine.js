@@ -11,39 +11,39 @@ const rootPath = process.cwd()
 const TEMPLATE_PATH = `${rootPath}/template/`
 
 class TemplateEngine {
-    constructor() {
-        this.templates = []
-    }
+  constructor() {
+    this.templates = []
+  }
 
-    /**
-     * 读取模板配置文件
-     * @param {String} filepath - 文件路径
-     */
-    static readFile (filepath) {
-        return fs.readFileSync(TEMPLATE_PATH + filepath)
-    }
+  /**
+   * 读取模板配置文件
+   * @param {String} filepath - 文件路径
+   */
+  static readFile (filepath) {
+    return fs.readFileSync(TEMPLATE_PATH + filepath)
+  }
 
-    /**
-     * 模板文件缓存
-     * @param {String} key - 主键
-     * @param {String} filepath - 文件路径
-     */
-    cacheReadFile (key, filepath) {
-        if (this.templates[key]) {
-            console.error(`从缓存中读取模板文件:${TEMPLATE_PATH}${filepath}`)
-            return this.templates[key]
-        }
-        try {
-            console.error(`读取模版文件:${TEMPLATE_PATH}${filepath}`)
-            const file = TemplateEngine.readFile(filepath)
-            this.templates[key] = file.toString()
-        } catch (e) {
-            console.error(`读取模板文件${TEMPLATE_PATH}${filepath}失败:`)
-            console.error(e)
-            this.templates[key] = null
-        }
-        return this.templates[key]
+  /**
+   * 模板文件缓存
+   * @param {String} key - 主键
+   * @param {String} filepath - 文件路径
+   */
+  cacheReadFile (key, filepath) {
+    if (this.templates[key]) {
+      console.error(`从缓存中读取模板文件:${TEMPLATE_PATH}${filepath}`)
+      return this.templates[key]
     }
+    try {
+      console.error(`读取模版文件:${TEMPLATE_PATH}${filepath}`)
+      const file = TemplateEngine.readFile(filepath)
+      this.templates[key] = file.toString()
+    } catch (e) {
+      console.error(`读取模板文件${TEMPLATE_PATH}${filepath}失败:`)
+      console.error(e)
+      this.templates[key] = null
+    }
+    return this.templates[key]
+  }
 }
 
 /**
@@ -52,14 +52,14 @@ class TemplateEngine {
 let instance = null
 
 module.exports = {
-    /**
-     * 获取模板引擎实例对象
-     * @return {TemplateEngine.Instance}
-     */
-    getInstance () {
-        if (!instance) {
-            instance = new TemplateEngine()
-        }
-        return instance
+  /**
+   * 获取模板引擎实例对象
+   * @return {TemplateEngine.Instance}
+   */
+  getInstance () {
+    if (!instance) {
+      instance = new TemplateEngine()
     }
+    return instance
+  }
 }

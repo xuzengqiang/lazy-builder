@@ -1,139 +1,139 @@
 {{!-- 首页配置 --}}
 <el-form label-position="top"
          :model="indexModel">
-    <el-row :gutter="20">
-        <el-col :span="4">
-            <el-form-item label="是否有弹窗">
-                <el-select v-model="indexModel.option.hasDialog">
-                    <el-option v-for="item in yesOrNo"
-                               :key="item.value"
-                               :value="item.value"
-                               :label="item.label">
-                    </el-option>
-                </el-select>
-            </el-form-item>
-        </el-col>
-        <el-col :span="4">
-            <el-form-item label="请求method">
-                <el-input placeholder="列表数据请求对应的方法"
-                          v-model="indexModel.option.method" />
-            </el-form-item>
-        </el-col>
-        <el-col :span="4">
-            <el-form-item label="通用查询code">
-                <el-input v-model="indexModel.option.searchCode" />
-            </el-form-item>
-        </el-col>
-        <el-col :span="4">
-            <el-form-item label="自定义列code">
-                <el-input v-model="indexModel.option.customColumnCode" />
-            </el-form-item>
-        </el-col>
-        <el-col :span="4">
-            <el-form-item label="自定义查询code">
-                <el-input v-model="indexModel.option.customSearchCode" />
-            </el-form-item>
-        </el-col>
-    </el-row>
-    <el-row>
-        <el-form-item label="formTools配置(单击选中后可以按方向键左右移动排序)">
-            <el-button style="padding:8px 20px"
-                       @click="formToolMoveLeft">
-                左移
-            </el-button>
-            <el-button style="padding:8px 20px;margin-right:20px"
-                       @click="formToolMoveRight">
-                右移
-            </el-button>
-            <el-tag v-for="(tag, index) in indexModel.formToolList"
-                    closable
-                    :key="tag"
-                    :class="{
+  <el-row :gutter="20">
+    <el-col :span="4">
+      <el-form-item label="是否有弹窗">
+        <el-select v-model="indexModel.option.hasDialog">
+          <el-option v-for="item in yesOrNo"
+                     :key="item.value"
+                     :value="item.value"
+                     :label="item.label">
+          </el-option>
+        </el-select>
+      </el-form-item>
+    </el-col>
+    <el-col :span="4">
+      <el-form-item label="请求method">
+        <el-input placeholder="列表数据请求对应的方法"
+                  v-model="indexModel.option.method" />
+      </el-form-item>
+    </el-col>
+    <el-col :span="4">
+      <el-form-item label="通用查询code">
+        <el-input v-model="indexModel.option.searchCode" />
+      </el-form-item>
+    </el-col>
+    <el-col :span="4">
+      <el-form-item label="自定义列code">
+        <el-input v-model="indexModel.option.customColumnCode" />
+      </el-form-item>
+    </el-col>
+    <el-col :span="4">
+      <el-form-item label="自定义查询code">
+        <el-input v-model="indexModel.option.customSearchCode" />
+      </el-form-item>
+    </el-col>
+  </el-row>
+  <el-row>
+    <el-form-item label="formTools配置(单击选中后可以按方向键左右移动排序)">
+      <el-button style="padding:8px 20px"
+                 @click="formToolMoveLeft">
+        左移
+      </el-button>
+      <el-button style="padding:8px 20px;margin-right:20px"
+                 @click="formToolMoveRight">
+        右移
+      </el-button>
+      <el-tag v-for="(tag, index) in indexModel.formToolList"
+              closable
+              :key="tag"
+              :class="{
                         selected: selectedFormToolIndex === index
                     }"
-                    :disable-transitions="false"
-                    {{!--
-                    监听原生的点击事件
-                    --}}
-                    @click.native="formToolClicked(index)"
-                    @close="removeFormTool(index)">
-                ${tag.label}
-            </el-tag>
-            <el-button class="button-new-tag"
-                       size="small"
-                       @click="$refs.formToolDialog.show = true">+新增formTool</el-button>
-            <form-tool-dialog ref="formToolDialog"
-                              @add-form-tool="addFormTool">
-            </form-tool-dialog>
-        </el-form-item>
-    </el-row>
-    <el-row>
-        <el-form-item label="tools配置">
-            <el-button style="padding:8px 20px"
-                       @click="toolMoveLeft">
-                左移
-            </el-button>
-            <el-button style="padding:8px 20px;margin-right:20px"
-                       @click="toolMoveRight">
-                右移
-            </el-button>
-            <el-tag :key="tool"
-                    v-for="(tool, index) in indexModel.toolList"
-                    closable
-                    :disable-transitions="false"
-                    :class="{
+              :disable-transitions="false"
+              {{!--
+              监听原生的点击事件
+              --}}
+              @click.native="formToolClicked(index)"
+              @close="removeFormTool(index)">
+        ${tag.label}
+      </el-tag>
+      <el-button class="button-new-tag"
+                 size="small"
+                 @click="$refs.formToolDialog.show = true">+新增formTool</el-button>
+      <form-tool-dialog ref="formToolDialog"
+                        @add-form-tool="addFormTool">
+      </form-tool-dialog>
+    </el-form-item>
+  </el-row>
+  <el-row>
+    <el-form-item label="tools配置">
+      <el-button style="padding:8px 20px"
+                 @click="toolMoveLeft">
+        左移
+      </el-button>
+      <el-button style="padding:8px 20px;margin-right:20px"
+                 @click="toolMoveRight">
+        右移
+      </el-button>
+      <el-tag :key="tool"
+              v-for="(tool, index) in indexModel.toolList"
+              closable
+              :disable-transitions="false"
+              :class="{
                         selected: selectedToolIndex === index
                     }"
-                    @click.native="toolClicked(index)"
-                    @close="removeTool(index)">
-                ${tool.label}
-            </el-tag>
-            <el-button class="button-new-tag"
-                       size="small"
-                       @click="$refs.toolDialog.show=true">+新增tool</el-button>
-            <tool-dialog ref="toolDialog"
-                         @add-tool="addTool"></tool-dialog>
-        </el-form-item>
-    </el-row>
-    <el-row>
-        <div>表格配置>></div>
-        <el-col :span="4">
-            <el-form-item label="是否生成复选框">
-                <el-select v-model="indexModel.option.hasSelection">
-                    <el-option v-for="item in yesOrNo"
-                               :key="item.value"
-                               :value="item.value"
-                               :label="item.label">
-                    </el-option>
-                </el-select>
-            </el-form-item>
-        </el-col>
-        <el-col :span="4">
-            <el-form-item label="是否有修改操作">
-                <el-select v-model="indexModel.option.hasEdit">
-                    <el-option v-for="item in yesOrNo"
-                               :key="item.value"
-                               :value="item.value"
-                               :label="item.label">
-                    </el-option>
-                </el-select>
-            </el-form-item>
-        </el-col>
-    </el-row>
-    <el-row style="padding:20px 0px">
-        <el-button type="success"
-                   icon="el-icon-edit"
-                   round
-                   @click="indexBuilder">
-            生成首页配置文件
-        </el-button>
-        <el-button type="warning"
-                   icon="el-icon-edit-outline"
-                   round
-                   @click="indexUnifileBuilder">
-            生成单文件
-        </el-button>
-    </el-row>
+              @click.native="toolClicked(index)"
+              @close="removeTool(index)">
+        ${tool.label}
+      </el-tag>
+      <el-button class="button-new-tag"
+                 size="small"
+                 @click="$refs.toolDialog.show=true">+新增tool</el-button>
+      <tool-dialog ref="toolDialog"
+                   @add-tool="addTool"></tool-dialog>
+    </el-form-item>
+  </el-row>
+  <el-row>
+    <div>表格配置>></div>
+    <el-col :span="4">
+      <el-form-item label="是否生成复选框">
+        <el-select v-model="indexModel.option.hasSelection">
+          <el-option v-for="item in yesOrNo"
+                     :key="item.value"
+                     :value="item.value"
+                     :label="item.label">
+          </el-option>
+        </el-select>
+      </el-form-item>
+    </el-col>
+    <el-col :span="4">
+      <el-form-item label="是否有修改操作">
+        <el-select v-model="indexModel.option.hasEdit">
+          <el-option v-for="item in yesOrNo"
+                     :key="item.value"
+                     :value="item.value"
+                     :label="item.label">
+          </el-option>
+        </el-select>
+      </el-form-item>
+    </el-col>
+  </el-row>
+  <el-row style="padding:20px 0px">
+    <el-button type="success"
+               icon="el-icon-edit"
+               round
+               @click="indexBuilder">
+      生成首页配置文件
+    </el-button>
+    <el-button type="warning"
+               icon="el-icon-edit-outline"
+               round
+               @click="indexUnifileBuilder">
+      生成单文件
+    </el-button>
+  </el-row>
 </el-form>
 
 <!--
@@ -143,7 +143,7 @@ formToolDialog弹出层组件
 -->
 <script type="text/x-template"
         id="form-tool-dialog-template">
-    {{>components/form-tool-dialog/index}}    
+    {{>components/form-tool-dialog/index}}
 </script>
 
 <!--
@@ -153,5 +153,5 @@ toolDialog弹出层组件
 -->
 <script type="text/x-template"
         id="tool-dialog-template">
-    {{>components/tool-dialog/index}}    
+    {{>components/tool-dialog/index}}
 </script>

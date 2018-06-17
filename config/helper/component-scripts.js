@@ -16,18 +16,18 @@ const rootPath = process.cwd()
 const script = path => `<script type="text/javascript" src="${path}.js"></script>`
 
 hbs.registerHelper('component-scripts', () => {
-    const basePath = `${rootPath}/src/components`
-    const dirs = fs.readdirSync(basePath)
+  const basePath = `${rootPath}/src/components`
+  const dirs = fs.readdirSync(basePath)
 
-    let state
-    let scripts = []
-    dirs.forEach(name => {
-        state = fs.statSync(`${basePath}/${name}`)
-        if (state.isDirectory()) {
-            scripts.push(script(`components/${name}/index`))
-        }
-    })
+  let state
+  let scripts = []
+  dirs.forEach(name => {
+    state = fs.statSync(`${basePath}/${name}`)
+    if (state.isDirectory()) {
+      scripts.push(script(`components/${name}/index`))
+    }
+  })
 
-    scripts.push(script('components/index'))
-    return new hbs.SafeString('\n' + scripts.join('\n'))
+  scripts.push(script('components/index'))
+  return new hbs.SafeString('\n' + scripts.join('\n'))
 })

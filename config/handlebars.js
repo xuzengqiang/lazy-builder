@@ -4,7 +4,7 @@
  * @author xuzengqiang <253948113@qq.com>
  * @date 2018-05-30 12:00:47
  * @version 1.0.0
- * 
+ *
  * @update xuzengqiang
  * @date 2018-06-03 11:08:50
  * @version 1.0.1
@@ -25,8 +25,8 @@ require('./helper')
 
 // HandlebarsDelimiters(Handlebars, ['${', '}'])
 const HandlebarsViews = () => hbs.middleware({
-    viewPath: `${rootPath}/src`,
-    partialsPath: `${rootPath}/src`
+  viewPath: `${rootPath}/src`,
+  partialsPath: `${rootPath}/src`
 })
 
 module.exports = HandlebarsViews
