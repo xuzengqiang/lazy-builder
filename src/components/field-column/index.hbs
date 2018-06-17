@@ -7,9 +7,13 @@
       添加字段
     </el-button>
   </el-row>
+  {{!-- hack,没有相同,第一次添加元素时无法遍历 --}}
+  <label v-if="rowFields.length">
+  </label>
   <el-row :gutter="6"
-          v-for="(row, rownum) in rowFields"
-          :key="'row-'+rownum"
+          v-if="rowFields.length"
+          v-for="(row, index) in rowFields"
+          :key="'row-'+index"
           style="padding:10px 0px">
     <el-col v-for="(field, column) in row"
             :key="'field-' + column"
@@ -27,7 +31,7 @@
                   clearable
                   :disabled="field.disabled || false"
                   :rows="field.rows || 1"
-                  :resize="fields.resize || 'none'">
+                  :resize="field.resize || 'none'">
         </el-input>
         <el-select v-else-if="field.type === 'select'"
                    clearable

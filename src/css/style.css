@@ -45,21 +45,6 @@ a {
 .form-column .form-layout .layout-oper {
   padding: 10px;
 }
-.form-column .form-layout .layout-title {
-  height: 30px;
-  background: #f5f5fa;
-  width: 100%;
-  height: 30px;
-  margin-bottom: 10px;
-}
-.form-layout .layout-title label{
-  font-weight: bold;
-  color: #333;
-  line-height: 30px;
-  letter-spacing: 0px;
-  font-size: 14px;
-  margin-left: 20px;
-}
 
 .layout-category {
   width: 120px;

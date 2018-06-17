@@ -19,14 +19,6 @@
     name: 'FormFieldRender',
     data () {
       return {
-        dialogVisible: false,
-        status: 'setting',
-        fields: [],
-        title: '',
-        focused: true,
-        dialogData: null,
-        mode: Mode.ADD,
-        column: DEFAULT_COLUMN
       }
     },
     /**

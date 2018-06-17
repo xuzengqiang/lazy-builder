@@ -52,6 +52,15 @@
       },
 
       /**
+       * 新增栏目
+       * @date 2018-06-04 15:59:18
+       * @since 1.0.0
+       */
+      addColumn (column) {
+        this.addModifyModel.columns.push(column)
+      },
+
+      /**
        * 删除当前栏目
        * @param {Object} column - 栏目信息
        * @param {Integer} index - 当前栏目的索引

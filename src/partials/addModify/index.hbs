@@ -26,6 +26,7 @@
       </el-form-item>
     </el-col>
   </el-row>
+  ${addModifyModel.columns}
   <el-row v-for="(column, index) in addModifyModel.columns"
           class="form-column">
     <el-row :gutter="20"
@@ -47,10 +48,7 @@
           删除栏目
         </el-button>
       </div>
-      <div class="layout-title"
-           v-if="column.title">
-        <label>${column.title}</label>
-      </div>
+      <column-title :label="column.title"></column-title>
       <el-col v-for="children in column.childrens"
               :span="children.span">
         <form-field-render :model="children">

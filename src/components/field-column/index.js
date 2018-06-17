@@ -79,6 +79,7 @@
         if (arr.length) {
           rows.push(arr)
         }
+        console.error('重绘rows')
         console.error(rows)
         return rows
       }
@@ -97,6 +98,7 @@
        * @param {Object} field - 字段信息
        */
       addFieldHandle (field) {
+        console.error('add Fields')
         this.fields.push(field)
       },
       /**
