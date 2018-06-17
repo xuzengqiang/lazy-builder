@@ -6,14 +6,14 @@
 const router = require('koa-router')()
 const fs = require('fs')
 const BuilderController = require('../server/controllers/BuilderController')
-const IndexController = require('../server/controllers/IndexController')
-const ArtTemplateController = require('../server/controllers/ArtTemplateController')
+const IndexController = require('../server/controllers/index/IndexController')
+const ArtTemplateController = require('../server/controllers/artTemplate/ArtTemplateController')
 
 /**
  * 完整构建项目文件夹
  * @description 通过ctx.request.body可以获取到请求的参数信息
  */
-router.post('/complete-builder', function(ctx, next) {
+router.post('/complete-builder', function (ctx, next) {
   const builderController = new BuilderController(ctx.request.body)
   builderController.completeBuilder()
   ctx.body = 'builder'
@@ -22,7 +22,7 @@ router.post('/complete-builder', function(ctx, next) {
 /**
  * 构建首页
  */
-router.post('/index-builder', function(ctx, next) {
+router.post('/index-builder', function (ctx, next) {
   const builderController = new BuilderController(ctx.request.body)
   builderController.indexBuilder()
   ctx.body = 'builder'
@@ -31,7 +31,7 @@ router.post('/index-builder', function(ctx, next) {
 /**
  * 首页单文件构建
  */
-router.post('/index-unifile-builder', function(ctx, next) {
+router.post('/index-unifile-builder', function (ctx, next) {
   const options = ctx.request.body
   const menu = options.menu
   const indexModel = options.indexModel

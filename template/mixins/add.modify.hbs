@@ -5,38 +5,13 @@
  */
 import rules from '../config/rules'
 import ModelConfig from '../config/model'
-{{#each columns}}
-{{#each childrens}}
-{{!-- 遍历子栏目,引入相关的字段配置文件 --}}
-{{#not_null_array fields}}
-import {{fieldsConfig}} from '../config/{{fileName}}'
-{{/not_null_array}}
-{{/each}}
-{{/each}}
-import FormFieldsRender from '@/fms/components/form-fields-render'
-import FormFooter from '@/fms/components/form-footer'
+import Layout from '../config/layout'
 
 export default {
   data () {
     return {
-      loading: false,
       rules: rules(this),
-      {{#if hasDialog}}
-      dialogOption: {
-        width: '1200px',
-        show: false,
-        title: '',
-        view: ''
-      },
-      {{/if}}
-      {{#each columns}}
-      {{#each childrens}}
-      {{!-- 遍历子栏目,生成相关fields --}}
-      {{#not_null_array fields}}
-      {{fieldsConfig}}: {{fieldsConfig}}(this),
-      {{/not_null_array}}
-      {{/each}}
-      {{/each}}
+      layout: Layout(this),
       {{!-- 在弹出层内部不需要使用search-pager --}}
       {{!-- @since 1.0.1 --}}
       {{#unless inDialog}}
@@ -48,10 +23,6 @@ export default {
       {{/unless}}
       model: ModelConfig(this)
     }
-  },
-  components: {
-    FormFieldsRender,
-    FormFooter
   },
   {{!-- 如果在弹出层中不存在路由进入 --}}
   {{#unless inDialog}}
@@ -65,33 +36,6 @@ export default {
   },
   {{/unless}}
   methods: {
-    {{#if hasDialog}}
-    /**
-     * 显示弹出窗
-     * @param {String} view - 需要显示的组件
-     * @param {String} title - 弹出窗标题
-     * @param {String} width - 弹出层宽度
-     */
-    showDynamicDialog (view, title, width = '1200px') {
-      Object.assign(this.dialogOption, {
-        title: title,
-        width: width,
-        view: view,
-        show: true
-      })
-    },
-    /**
-     * 关闭弹窗
-     */
-    closeDynamicDialog () {
-      this.dialogOption = {
-        show: false,
-        view: null,
-        title: '',
-        width: '0px'
-      }
-    },
-    {{/if}}
     /**
      * 表单提交之前的处理
      * @param {Function} callback - 表单验证成功之后的回调函数
