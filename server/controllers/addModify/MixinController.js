@@ -6,8 +6,11 @@
  * @version 1.0.0
  * @since 1.0.2
  */
-import BuilderError from '../../error/BuilderError'
-import print from '../../utils/print'
+const FieldController = require('../FieldController')
+const print = require('../../utils/print')
+const Template = require('../../utils/template/Template')
+const FileUtils = require('../../utils/FileUtils')
+const rootPath = process.cwd()
 
 class MixinController {
   /**
@@ -93,3 +96,5 @@ class MixinController {
     })
   }
 }
+
+module.exports = MixinController

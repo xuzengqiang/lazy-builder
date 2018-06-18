@@ -12,6 +12,8 @@ class BuilderError extends Error {
    * @param {Object} constructorOpt
    */
   constructor(message, constructorOpt) {
+    super(message, constructorOpt)
+
     // @TODO
     Error.captureStackTrace(this, constructorOpt || this)
     this.message = message
@@ -21,4 +23,4 @@ class BuilderError extends Error {
 
 BuilderError.prototype.name = 'Builder Error'
 
-module.export = BuilderError
+module.exports = BuilderError

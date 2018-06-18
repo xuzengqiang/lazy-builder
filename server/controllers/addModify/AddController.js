@@ -3,9 +3,11 @@
  * @author: xuzengqiang
  * @date: 2018-06-17 21:33:49
  */
-const BuilderError = require('../../exception/BuilderError')
+const BuilderError = require('../../error/BuilderError')
 const print = require('../../utils/print')
-
+const Template = require('../../utils/template/Template')
+const FileUtils = require('../../utils/FileUtils')
+const rootPath = process.cwd()
 class AddController {
   /**
    * 构造函数

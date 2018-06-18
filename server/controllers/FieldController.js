@@ -1,5 +1,3 @@
-import { file } from "babel-types";
-
 /*
  * @fileOverview: 字段文件生成
  * @author: xuzengqiang
@@ -10,6 +8,10 @@ import { file } from "babel-types";
 const fs = require('fs')
 const rootPath = process.cwd()
 const moment = require('moment')
+const FileUtils = require('../utils/FileUtils')
+const BuilderError = require('../error/BuilderError')
+const print = require('../utils/print')
+const Template = require('../utils/template/Template')
 
 const uuid = () => moment(new Date()).format('YYYYMMDDHHmmss')
 
@@ -24,7 +26,7 @@ class FieldController {
   constructor(fields, fileName) {
     this.fields = Array.isArray(fields) ? fields : []
 
-    fileName = typeof fileName === 'String' ? (fileName + '').trim() : ''
+    fileName = typeof fileName === 'string' ? (fileName + '').trim() : ''
     if (fileName) {
       this.fileName = /\.js$/i.test(fileName) ? fileName : `${fileName}.js`
       this.filepath = `${rootPath}/build/config/fields/${fileName}`
@@ -32,7 +34,7 @@ class FieldController {
       fileName = `${uuid()}.js`
       console.error(`自动生成文件名称:${fileName}`)
       this.fileName = fileName
-      this.filepath = `${rootPath}/build/fields/${fileName}`
+      this.filepath = `${rootPath}/fields/${fileName}`
     }
   }
 
@@ -41,7 +43,7 @@ class FieldController {
    */
   builder () {
     if (this.fields.length) {
-      console.error(`构建字段配置文件${this.fileName}.js`)
+      print.out(`构建字段配置文件${this.fileName}.js`)
       const file = FileUtils.createFile(this.filepath)
       const template = new Template('configFormFields')
       template.compile(file, {
@@ -51,4 +53,4 @@ class FieldController {
   }
 }
 
-module.export = FieldController
+module.exports = FieldController

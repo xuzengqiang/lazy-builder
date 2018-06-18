@@ -31,6 +31,7 @@ const TemplateMapper = {
   configFormFields: 'config/form-fields.hbs',
   configRules: 'config/rules.hbs',
   configModel: 'config/model.hbs',
+  configLayout: 'config/layout.hbs',
   mixinsAddModify: 'mixins/add.modify.hbs',
   mixinsModifyDetail: 'mixins/modify.detail.hbs',
   mixinsCommon: 'mixins/common.hbs',

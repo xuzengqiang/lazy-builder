@@ -5,15 +5,24 @@
  * @since 1.0.2
  * @version 1.0.0
  */
-import BuilderError from '../../error/BuilderError'
-import print from '../../utils/print'
+const BuilderError = require('../../error/BuilderError')
+const LayoutController = require('../layout/LayoutController')
+const FieldController = require('../FieldController')
+const print = require('../../utils/print')
+const FileUtils = require('../../utils/FileUtils')
+const rootPath = process.cwd()
+const Template = require('../../utils/template/Template')
 
 class ConfigController {
   /**
    * 构造函数
+   * @param {Object} model - 请求的参数信息
+   * @param {Object} menu - 菜单配置
    */
-  constructor() {
-
+  constructor(model, menu) {
+    this.model = model
+    this.menu = menu
+    this.layoutController = new LayoutController(model.columns)
   }
 
   /**
@@ -28,9 +37,9 @@ class ConfigController {
     try {
       print.out('开始构建config配置文件...')
       this._createModelFile()
-      this._createLayoutFile()
       this._createRulesFile()
-      this._createFieldFiles()
+      this._createLayoutFile()
+      // this._createFieldFiles()
       print.success('config配置文件构建成功!')
     } catch (e) {
       print.error(e)
@@ -42,7 +51,10 @@ class ConfigController {
    * 创建model配置文件
    */
   _createModelFile () {
-
+    print.out('创建model.js配置文件')
+    const file = FileUtils.createFile(`${rootPath}/build/config/model.js`)
+    const template = new Template('configModel')
+    template.compile(file)
   }
 
   /**
@@ -56,18 +68,29 @@ class ConfigController {
   }
 
   /**
-   * 创建布局文件
-   */
-  _createLayoutFile () {
-
-  }
-
-  /**
    * 创建字段配置文件
    */
   _createFieldFiles () {
-
+    const columns = this.layoutController.fieldColumns
+    let fileName
+    let fieldController
+    console.error(columns)
+    columns.forEach(column => {
+      fileName = column.fileName ? (column.fileName + '').trim() : ''
+      if (fileName) {
+        fieldController = new FieldController(column.fields, fileName)
+        fieldController.builder()
+      }
+    })
   }
+
+  /**
+   * 创建布局文件
+   */
+  _createLayoutFile () {
+    this.layoutController.builder()
+  }
+
 }
 
 module.exports = ConfigController

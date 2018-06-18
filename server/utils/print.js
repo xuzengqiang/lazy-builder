@@ -15,7 +15,7 @@ class Print {
    * 普通文本输出
    * @param {...} messages - 需要输出的数据信息
    */
-  out (...messages) {
+  static out (...messages) {
     console.log(...messages)
   }
 
@@ -23,15 +23,17 @@ class Print {
    * 输出成功信息
    * @param {...} messages - 需要输出的数据信息
    */
-  success (...messages) {
-    console.log(symbols.success, chalk.green(...params))
+  static success (...messages) {
+    console.log(symbols.success, chalk.green(...messages))
   }
 
   /**
    * 输出错误信息
    * @param {...} messages - 需要输出的数据信息
    */
-  error (...messages) {
-    console.log(symbols.error, chalk.red(...params))
+  static error (...messages) {
+    console.log(symbols.error, chalk.red(...messages))
   }
 }
+
+module.exports = Print

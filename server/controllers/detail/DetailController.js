@@ -10,6 +10,10 @@ const Template = require('../../utils/template/Template')
 const log4js = require('koa-log4')
 const logger = log4js.getLogger('index')
 const lodash = require('lodash')
+const BuilderError = require('../../error/BuilderError')
+const print = require('../../utils/print')
+const LayoutController = require('../layout/LayoutController')
+const FieldController = require('../FieldController')
 
 class DetailController {
   /**
@@ -24,6 +28,7 @@ class DetailController {
      * 是否有弹窗
      */
     this.hasDialog = true
+    this.layoutController = new LayoutController(addModifyModel.columns)
   }
 
   /**
@@ -31,15 +36,18 @@ class DetailController {
    */
   builder () {
     try {
+      print.out('开始构建详情页代码....')
       this._createIndexFile()
       this._createDataFile()
       this._createMethodFile()
       this._createComponentsFile()
       this._createMixinFile()
-      this._createFormFieldsFiles()
       this._createSearchPagerFile()
+      this._createFormFieldsFiles()
+      print.success('详情页代码构建成功!')
     } catch (e) {
       console.error(e)
+      new BuilderError('详情页代码构建失败!')
     }
   }
 
@@ -47,7 +55,7 @@ class DetailController {
    * 创建详情入口文件
    */
   _createIndexFile () {
-    console.error('构建详情页入口文件')
+    print.out('构建详情页入口文件')
     const file = FileUtils.createFile(`${rootPath}/build/detail/index.vue`)
     FileUtils.createFile(`${rootPath}/build/detail/${this.menu.name}详情.md`)
     const template = new Template('detailIndex')
@@ -61,7 +69,7 @@ class DetailController {
    * 创建详情页data文件
    */
   _createDataFile () {
-    console.error('构建详情页data.js')
+    print.out('构建详情页data.js')
     const file = FileUtils.createFile(`${rootPath}/build/detail/mixins/data.js`)
     const template = new Template('detailMixinsData')
     template.compile(file, {
@@ -75,7 +83,7 @@ class DetailController {
    * @param {Boolean}
    */
   _createMethodFile () {
-    console.error('构建详情页methods.js')
+    print.out('构建详情页methods.js')
     const file = FileUtils.createFile(`${rootPath}/build/detail/mixins/methods.js`)
     const template = new Template('detailMixinsMethods')
     template.compile(file, {
@@ -87,7 +95,7 @@ class DetailController {
    * 创建详情页components文件
    */
   _createComponentsFile () {
-    console.error('构建详情页components.js')
+    print.out('构建详情页components.js')
     const file = FileUtils.createFile(`${rootPath}/build/detail/mixins/components.js`)
     const template = new Template('detailMixinsComponents')
     template.compile(file)
@@ -97,7 +105,7 @@ class DetailController {
    * 创建详情页混合入口文件
    */
   _createMixinFile () {
-    console.error('构建详情页mixins.js')
+    print.out('构建详情页mixins.js')
     const file = FileUtils.createFile(`${rootPath}/build/detail/mixins/index.js`)
     const template = new Template('detailMixinsIndex')
     template.compile(file)
@@ -107,7 +115,7 @@ class DetailController {
    * 创建SearchPager文件
    */
   _createSearchPagerFile () {
-    console.error('构建详情页search-pager.js文件')
+    print.out('构建详情页search-pager.js文件')
     const file = FileUtils.createFile(`${rootPath}/build/detail/config/search-pager.js`)
     const template = new Template('detailConfigSearchPager')
     template.compile(file, {
@@ -119,15 +127,16 @@ class DetailController {
    * 生成form-fields文件
    */
   _createFormFieldsFiles () {
-    console.error('构建详情页字段配置文件...')
-    const columns = this.addModifyModel.columns
-    let childrens
+    const columns = this.layoutController.fieldColumns
+    let fileName
+    let fieldController
+    console.error(columns)
     columns.forEach(column => {
-      childrens = column.childrens
-      Array.isArray(childrens) &&
-        childrens.forEach(children => {
-          this._createSingleFormFieldsFile(children)
-        })
+      fileName = column.fileName ? (column.fileName + '').trim() : ''
+      if (fileName) {
+        fieldController = new FieldController(column.fields, fileName)
+        fieldController.builder()
+      }
     })
   }
 
