@@ -28,7 +28,8 @@ class FieldController {
 
     fileName = typeof fileName === 'string' ? (fileName + '').trim() : ''
     if (fileName) {
-      this.fileName = /\.js$/i.test(fileName) ? fileName : `${fileName}.js`
+      fileName = /\.js$/i.test(fileName) ? fileName : `${fileName}.js`
+      this.fileName = fileName
       this.filepath = `${rootPath}/build/config/fields/${fileName}`
     } else {
       fileName = `${uuid()}.js`
