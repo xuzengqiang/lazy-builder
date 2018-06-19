@@ -7,7 +7,6 @@
  */
 const BuilderError = require('../../error/BuilderError')
 const LayoutController = require('../layout/LayoutController')
-const FieldController = require('../FieldController')
 const print = require('../../utils/print')
 const FileUtils = require('../../utils/FileUtils')
 const rootPath = process.cwd()
@@ -39,7 +38,7 @@ class ConfigController {
       this._createModelFile()
       this._createRulesFile()
       this._createLayoutFile()
-      // this._createFieldFiles()
+      this._createFieldFiles()
       print.success('config配置文件构建成功!')
     } catch (e) {
       print.error(e)
@@ -73,13 +72,18 @@ class ConfigController {
   _createFieldFiles () {
     const columns = this.layoutController.fieldColumns
     let fileName
-    let fieldController
-    console.error(columns)
+    let file
+    let template
+
     columns.forEach(column => {
       fileName = column.fileName ? (column.fileName + '').trim() : ''
       if (fileName) {
-        fieldController = new FieldController(column.fields, fileName)
-        fieldController.builder()
+        print.out(`构建新增修改字段配置文件${fileName}.js`)
+        file = FileUtils.createFile(`${rootPath}/build/config/fields/${fileName}.js`)
+        template = new Template('configFormFields')
+        template.compile(file, {
+          fields: column.fields
+        })
       }
     })
   }

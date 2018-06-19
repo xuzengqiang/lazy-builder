@@ -20,23 +20,11 @@ class FieldController {
   /**
    * 构造函数
    * @param {Array} fields - 字段配置信息
-   * @param {String} [fileName] - 文件名称
-   * @description 如果没有文件名称,则会自动生成,有文件名称则会生成到默认路径
    */
-  constructor(fields, fileName) {
+  constructor(fields, fileName, filepath) {
     this.fields = Array.isArray(fields) ? fields : []
-
-    fileName = typeof fileName === 'string' ? (fileName + '').trim() : ''
-    if (fileName) {
-      fileName = /\.js$/i.test(fileName) ? fileName : `${fileName}.js`
-      this.fileName = fileName
-      this.filepath = `${rootPath}/build/config/fields/${fileName}`
-    } else {
-      fileName = `${uuid()}.js`
-      console.error(`自动生成文件名称:${fileName}`)
-      this.fileName = fileName
-      this.filepath = `${rootPath}/fields/${fileName}`
-    }
+    this.fileName = `${uuid()}`
+    this.filepath = `${rootPath}/fields/${this.fileName}.js`
   }
 
   /**

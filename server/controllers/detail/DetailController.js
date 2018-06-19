@@ -129,30 +129,20 @@ class DetailController {
   _createFormFieldsFiles () {
     const columns = this.layoutController.fieldColumns
     let fileName
-    let fieldController
-    console.error(columns)
+    let file
+    let template
+
     columns.forEach(column => {
       fileName = column.fileName ? (column.fileName + '').trim() : ''
       if (fileName) {
-        fieldController = new FieldController(column.fields, fileName)
-        fieldController.builder()
+        print.out(`构建详情页字段配置文件${fileName}.js`)
+        file = FileUtils.createFile(`${rootPath}/build/detail/config/fields/${fileName}.js`)
+        template = new Template('detailConfigFormFields')
+        template.compile(file, {
+          fields: column.fields
+        })
       }
     })
-  }
-
-  /**
-   * 创建单个字段配置文件
-   */
-  _createSingleFormFieldsFile (subcolumn) {
-    const fileName = subcolumn && subcolumn.fileName ? (subcolumn.fileName + '').trim() : ''
-    if (fileName && subcolumn.fields.length) {
-      console.error(`构建详情页字段配置文件${fileName}.js`)
-      const file = FileUtils.createFile(`${rootPath}/build/detail/config/${fileName}.js`)
-      const template = new Template('detailConfigFormFields')
-      template.compile(file, {
-        subcolumn
-      })
-    }
   }
 }
 

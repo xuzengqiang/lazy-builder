@@ -3,9 +3,9 @@
  * @author {{author}}
  * @date {{creationDate}}
  */
-{{#each fieldColumns}}
-import {{fieldsConfig}} from './fields/{{fileName}}'
-{{/each}}
+import getFields from '@/fms/utils/framework/fetchFieldsConfig'
+const AddModifyFields = getFields(require.context('./fields/', false, /\.js$/))
+const DetailFields = getFields(require.context('../detail/config/fields/', false, /\.js$/))
 
 /**
  * 获取布局数组
@@ -13,6 +13,8 @@ import {{fieldsConfig}} from './fields/{{fileName}}'
  * @param {Boolean} [isDetail] - 是否是详情页布局
  */
 export default (vm, isDetail) => {
+  const fields = isDetail ? DetailFields : AddModifyFields
+
   return [
     {{#each layout}}
     {
@@ -43,7 +45,7 @@ export default (vm, isDetail) => {
               column: {{column}},
               {{/if}}
               {{#not_null_array fields}}
-              fields: {{fieldsConfig}}(vm),
+              fields: fields.{{fieldsConfig}}(vm),
               {{/not_null_array}}
               {{#if pane}}
               {{#not_null_array panes}}
@@ -62,10 +64,10 @@ export default (vm, isDetail) => {
                       column: {{column}},
                       {{/if}}
                       {{#not_null_array fields}}
-                      fields: {{fieldsConfig}}(vm),
+                      fields: fields.{{fieldsConfig}}(vm)
                       {{/not_null_array}}
                     }{{end_comma ../childrens @index}}
-                  {{/each}} 
+                  {{/each}}
                   ]
                 }{{end_comma ../panes @index}}
                 {{/each}}
@@ -84,7 +86,7 @@ export default (vm, isDetail) => {
               	  column: {{column}}
               	  {{/if}}
               	  {{#not_null_array fields}}
-              	  fields: {{fieldsConfig}}(vm),
+              	  fields: fields.{{fieldsConfig}}(vm),
               	  {{/not_null_array}}
               	  {{!-- 选项卡下面不能再有选项卡 --}}
               	  {{#if pane}}
@@ -99,7 +101,7 @@ export default (vm, isDetail) => {
               	      column: {{column}},
               	      {{/if}}
               	      {{#not_null_array fields}}
-              	      fields: {{fieldsConfig}}(vm)
+              	      fields: fields.{{fieldsConfig}}(vm)
               	      {{/not_null_array}}
               	    }{{end_comma ../panes @index}}
               	    {{/each}}
