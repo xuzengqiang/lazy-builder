@@ -1,10 +1,41 @@
 <template>
-    {{#if inDialog}} {{/if}}
+  {{!-- 如果在弹出层中 --}}
+  {{#if inDialog}}
+  <div class="kye-dialog-body">
+  {{else}}
+  <div>
+  {{/if}}
+    {{!-- 弹出层中不存在search-page --}}
+    {{#unless inDialog}}
+    <search-pager ref="searchPager"
+                  :option="searchPagerConfig.option">
+    </search-pager>
+    {{/unless}}
+    <kye-form ref="form"
+              :model="model"
+              :rules="rules">
+      <fms-form-fields :model="model"
+                       :layout="layout">
+      </fms-form-fields>
+    </kye-form>
+    {{#if hasDialog}}
+    <!-- 弹出层 -->
+    <kye-dialog v-bind="dialogOption"
+                @close="closeDynamicDialog"
+                :visible.sync="dialogOption.show">
+      <component :is="dialogOption.view"
+                 @close="closeDynamicDialog">
+      </component>
+    </kye-dialog>
+    {{/if}}
+    <fms-form-footer @save="formSubmit"
+                     @cancel="back" />
+  </div>
 </template>
-<script>
-    export default {
-        data() {
 
-        }
-    }
+<script>
+  import mixins from './mixins'
+  export default {
+    mixins: [mixins]
+  }
 </script>

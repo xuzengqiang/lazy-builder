@@ -82,6 +82,30 @@
        */
       editColumn (column, index) {
         this.$refs.columnDialog.show = true
+      },
+
+      /**
+       * 新增页构建
+       */
+      addBuilder () {
+        this.$confirm('确定单独构建表单新增代码吗?', '温馨提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(data => {
+          axios
+            .post('http://localhost:3000/add-builder', {
+              menu: this.menu,
+              /** 新增修改页配置 */
+              addModifyModel: this.addModifyModel
+            })
+            .then(data => {
+              console.error(data)
+            })
+            .catch(error => {
+              console.error(error)
+            })
+        })
       }
     }
   }

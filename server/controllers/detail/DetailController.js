@@ -40,7 +40,6 @@ class DetailController {
       this._createIndexFile()
       this._createDataFile()
       this._createMethodFile()
-      this._createComponentsFile()
       this._createMixinFile()
       this._createSearchPagerFile()
       this._createFormFieldsFiles()
@@ -89,16 +88,6 @@ class DetailController {
     template.compile(file, {
       hasDialog: this.hasDialog
     })
-  }
-
-  /**
-   * 创建详情页components文件
-   */
-  _createComponentsFile () {
-    print.out('构建详情页components.js')
-    const file = FileUtils.createFile(`${rootPath}/build/detail/mixins/components.js`)
-    const template = new Template('detailMixinsComponents')
-    template.compile(file)
   }
 
   /**
