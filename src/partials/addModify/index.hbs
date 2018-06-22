@@ -55,6 +55,11 @@
         </el-row>
     </el-row>
 </el-form>
+<el-button style="background:rgb(126, 56, 120);color:#fff;border:0 none"
+           icon="el-icon-printer"
+           @click="addBuilder">
+  单独输出表单新增页代码
+</el-button>
 <el-button @click="showColumnDialog">添加栏目</el-button>
 <add-column-dialog ref="columnDialog"
                    @add-column="addColumn">

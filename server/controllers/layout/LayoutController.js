@@ -17,10 +17,21 @@ class LayoutController {
   /**
    * 构造函数
    * @param { Array } layout - 布局数组
+   * @param { String } filePath - 文件存放路径
    */
-  constructor(layout) {
+  constructor(layout, filePath) {
     this.layout = Array.isArray(layout) ? layout : []
+    this.filePath = filePath || `${rootPath}/build/config/layout.js`
+    this.templatePath = 'configLayout'
     this.fieldColumns = this.fetchFieldColumns()
+  }
+
+  /**
+   * 设置模板路径
+   * @param {String} templatePath - 模板路径(简称)
+   */
+  setTemplatePath (templatePath) {
+    this.templatePath = templatePath
   }
 
   /**
@@ -30,8 +41,8 @@ class LayoutController {
     try {
       print.out('开始构建布局文件layout.js')
 
-      const file = FileUtils.createFile(`${rootPath}/build/config/layout.js`)
-      const template = new Template('configLayout')
+      const file = FileUtils.createFile(this.filePath)
+      const template = new Template(this.templatePath)
       template.compile(file, {
         fieldColumns: this.fieldColumns,
         layout: this.layout

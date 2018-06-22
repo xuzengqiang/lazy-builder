@@ -1,0 +1,13 @@
+/*
+ * @fileOverview model对象文件
+ * @author {{author}}
+ * @date {{creationDate}}
+ */
+import fetchLayoutModel from '@/fms/utils/framework/fetchLayoutModel'
+import Layout from './layout'
+
+export default vm => {
+  return {
+    ...fetchLayoutModel(Layout(vm))
+  }
+}

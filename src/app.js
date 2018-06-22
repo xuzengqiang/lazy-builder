@@ -20,7 +20,8 @@ dom.ready(() => {
         menu: {
           router: '',
           name: ''
-        }
+        },
+        loading: false
       }
     },
     mounted () {
