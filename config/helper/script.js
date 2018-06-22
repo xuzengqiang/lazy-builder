@@ -9,11 +9,11 @@ const hbs = require('koahub-handlebars')
 const rjs = /(\.js)$/
 
 hbs.registerHelper('script', path => {
-    path = hbs.Utils.escapeExpression(path)
+  path = hbs.Utils.escapeExpression(path)
 
-    // 自动补全.js
-    path = rjs.test(path) ? path : `${path}.js`
+  // 自动补全.js
+  path = rjs.test(path) ? path : `${path}.js`
 
-    const render = `<script type="text/javascript" src="${path}"></script>`
-    return new hbs.SafeString(render)
+  const render = `<script type="text/javascript" src="${path}"></script>`
+  return new hbs.SafeString(render)
 })

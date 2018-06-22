@@ -1,0 +1,125 @@
+/*
+ * @fileOverview 新增修改详情页布局文件
+ * @author {{author}}
+ * @date {{creationDate}}
+ */
+import getFields from '@/fms/utils/framework/fetchFieldsConfig'
+const AddModifyFields = getFields(require.context('./fields/', false, /\.js$/))
+const DetailFields = getFields(require.context('../detail/config/fields/', false, /\.js$/))
+
+/**
+ * 获取布局数组
+ * @param {VueComponent} vm - vue组件实例对象
+ * @param {Boolean} [isDetail] - 是否是详情页布局
+ */
+export default (vm, isDetail) => {
+  const fields = isDetail ? DetailFields : AddModifyFields
+
+  return [
+    {{#each layout}}
+    {
+      {{#if title}}
+      title: '{{title}}',
+      {{/if}}
+      cols: [
+        {{#each childrens}}
+        {
+          {{#if title}}
+          title: '{{title}}',
+          {{/if}}
+          {{#if column}}
+          column: {{column}},
+          {{/if}}
+          {{#if span}}
+          span: {{span}},
+          {{/if}}
+          {{!-- 如果含有子节点 --}}
+          {{#not_null_array childrens}}
+          childrens: [
+            {{#each childrens}}
+            {
+              {{#if title}}
+              title: '{{title}}',
+              {{/if}}
+              {{#if column}}
+              column: {{column}},
+              {{/if}}
+              {{#not_null_array fields}}
+              fields: fields.{{fieldsConfig}}(vm),
+              {{/not_null_array}}
+              {{#if pane}}
+              {{#not_null_array panes}}
+              tabs: [
+                {{#each panes}}
+                {
+                  label: '{{label}}',
+                  {{!-- 选项卡下面限制不能还有选项卡 --}}
+                  childrens: [
+                  {{#each childrens}}
+                    {
+                      {{#if title}}
+                      title: '{{title}}',
+                      {{/if}}
+                      {{#if column}}
+                      column: {{column}},
+                      {{/if}}
+                      {{#not_null_array fields}}
+                      fields: fields.{{fieldsConfig}}(vm)
+                      {{/not_null_array}}
+                    }{{end_comma ../childrens @index}}
+                  {{/each}}
+                  ]
+                }{{end_comma ../panes @index}}
+                {{/each}}
+              ]{{#not_null_array childrens}},{{/not_null_array}}
+              {{/not_null_array}}
+              {{/if}}
+              {{!-- 还有子节点 --}}
+              {{#not_null_array childrens}}
+              childrens: [
+              	{{#each childrens}}
+              	{
+              	  {{#if title}}
+              	  title: '{{title}}',
+              	  {{/if}}
+              	  {{#if column}}
+              	  column: {{column}}
+              	  {{/if}}
+              	  {{#not_null_array fields}}
+              	  fields: fields.{{fieldsConfig}}(vm),
+              	  {{/not_null_array}}
+              	  {{!-- 选项卡下面不能再有选项卡 --}}
+              	  {{#if pane}}
+              	  {{#not_null_array panes}}
+              	  tabs: [
+              	    {{#each panes}}
+              	    {
+              	      {{#if title}}
+              	      title: '{{title}}',
+              	      {{/if}}
+              	      {{#if column}}
+              	      column: {{column}},
+              	      {{/if}}
+              	      {{#not_null_array fields}}
+              	      fields: fields.{{fieldsConfig}}(vm)
+              	      {{/not_null_array}}
+              	    }{{end_comma ../panes @index}}
+              	    {{/each}}
+              	  ]
+              	  {{/not_null_array}}
+              	  {{/if}}
+              	}{{end_comma ../childrens @index}}
+              	{{/each}}
+              ]
+              {{/not_null_array}}
+            }{{end_comma ../childrens @index}}
+            {{/each}}
+          ]
+          {{/not_null_array}}
+        }{{end_comma ../childrens @index}}
+        {{/each}}
+      ]
+    }{{end_comma ../layout @index}}
+    {{/each}}
+  ]
+}

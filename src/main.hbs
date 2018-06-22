@@ -2,76 +2,76 @@
 <html lang="en">
 
 <head>
-    {{>partials/header/index}}
+  {{>partials/header/index}}
 </head>
 
 <body>
-    <div id="app">
-        <el-row style="padding:10px 0px">
-            <el-button type="primary"
-                       size="small"
-                       icon="el-icon-edit"
-                       round
-                       @click="addStorage">
-                写入缓存
-            </el-button>
-            <el-button type="danger"
-                       size="small"
-                       @click="clearStorage"
-                       icon="el-icon-delete"
-                       round>
-                清空缓存
-            </el-button>
-            <el-button type="danger"
-                       size="small"
-                       @click="resetData"
-                       icon="el-icon-delete"
-                       round>
-                重置所有数据
-            </el-button>
-        </el-row>
-        <el-row>
-            <el-col :span="8">
-                {{!-- 菜单配置 --}}
-                <el-form label-width="150px"
-                         ref="form"
-                         :model="menu"
-                         label-position="left">
-                    <el-form-item label="菜单主页面路由">
-                        <el-input v-model="menu.router"></el-input>
-                    </el-form-item>
-                    <el-form-item label="菜单名称">
-                        <el-input v-model="menu.name"></el-input>
-                    </el-form-item>
-                </el-form>
-            </el-col>
-        </el-row>
-        <el-tabs v-model="currentModule"
-                 style="padding:15px;border:1px solid #DDD;margin-bottom:20px">
-            <el-tab-pane label="首页配置"
-                         name="index">
-                {{>partials/index/index}}
-            </el-tab-pane>
-            <el-tab-pane label="新增/修改配置"
-                         name="form">
-                {{>partials/addModify/index}}
-            </el-tab-pane>
-            <el-tab-pane label="详情页配置"
-                         name="detail">
-            </el-tab-pane>
-        </el-tabs>
+  <div id="app">
+    <el-row style="padding:10px 0px">
+      <el-button type="primary"
+                 size="small"
+                 icon="el-icon-edit"
+                 round
+                 @click="addStorage">
+        写入缓存
+      </el-button>
+      <el-button type="danger"
+                 size="small"
+                 @click="clearStorage"
+                 icon="el-icon-delete"
+                 round>
+        清空缓存
+      </el-button>
+      <el-button type="danger"
+                 size="small"
+                 @click="resetData"
+                 icon="el-icon-delete"
+                 round>
+        重置所有数据
+      </el-button>
+    </el-row>
+    <el-row>
+      <el-col :span="8">
+        {{!-- 菜单配置 --}}
+        <el-form label-width="150px"
+                 ref="form"
+                 :model="menu"
+                 label-position="left">
+          <el-form-item label="菜单主页面路由">
+            <el-input v-model="menu.router"></el-input>
+          </el-form-item>
+          <el-form-item label="菜单名称">
+            <el-input v-model="menu.name"></el-input>
+          </el-form-item>
+        </el-form>
+      </el-col>
+    </el-row>
+    <el-tabs v-model="currentModule"
+             style="padding:15px;border:1px solid #DDD;margin-bottom:20px">
+      <el-tab-pane label="首页配置"
+                   name="index">
+        {{>partials/index/index}}
+      </el-tab-pane>
+      <el-tab-pane label="新增/修改配置"
+                   name="form">
+        {{>partials/addModify/index}}
+      </el-tab-pane>
+      <el-tab-pane label="详情页配置"
+                   name="detail">
+      </el-tab-pane>
+    </el-tabs>
 
-        <el-button type="primary"
-                   icon="el-icon-printer"
-                   @click="completeBuilder">
-            构建完整FMS模块代码
-        </el-button>
-        <el-button type="danger"
-                   icon="el-icon-printer"
-                   @click="artTemplateBuilder">
-            art-template输出
-        </el-button>
-    </div>
+    <el-button type="primary"
+               icon="el-icon-printer"
+               @click="completeBuilder">
+      构建完整FMS模块代码
+    </el-button>
+    <el-button type="danger"
+               icon="el-icon-printer"
+               @click="artTemplateBuilder">
+      art-template输出
+    </el-button>
+  </div>
 </body>
 
 <!--

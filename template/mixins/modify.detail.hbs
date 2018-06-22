@@ -6,18 +6,7 @@
 
 export default {
   {{!-- 如果在弹出层中,那么不存在路由进入 --}}
-  {{#if inDialog}}
-  data () {
-    return {
-      loading: false
-    }
-  }
-  {{else}}
-  data () {
-    return {
-      loading: false
-    }
-  },
+  {{#unless inDialog}}
   /**
    * 路由进入之前加载数据信息
    */
@@ -36,11 +25,7 @@ export default {
         return
       }
 
-      this.loading = true
-
       // 请求数据
-
-      this.loading = false
     },
     /**
      * 数据无效返回
@@ -50,5 +35,5 @@ export default {
       this.$router.replace('{{router}}')
     }
   }
-  {{/if}}
+  {{/unless}}
 }

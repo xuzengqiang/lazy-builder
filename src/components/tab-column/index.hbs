@@ -1,0 +1,20 @@
+<div class="tab-column-container">
+  <el-row v-for="children in model.childrens"
+          class="column-block">
+    <column-title :label="children.title"></column-title>
+    <!-- 如果存在字段fields -->
+    <field-column :column="children.column"
+                  :fields="children.fields">
+    </field-column>
+  </el-row>
+  <el-row class="tab-oper">
+    <el-button @click="addColumn"
+               icon="el-icon-circle-plus-outline"
+               round>
+      为选项卡添加子栏目
+    </el-button>
+  </el-row>
+  <column-config-dialog ref="columnSetting"
+                        @set-column="setColumn">
+  </column-config-dialog>
+</div>

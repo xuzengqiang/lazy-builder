@@ -4,35 +4,11 @@
  * @date {{creationDate}}
  */
 import SearchPagerConfig from '../config/search-pager'
-{{#each columns}}
-{{#each childrens}}
-{{!-- 遍历子栏目,引入相关的字段配置文件 --}}
-{{#not_null_array fields}}
-import {{fieldsConfig}} from '../config/{{fileName}}'
-{{/not_null_array}}
-{{/each}}
-{{/each}}
-import ModelConfig from '../../config/model'
+import Layout from '../../config/layout'
 
 export default function () {
   return {
     searchPagerConfig: SearchPagerConfig(this),
-    {{#if hasDialog}}
-    dialogOption: {
-      width: '1200px',
-      show: false,
-      title: '',
-      view: ''
-    },
-    {{/if}}
-    {{#each columns}}
-    {{#each childrens}}
-    {{!-- 遍历子栏目,生成相关fields --}}
-    {{#not_null_array fields}}
-    {{fieldsConfig}}: {{fieldsConfig}}(this),
-    {{/not_null_array}}
-    {{/each}}
-    {{/each}}
-    model: ModelConfig(this)
+    layout: Layout(this, true)
   }
 }

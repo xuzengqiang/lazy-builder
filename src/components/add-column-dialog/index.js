@@ -4,19 +4,10 @@
  * @date: 2018-06-02 17:49:18
  */
 ;(window => {
-  const DEFAULT_COLUMN = 4
-
   const getModel = totalspan => {
     return {
-      title: '',
-      fields: [],
-      fileName: '',
-      fieldsConfig: '',
-      column: DEFAULT_COLUMN,
-      totalspan: totalspan,
-      // @fixed 从缓存中获取之后,无法恢复可编辑状态的BUG
-      // created: false
-      created: true
+      span: totalspan,
+      childrens: []
     }
   }
 
@@ -42,22 +33,15 @@
     methods: {
       addColumn() {
         const column = this.column
-        let childrens = []
+        let childrens = null
 
         // 生成子栏目
         switch (this.layout) {
           case 'one-column':
-            childrens.push({
-              span: 24
-            })
+            childrens = [getModel(24)]
             break
           case 'two-column':
-            childrens.push({
-              span: this.column
-            })
-            childrens.push({
-              span: 24 - this.column
-            })
+            childrens = [getModel(column), getModel(24 - column)]
         }
 
         this.show = false

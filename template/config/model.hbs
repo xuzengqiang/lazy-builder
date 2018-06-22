@@ -3,54 +3,11 @@
  * @author {{author}}
  * @date {{creationDate}}
  */
+import fetchLayoutModel from '@/fms/utils/framework/fetchLayoutModel'
+import Layout from './layout'
 
 export default vm => {
   return {
-    {{!-- 先生成没有匹配的keys集合 --}}
-  	{{#each emptyKeys}}
-  	// {{label}}
-  	// key: @TODO
-  	{{/each}}
-  	{{!-- 已经有配置key,最多遍历3层,后续再优化 --}}
-  	{{#each nodes}}
-  	{{#if isleaf}}
-  	// {{label}}
-  	{{key}}: ''{{#array_last_index ../nodes @index}}{{else}},{{/array_last_index}}
-  	{{else}}
-  	{{!-- 如果有子节点 --}}
-  	{{#greater_than childrens.length 0}}
-  	{{key}}: {
-  	  {{!-- 遍历子节点--}}
-  	  {{#each childrens}}
-  	  {{!-- 如果是叶子节点--}}
-  	  {{#if isleaf}}
-  	  // {{label}}
-  	  {{key}}: ''{{#array_last_index ../childrens @index}}{{else}},{{/array_last_index}}
-  	  {{else}}
-  	  {{!-- 如果有叶子节点 --}}
-  	  {{#greater_than childrens.length 0}}
-  	  {{key}}: {
-  	     {{!-- 遍历子节点 --}}
-  	     {{#each childrens}}
-  	     {{!-- 如果是叶子节点 --}}
-  	     {{#if isleaf}}
-  	     // {{label}}
-  	     {{key}}: ''{{#array_last_index ../childrens @index}}{{else}},{{/array_last_index}}
-  	     {{else}}
-  	     {{!-- 如果有叶子节点 --}}
-  	     {{#greather_than childrens.length 0}}
-  	     {{!-- 后续不再处理,如果有需求再完善 --}}
-  	     {{key}}: {}{{#array_last_index ../childrens @index}}{{else}},{{/array_last_index}}
-  	     {{/greather_than}}
-  	     {{/if}}
-  	     {{/each}}
-  	  }{{#array_last_index ../childrens @index}}{{else}},{{/array_last_index}}
-  	  {{/greater_than}}
-  	  {{/if}}
-  	  {{/each}}
-    }{{#array_last_index ../nodes @index}}{{else}},{{/array_last_index}}
-    {{/greater_than}}
-    {{/if}}
-  	{{/each}}
+    ...fetchLayoutModel(Layout(vm))
   }
 }

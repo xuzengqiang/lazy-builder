@@ -2,59 +2,59 @@
 <el-dialog title="表单栏目配置"
            append-to-body
            :visible.sync="show">
-    <el-form label-width="100px"
-             ref="toolsForm"
-             label-position="left">
-        <el-form-item label="栏目名称">
-            <el-input v-model="title"
-                      placeholder="可以不填写,如果填写会生成栏目标题"></el-input>
-        </el-form-item>
-        <el-form-item label="布局方式">
-            <!-- 单栏 -->
-            <div class="layout-category"
-                 layout="one-column"
-                 :class="{
+  <el-form label-width="100px"
+           ref="form"
+           label-position="left">
+    <el-form-item label="栏目名称">
+      <el-input v-model="title"
+                placeholder="可以不填写,如果填写会生成栏目标题"></el-input>
+    </el-form-item>
+    <el-form-item label="布局方式">
+      <!-- 单栏 -->
+      <div class="layout-category"
+           layout="one-column"
+           :class="{
                     selected: layout === 'one-column'
                  }"
-                 @click="layoutClicked('one-column')">
-                <label></label>
-                <div class="shade">单栏</div>
-            </div>
+           @click="layoutClicked('one-column')">
+        <label></label>
+        <div class="shade">单栏</div>
+      </div>
 
-            <!-- 两栏 -->
-            <div class="layout-category"
-                 layout="two-column"
-                 :class="{
+      <!-- 两栏 -->
+      <div class="layout-category"
+           layout="two-column"
+           :class="{
                     selected: layout === 'two-column'
                  }"
-                 @click="layoutClicked('two-column')">
-                <label :style="'width:' + column/12 * 60 + 'px'"></label>
-                <label :style="'width:' + (24 - column)/12 * 60 + 'px'"></label>
-                <div class="shade">两栏</div>
-            </div>
+           @click="layoutClicked('two-column')">
+        <label :style="'width:' + column/12 * 60 + 'px'"></label>
+        <label :style="'width:' + (24 - column)/12 * 60 + 'px'"></label>
+        <div class="shade">两栏</div>
+      </div>
 
-        </el-form-item>
-        <el-form-item label="列数配置">
-            <el-input v-if="layout==='one-column'"
-                      disabled
-                      :value="24" />
-            <template v-if="layout==='two-column'">
-                <el-input-number v-model="column"
-                                 placeholder="第一栏所占列数"
-                                 style="width:200px"
-                                 :min="2"
-                                 :max="22">
-                </el-input-number>
-                <el-input-number :value="24-column"
-                                 placeholder="第二栏所占列数"
-                                 style="width:200px"
-                                 disabled>
-                </el-input-number>
-            </template>
-        </el-form-item>
-    </el-form>
-    <dialog-footer slot="footer"
-                   @ensure="addColumn"
-                   @cancel="show=false">
-    </dialog-footer>
+    </el-form-item>
+    <el-form-item label="列数配置">
+      <el-input v-if="layout==='one-column'"
+                disabled
+                :value="24" />
+      <template v-if="layout==='two-column'">
+        <el-input-number v-model="column"
+                         placeholder="第一栏所占列数"
+                         style="width:200px"
+                         :min="2"
+                         :max="22">
+        </el-input-number>
+        <el-input-number :value="24-column"
+                         placeholder="第二栏所占列数"
+                         style="width:200px"
+                         disabled>
+        </el-input-number>
+      </template>
+    </el-form-item>
+  </el-form>
+  <dialog-footer slot="footer"
+                 @ensure="addColumn"
+                 @cancel="show=false">
+  </dialog-footer>
 </el-dialog>

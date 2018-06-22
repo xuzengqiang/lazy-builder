@@ -4,7 +4,7 @@
  * @date 2018-6-7 23:53:38
  * @version 1.0.0
  */
-;(window => {
+; (window => {
   const rint = /^(0|[1-9]\d*)$/i
 
   /**
@@ -23,7 +23,7 @@
   ]
 
   const IndexMixin = {
-    data() {
+    data () {
       return {
         yesOrNo,
         /**
@@ -93,7 +93,7 @@
        * @date 2018-6-4 00:23:57
        * @param {Object} model - formTool信息
        */
-      addFormTool(model) {
+      addFormTool (model) {
         let formTool = JSON.parse(JSON.stringify(model))
         this.indexModel.formToolList.push(formTool)
       },
@@ -104,7 +104,7 @@
        * @since 1.0.0
        * @param {Number} index - 索引
        */
-      removeFormTool(index) {
+      removeFormTool (index) {
         this.indexModel.formToolList.splice(index, 1)
       },
 
@@ -114,7 +114,7 @@
        * @since 1.0.0
        * @param {Object} model - formTool信息
        */
-      addTool(model) {
+      addTool (model) {
         let tool = JSON.parse(JSON.stringify(model))
         this.indexModel.toolList.push(tool)
       },
@@ -125,31 +125,22 @@
        * @since 1.0.0
        * @param {Number} index - 索引
        */
-      removeTool(index) {
+      removeTool (index) {
         this.indexModel.toolList.splice(index, 1)
-      },
-
-      /**
-       * 新增栏目
-       * @date 2018-06-04 15:59:18
-       * @since 1.0.0
-       */
-      addColumn(column) {
-        this.addModifyModel.columns.push(column)
       },
 
       /**
        * formTool点击之后的处理
        * @param {Number} index - 点击的formTool的索引
        */
-      formToolClicked(index) {
+      formToolClicked (index) {
         this.selectedFormToolIndex = index
       },
 
       /**
        * formTool左移
        */
-      formToolMoveLeft() {
+      formToolMoveLeft () {
         const index = this.selectedFormToolIndex
         this.swap(this.indexModel.formToolList, index, index - 1, () => {
           this.selectedFormToolIndex = index - 1
@@ -159,7 +150,7 @@
       /**
        * formTool右移
        */
-      formToolMoveRight() {
+      formToolMoveRight () {
         const index = this.selectedFormToolIndex
         this.swap(this.indexModel.formToolList, index, index + 1, () => {
           this.selectedFormToolIndex = index + 1
@@ -170,14 +161,14 @@
        * tool点击之后的处理
        * @param {Number} index - 点击的formTool的索引
        */
-      toolClicked(index) {
+      toolClicked (index) {
         this.selectedToolIndex = index
       },
 
       /**
        * tool左移
        */
-      toolMoveLeft() {
+      toolMoveLeft () {
         const index = this.selectedToolIndex
         this.swap(this.indexModel.toolList, index, index - 1, () => {
           this.selectedToolIndex = index - 1
@@ -187,7 +178,7 @@
       /**
        * tool右移
        */
-      toolMoveRight() {
+      toolMoveRight () {
         const index = this.selectedToolIndex
         this.swap(this.indexModel.toolList, index, index + 1, () => {
           this.selectedToolIndex = index + 1
@@ -201,7 +192,7 @@
        * @param {Integer} indexb - 索引b
        * @param {Function} callback - 交换成功的function
        */
-      swap(array, indexa, indexb, callback) {
+      swap (array, indexa, indexb, callback) {
         if (Array.isArray(array) && array.length >= 2 && rint.test(indexa) && rint.test(indexb)) {
           if (indexa < array.length && indexb < array.length) {
             let temp = array[indexa]
@@ -220,7 +211,7 @@
        * 会构建出首页代码
        * @since 1.0.0
        */
-      indexBuilder() {
+      indexBuilder () {
         this.$confirm('确定单独构建首页代码吗?', '温馨提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -245,7 +236,7 @@
        * 首页单文件构建
        * @since 1.0.1
        */
-      indexUnifileBuilder() {
+      indexUnifileBuilder () {
         this.$confirm('确定生成首页单文件代码吗?', '温馨提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',

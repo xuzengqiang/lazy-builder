@@ -6,7 +6,7 @@
 
 export default vm => {
   return [
-    {{#each subcolumn.fields}}
+    {{#each fields}}
     {
       label: '{{label}}',
       {{!-- 详情页统一先不生成插槽,后续如果有需要可以再自行处理 --}}
@@ -28,7 +28,7 @@ export default vm => {
       filter: '{{filter}}',
       {{/if}}
       column: {{column}}
-    }{{#array_last_index ../subcolumn.fields @index}}{{else}},{{/array_last_index}}
+    }{{end_comma ../fields @index}}
     {{/each}}
   ]
 }

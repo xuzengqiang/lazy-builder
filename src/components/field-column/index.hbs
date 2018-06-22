@@ -1,0 +1,69 @@
+<div class="fields-column-container">
+  <el-row>
+    <el-button @click="addField"
+               class="add-field"
+               icon="el-icon-setting"
+               round>
+      添加字段
+    </el-button>
+  </el-row>
+  {{!-- hack,没有相同,第一次添加元素时无法遍历 --}}
+  <label v-if="rowFields.length">
+  </label>
+  <el-row :gutter="6"
+          v-if="rowFields.length"
+          v-for="(row, index) in rowFields"
+          :key="'row-'+index"
+          style="padding:10px 0px">
+    <el-col v-for="(field, column) in row"
+            :key="'field-' + column"
+            :span="field.span"
+            class="form-field-column">
+      <el-form-item :label="field.label"
+                    :prop="field.key"
+                    class="form-field-item">
+        <span slot="label"
+              class="label"
+              @click="editField(field)"
+              v-text="field.label">
+        </span>
+        <el-input v-if="!field.type || field.type === 'text' || field.type === 'textarea'"
+                  clearable
+                  :disabled="field.disabled || false"
+                  :rows="field.rows || 1"
+                  :resize="field.resize || 'none'">
+        </el-input>
+        <el-select v-else-if="field.type === 'select'"
+                   clearable
+                   :disabled="field.disabled || false">
+        </el-select>
+        <el-date-picker v-else-if="field.type === 'datePicker'"
+                        clearable
+                        :disabled="field.disabled || false"
+                        :type="field.dateType"
+                        :format="field.valueFormat"
+                        :value-format="field.valueFormat">
+        </el-date-picker>
+        <p class="key-message">
+          <el-tooltip effect="dark"
+                      :content="field.key"
+                      placement="bottom">
+            <label v-text="'字段key: ' + field.key"></label>
+          </el-tooltip>
+        </p>
+      </el-form-item>
+      <el-button class="field-delete"
+                 type="danger"
+                 icon="el-icon-close"
+                 @click="deleteField(field)"
+                 circle>
+      </el-button>
+    </el-col>
+  </el-row>
+  <add-field-dialog ref="dialog"
+                    :mode="mode"
+                    :dialog-data="dialogData"
+                    @add-field="addFieldHandle"
+                    @edit-field="editFieldHandle">
+  </add-field-dialog>
+</div>

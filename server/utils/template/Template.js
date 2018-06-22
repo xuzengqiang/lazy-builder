@@ -2,7 +2,7 @@
  * @fileOverview: 模板工具方法
  * @author: xuzengqiang
  * @date: 2018-06-04 10:23:29
- * 
+ *
  * @update xuzengqiang
  * @date 2018-6-5 00:26:38
  * @since 1.0.1
@@ -31,8 +31,10 @@ const TemplateMapper = {
   configFormFields: 'config/form-fields.hbs',
   configRules: 'config/rules.hbs',
   configModel: 'config/model.hbs',
+  configLayout: 'config/layout.hbs',
   mixinsAddModify: 'mixins/add.modify.hbs',
   mixinsModifyDetail: 'mixins/modify.detail.hbs',
+  mixinsCommon: 'mixins/common.hbs',
   modifyIndex: 'modify/index.hbs',
   detailIndex: 'detail/index.hbs',
   detailMixinsIndex: 'detail/mixins/index.hbs',
@@ -69,7 +71,7 @@ class Template {
    * @param {Object} params - 参数信息
    * @since 1.0.0
    */
-  compile(file, params = {}) {
+  compile (file, params = {}) {
     if (!file || typeof file.write !== 'function') {
       console.error('无效的文件信息,模板编译失败!')
       return

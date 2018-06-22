@@ -1,9 +1,122 @@
 /*
- * @fileOverview 详情页computed
+ * @fileOverview 新增修改详情页布局文件
  * @author {{author}}
  * @date {{creationDate}}
  */
+{{#each fieldColumns}}
+import {{fieldsConfig}} from './fields/{{fileName}}'
+{{/each}}
 
 export default {
+  
 
+  return [
+    {{#each layout}}
+    {
+      {{#if title}}
+      title: '{{title}}',
+      {{/if}}
+      cols:[
+        {{#each childrens}}
+        {
+        {{#if title}}
+        title: '{{title}}',
+        {{/if}}
+        {{#if span}}
+        span: {{span}},
+        {{/if}}
+        {{#if column}}
+        column: {{column}},
+        {{/if}}
+        {{!-- 如果含有子节点 --}}
+        {{#not_null_array childrens}}
+        {{#each childrens}}
+        childrens: [
+        {
+          {{#if title}}
+          title: '{{title}}',
+          {{/if}}
+          {{#if column}}
+          column: {{column}},
+          {{/if}}
+          {{#not_null_array fields}}
+          fields: {{fieldsConfig}}(vm),
+          {{/not_null_array}}
+          {{#if pane}}
+          {{#not_null_array panes}}
+          tabs: [
+            {{#each panes}}
+            {
+              label: '{{label}}',
+              {{!-- 选项卡下面限制不能还有选项卡 --}}
+              childrens:[
+              {{#each childrens}}
+                {
+                  {{#if title}}
+                  title: '{{title}}',
+                  {{/if}}
+                  {{#if column}}
+                  column: {{column}},
+                  {{/if}}
+                  {{#not_null_array fields}}
+                  fields: {{fieldsConfig}}(vm),
+                  {{#not_null_array}}
+                }
+              {{/each}} 
+              ]
+            },
+            {{/each}}
+          ]
+          {{/not_null_array}}
+          {{/if}}
+          {{!-- 还有子节点 --}}
+          {{#not_null_array childrens}}
+          childrens: [
+          	{{#each childrens}}
+          	{
+          	  {{#if title}}
+          	  title: '{{title}}',
+          	  {{/if}}
+          	  {{#if column}}
+          	  column: {{column}}
+          	  {{/if}}
+          	  {{#not_null_array fields}}
+          	  fields: {{fieldsConfig}}(vm),
+          	  {{/not_null_array}}
+          	  {{!-- 选项卡下面不能再有选项卡 --}}
+          	  {{#if pane}}
+          	  {{#not_null_array panes}}
+          	  tabs: [
+          	    {{#each panes}}
+          	    {
+          	      {{#if title}}
+          	      title: '{{title}}',
+          	      {{/if}}
+          	      {{#if column}}
+          	      column: {{column}},
+          	      {{/if}}
+          	      {{#not_null_array fields}}
+          	      fields: {{fieldsConfig}}(vm)
+          	      {{/not_null_array}}
+          	    }
+          	    {{/each}}
+          	  ],
+          	  {{/not_null_array}}
+          	  {{/if}}
+          	}
+          	{{/each}}
+          ]
+          {{/not_null_array}}
+        }
+        ]
+        {{/each}}
+        {{/not_null_array}}
+        },
+        {{/each}}
+      ]
+      {{#each }}
+      ]
+    },
+    {{/each}}
+  ]
 }

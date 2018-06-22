@@ -3,15 +3,21 @@
  * @author: xuzengqiang
  * @date: 2018-06-04 20:35:46
  */
-const FileUtils = require('../utils/FileUtils')
+const FileUtils = require('../../utils/FileUtils')
 const fs = require('fs')
 const rootPath = process.cwd()
-const Template = require('../utils/template/Template')
+const Template = require('../../utils/template/Template')
 const log4js = require('koa-log4')
 const logger = log4js.getLogger('index')
 const lodash = require('lodash')
 const symbols = require('log-symbols')
 const chalk = require('chalk')
+const AddController = require('./AddController')
+const ModifyController = require('./ModifyController')
+const ConfigController = require('./ConfigController')
+const MixinController = require('./MixinController')
+const print = require('../../utils/print')
+
 class AddModifyController {
   /**
    * 构造函数
@@ -33,58 +39,23 @@ class AddModifyController {
      * @type {Boolean}
      */
     this.inDialog = model.option.inDialog
+
+    this.addController = new AddController(model, menu)
+    this.modifyController = new ModifyController(model, menu)
+    this.configController = new ConfigController(model, menu)
+    this.mixinController = new MixinController(model, menu)
   }
 
   /**
    * 构建
    */
   builder () {
-    try {
-      this._createAddIndexFile()
-      this._createModifyIndexFile()
-      this._createFormFieldsFiles()
-      this._createRulesFile()
-      this._createModelFile()
-      this._createAddModifyFile()
-      this._createModifyDetailFile()
-    } catch (e) {
-      console.error(e)
-    }
-  }
-
-  /**
-   * 生成入口文件
-   */
-  _createAddIndexFile () {
-    console.log('构建新增页入口文件...')
-    try {
-      const file = FileUtils.createFile(`${rootPath}/build/add/index.vue`)
-      FileUtils.createFile(`${rootPath}/build/add/${this.menu.name}新增.md`)
-      const template = new Template('addIndex')
-      template.compile(file, {
-        hasDialog: this.hasDialog,
-        inDialog: this.inDialog,
-        columns: this.model.columns
-      })
-      console.log(symbols.success, chalk.green('新增页入口文件构建成功!'))
-    } catch (e) {
-      console.error(symbols.error, chalk.red('新增页入口文件构建失败!'))
-    }
-  }
-
-  /**
-   * 生成入口文件
-   */
-  _createModifyIndexFile () {
-    console.error('构建编辑页入口文件')
-    const file = FileUtils.createFile(`${rootPath}/build/modify/index.vue`)
-    FileUtils.createFile(`${rootPath}/build/modify/${this.menu.name}修改.md`)
-    const template = new Template('modifyIndex')
-    template.compile(file, {
-      hasDialog: this.hasDialog,
-      inDialog: this.inDialog,
-      columns: this.model.columns
-    })
+    print.out('开始构建新增修改页文件...')
+    this.addController.simpleBuilder()
+    this.modifyController.simpleBuilder()
+    this.configController.builder()
+    this.mixinController.builder()
+    print.success('新增修改页配置文件构建成功!')
   }
 
   /**
@@ -205,6 +176,7 @@ class AddModifyController {
 
   /**
    * 创建树节点
+   * @deprecated
    */
   createTreeNodeList (fieldObject) {
     let treeNodeList = []
@@ -222,6 +194,7 @@ class AddModifyController {
    * 获取字段树
    * @author xuzengqiang
    * @date 2018-06-05 17:27:00
+   * @description
    */
   getTreeNode (fieldObject, property) {
     let node = fieldObject[property]

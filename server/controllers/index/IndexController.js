@@ -3,10 +3,12 @@
  * @author: xuzengqiang
  * @date: 2018-05-31 16:14:41
  */
-const FileUtils = require('../utils/FileUtils')
+const FileUtils = require('../../utils/FileUtils')
+const Template = require('../../utils/template/Template')
+const print = require('../../utils/print')
+const BuildError = require('../../error/BuilderError')
 const fs = require('fs')
 const rootPath = process.cwd()
-const Template = require('../utils/template/Template')
 const log4js = require('koa-log4')
 const logger = log4js.getLogger('index')
 
@@ -19,7 +21,6 @@ class IndexController {
   constructor(model, menu) {
     this.model = model
     this.menu = menu
-    console.error(model)
 
     /**
      * 是否生成复选框
@@ -51,18 +52,17 @@ class IndexController {
    */
   builder () {
     try {
+      print.out('开始构建首页相关配置文件...')
       this._createIndexFile()
       this._createDataFile()
       this._createMethodFile()
       this._createHooksFile()
       this._createComponentsFile()
       this._createMixinFile()
-      // 取消生成customFilter文件
-      // @since 1.0.1
-      // this._createCustomFilterFile()
       this._createQueryTableFile()
+      print.success('首页相关配置文件构建成功!')
     } catch (e) {
-      console.error(e)
+      new BuilderError(e)
     }
   }
 
@@ -71,7 +71,7 @@ class IndexController {
    * @since  1.0.1
    */
   unifileBuilder () {
-    console.error('首页单文件构建...')
+    print.out('构建首页单文件')
     const file = FileUtils.createFile(`${rootPath}/build/index.vue`)
     const template = new Template('indexUnifile')
     const option = this.model.option
@@ -88,26 +88,28 @@ class IndexController {
       formTools: this.model.formToolList,
       tools: this.model.toolList
     })
+    print.success('首页单文件构建成功!')
   }
 
   /**
    * 创建首页入口文件
    */
   _createIndexFile () {
-    console.error('构建首页入口文件')
+    print.out('构建首页入口文件')
     const file = FileUtils.createFile(`${rootPath}/build/index/index.vue`)
     FileUtils.createFile(`${rootPath}/build/index/${this.menu.name}首页.md`)
     const template = new Template('index')
     template.compile(file, {
       hasDialog: this.hasDialog
     })
+    print.success('首页入口文件构建成功!')
   }
 
   /**
    * 创建首页data文件
    */
   _createDataFile () {
-    console.error('构建首页data.js')
+    print.out('构建首页data.js')
     const file = FileUtils.createFile(`${rootPath}/build/index/mixins/data.js`)
     const template = new Template('indexData')
     template.compile(file, {
@@ -121,7 +123,7 @@ class IndexController {
    * @param {Boolean}
    */
   _createMethodFile () {
-    console.error('构建首页methods.js')
+    print.out('构建首页methods.js')
     const file = FileUtils.createFile(`${rootPath}/build/index/mixins/methods.js`)
     const template = new Template('indexMethods')
     template.compile(file, {
@@ -134,7 +136,7 @@ class IndexController {
    * @description 修改beforeRouteEnter为hooks,因为文件命名不允许有驼峰式
    */
   _createHooksFile () {
-    console.error('构建首页hooks.js')
+    print.out('构建首页hooks.js')
     const file = FileUtils.createFile(`${rootPath}/build/index/mixins/hooks.js`)
     const template = new Template('indexHooks')
     template.compile(file)
@@ -145,7 +147,7 @@ class IndexController {
    */
   _createComponentsFile () {
     if (!this.hasComponents) return
-    console.error('构建首页components.js')
+    print.out('构建首页components.js')
     const file = FileUtils.createFile(`${rootPath}/build/index/mixins/components.js`)
     const template = new Template('indexComponents')
     template.compile(file, {})
@@ -155,7 +157,7 @@ class IndexController {
    * 创建混合入口文件
    */
   _createMixinFile () {
-    console.error('构建首页mixins.js')
+    print.out('构建首页mixins.js')
     const file = FileUtils.createFile(`${rootPath}/build/index/mixins/index.js`)
     const template = new Template('indexMixin')
     template.compile(file, {
@@ -167,7 +169,7 @@ class IndexController {
    * 创建CustomFilter文件
    */
   _createCustomFilterFile () {
-    console.error('构建首页custom-filter.js文件')
+    print.out('构建首页custom-filter.js文件')
     const file = FileUtils.createFile(`${rootPath}/build/index/config/custom-filter.js`)
     const option = this.model.option
     const template = new Template('indexCustomFilter')
@@ -182,7 +184,7 @@ class IndexController {
    * 生成query-table
    */
   _createQueryTableFile () {
-    console.error('构建首页query-table.js文件')
+    print.out('构建首页query-table.js文件')
     const file = FileUtils.createFile(`${rootPath}/build/index/config/query-table.js`)
     const option = this.model.option
     const template = new Template('indexQueryTable')

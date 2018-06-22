@@ -6,7 +6,7 @@
 
 export default vm => {
   return [
-    {{#each subcolumn.fields}}
+    {{#each fields}}
     {
       label: '{{label}}',
       {{!-- 如果是自定义插槽 --}}
@@ -41,7 +41,7 @@ export default vm => {
       disabled: {{disabled}},
       {{/if}}
       column: {{column}}
-    }{{#array_last_index ../subcolumn.fields @index}}{{else}},{{/array_last_index}}
+    }{{end_comma ../fields @index}}
     {{/each}}
   ]
 }

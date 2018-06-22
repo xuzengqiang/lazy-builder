@@ -1,40 +1,76 @@
 {{!-- 栏目配置 --}}
 <el-dialog title="子栏目配置"
            append-to-body
-           :visible.sync="show">
-    <el-form label-width="100px"
-             ref="form"
-             label-position="left"
-             :model="model"
-             :rules="rules">
-        <el-form-item label="子栏目名称"
-                      prop="title">
-            <el-input v-if="hasTitle"
-                      disabled
-                      placeholder="父栏目已经存在标题,无法再次设置">
-            </el-input>
-            <el-input v-else
-                      v-model="model.title"
-                      placeholder="可以不填写,如果填写会生成栏目标题"></el-input>
-        </el-form-item>
-        <el-form-item label="文件名称"
-                      prop="fileName">
-            <el-input placeholder="每个子栏目字段会在config目录下单独生成一个文件"
-                      v-model="model.fileName"></el-input>
-        </el-form-item>
-        <el-form-item label="字段列数"
-                      prop="column">
-            <el-select v-model="model.column">
-                <el-option v-for="index in [1,2,4,6]"
-                           :key="index"
-                           :value="index"
-                           :label="index">
-                </el-option>
-            </el-select>
-        </el-form-item>
-    </el-form>
-    <dialog-footer slot="footer"
-                   @ensure="setColumn"
-                   @cancel="show=false">
-    </dialog-footer>
+           :visible.sync="show"
+           width="800px">
+  <el-form label-width="120px"
+           ref="form"
+           label-position="left"
+           :model="model"
+           :rules="rules">
+    <el-form-item label="子栏目名称"
+                  prop="title">
+      <el-input v-if="hasTitle"
+                disabled
+                style="width:360px"
+                placeholder="父栏目已经存在标题,无法再次设置">
+      </el-input>
+      <el-input v-else
+                v-model.trim="model.title"
+                style="width:360px"
+                placeholder="可以不填写,如果填写会生成栏目标题"></el-input>
+    </el-form-item>
+    <el-form-item label="是否生成选项卡">
+      <el-select v-model="model.pane"
+                 style="width:360px">
+        <el-option v-for="item in yesOrNo"
+                   :key="item.value"
+                   :value="item.value"
+                   :label="item.label">
+        </el-option>
+      </el-select>
+    </el-form-item>
+    <el-form-item label="文件名称"
+                  prop="fileName"
+                  v-if="!model.pane">
+      <el-input placeholder="每个子栏目字段会在config目录下单独生成一个文件"
+                v-model.trim="model.fileName"
+                style="width:360px"></el-input>
+    </el-form-item>
+    <el-form-item label="字段列数"
+                  prop="column"
+                  v-if="!model.pane">
+      <el-select v-model="model.column"
+                 style="width:360px">
+        <el-option v-for="index in [1,2,4,6]"
+                   :key="index"
+                   :value="index"
+                   :label="index">
+        </el-option>
+      </el-select>
+    </el-form-item>
+    <el-form-item label="配置选项卡"
+                  v-if="model.pane">
+      <el-input placeholder="回车或失去焦点时自动添加"
+                v-model="paneName"
+                style="width:360px"
+                @keyup.enter.native="addPane"
+                @blur="addPane">
+      </el-input>
+    </el-form-item>
+    <el-form-item label="选项卡预览"
+                  v-if="model.pane">
+      <el-tabs editable
+               @tab-remove="removePane">
+        <el-tab-pane v-for="(pane, index) in model.panes"
+                     :label="pane"
+                     :name="index">
+        </el-tab-pane>
+      </el-tabs>
+    </el-form-item>
+  </el-form>
+  <dialog-footer slot="footer"
+                 @ensure="setColumn"
+                 @cancel="show=false">
+  </dialog-footer>
 </el-dialog>
