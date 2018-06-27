@@ -6,6 +6,14 @@ router.get('/', async (ctx, next) => {
   })
 })
 
+router.get('/setting', async (ctx, next) => {
+  await ctx.render('pages/setting')
+})
+
+router.get('/generic-search', async (ctx, next) => {
+  await ctx.render('pages/generic-search')
+})
+
 router.get('/string', async (ctx, next) => {
   ctx.body = 'koa2 string'
 })

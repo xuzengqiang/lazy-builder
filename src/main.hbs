@@ -2,7 +2,12 @@
 <html lang="en">
 
 <head>
-  {{>partials/header/index}}
+  {{>partials/header/common}}
+  <title>代码自动构建工具</title>
+  {{component-scripts}}
+  {{script 'partials/addModify/index'}}
+  {{script 'partials/index/index'}}
+  {{script 'app'}}
 </head>
 
 <body>
