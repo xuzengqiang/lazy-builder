@@ -1,32 +1,32 @@
 {{!-- 表单字段渲染组件 --}}
 <div class="form-field-render">
-  <column-title :label="model.title"></column-title>
-  <!-- 遍历当前栏目的子节点 -->
-  <el-row v-for="column in model.childrens"
-          class="column-block outer">
-    <!-- 如果存在标题 -->
-    <column-title :label="column.title"></column-title>
-    <!-- 如果存在pane -->
-    <el-tabs v-if="column.pane">
-      <el-tab-pane v-for="pane in column.panes"
-                   :label="pane.label">
-        <tab-column :model="pane">
-        </tab-column>
-      </el-tab-pane>
-    </el-tabs>
-    <!-- 如果不是pane,则可以添加字段了 -->
-    <field-column v-else
-                  :column="column.column"
-                  :fields="column.fields">
-    </field-column>
-  </el-row>
-  <el-row style="padding:5px 0px">
-    <el-button @click="addColumn"
-               icon="el-icon-plus"
-               style="background:rgb(111, 52, 136);color:#FFF;border:0 none;font-size:14px">
-      添加子栏目
-    </el-button>
-  </el-row>
-  <column-config-dialog ref="columnSetting"
-                        @set-column="setColumn" />
+    <column-title :label="model.title"></column-title>
+    <!-- 遍历当前栏目的子节点 -->
+    <el-row v-for="column in model.childrens"
+            class="column-block outer">
+        <!-- 如果存在标题 -->
+        <column-title :label="column.title"></column-title>
+        <!-- 如果存在pane -->
+        <el-tabs v-if="column.pane">
+            <el-tab-pane v-for="pane in column.panes"
+                         :label="pane.label">
+                <tab-column :model="pane">
+                </tab-column>
+            </el-tab-pane>
+        </el-tabs>
+        <!-- 如果不是pane,则可以添加字段了 -->
+        <field-column v-else
+                      :column="column.column"
+                      :fields="column.fields">
+        </field-column>
+    </el-row>
+    <el-row style="padding:5px 0px">
+        <el-button @click="addColumn"
+                   icon="el-icon-plus"
+                   style="background:rgb(111, 52, 136);color:#FFF;border:0 none;font-size:14px">
+            添加子栏目
+        </el-button>
+    </el-row>
+    <column-config-dialog ref="columnSetting"
+                          @set-column="setColumn" />
 </div>

@@ -1,60 +1,59 @@
 {{!-- 新增修改子栏目首页 --}}
-
 <el-form label-position="right"
          label-width="120px">
-  <el-row>
-    <el-col :span="4">
-      <el-form-item label="是否有弹窗">
-        <el-select v-model="addModifyModel.option.hasDialog">
-          <el-option v-for="item in yesOrNo"
-                     :key="item.value"
-                     :value="item.value"
-                     :label="item.label">
-          </el-option>
-        </el-select>
-      </el-form-item>
-    </el-col>
-    <el-col :span="4">
-      <el-form-item label="是否在弹窗内部">
-        <el-select v-model="addModifyModel.option.inDialog">
-          <el-option v-for="item in yesOrNo"
-                     :key="item.value"
-                     :value="item.value"
-                     :label="item.label">
-          </el-option>
-        </el-select>
-      </el-form-item>
-    </el-col>
-  </el-row>
-  <el-row v-for="(column, index) in addModifyModel.columns"
-          class="form-column">
-    <el-row :gutter="20"
-            class="form-layout">
-      <div class="layout-oper">
-        <el-button type="primary"
-                   icon="el-icon-edit"
-                   size="small"
-                   round
-                   disabled
-                   @click="editColumn(column, index)">
-          编辑栏目
-        </el-button>
-        <el-button type="danger"
-                   icon="el-icon-delete"
-                   round
-                   size="small"
-                   @click="deleteColumn(column, index)">
-          删除栏目
-        </el-button>
-      </div>
-      <column-title :label="column.title"></column-title>
-      <el-col v-for="children in column.childrens"
-              :span="children.span">
-        <form-field-render :model="children">
-        </form-field-render>
-      </el-col>
+    <el-row>
+        <el-col :span="4">
+            <el-form-item label="是否有弹窗">
+                <el-select v-model="addModifyModel.option.hasDialog">
+                    <el-option v-for="item in yesOrNo"
+                               :key="item.value"
+                               :value="item.value"
+                               :label="item.label">
+                    </el-option>
+                </el-select>
+            </el-form-item>
+        </el-col>
+        <el-col :span="4">
+            <el-form-item label="是否在弹窗内部">
+                <el-select v-model="addModifyModel.option.inDialog">
+                    <el-option v-for="item in yesOrNo"
+                               :key="item.value"
+                               :value="item.value"
+                               :label="item.label">
+                    </el-option>
+                </el-select>
+            </el-form-item>
+        </el-col>
     </el-row>
-  </el-row>
+    <el-row v-for="(column, index) in addModifyModel.columns"
+            class="form-column">
+        <el-row :gutter="20"
+                class="form-layout">
+            <div class="layout-oper">
+                <el-button type="primary"
+                           icon="el-icon-edit"
+                           size="small"
+                           round
+                           disabled
+                           @click="editColumn(column, index)">
+                    编辑栏目
+                </el-button>
+                <el-button type="danger"
+                           icon="el-icon-delete"
+                           round
+                           size="small"
+                           @click="deleteColumn(column, index)">
+                    删除栏目
+                </el-button>
+            </div>
+            <column-title :label="column.title"></column-title>
+            <el-col v-for="children in column.childrens"
+                    :span="children.span">
+                <form-field-render :model="children">
+                </form-field-render>
+            </el-col>
+        </el-row>
+    </el-row>
 </el-form>
 <el-button style="background:rgb(126, 56, 120);color:#fff;border:0 none"
            icon="el-icon-printer"
